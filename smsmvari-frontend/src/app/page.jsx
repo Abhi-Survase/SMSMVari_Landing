@@ -7,6 +7,7 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 export default function HomePage() {
   return (
@@ -44,6 +45,7 @@ export default function HomePage() {
             </a>
           </div>
           <div className="flex items-center space-x-4">
+            <Link href="/admin">Login</Link>
             <button className="font-bold text-xs text-foreground hover:text-primary transition-colors uppercase hidden md:block">
               मराठी
             </button>
