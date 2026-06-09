@@ -12,53 +12,6 @@ import Link from "next/link";
 export default function HomePage() {
   return (
     <div className="font-sans text-foreground min-h-screen flex flex-col bg-background textured-bg">
-      {/* TopNavBar - Best placed in layout.jsx later */}
-      <nav className="bg-card border-b-2 border-primary w-full sticky top-0 z-50 shadow-sm">
-        <div className="flex justify-between items-center w-full px-4 md:px-8 py-2 max-w-7xl mx-auto">
-          <div className="font-heading text-2xl font-black text-primary tracking-tight">
-            SMSM Vari
-          </div>
-          <div className="hidden md:flex space-x-6">
-            <a
-              className="text-primary font-bold border-b-2 border-primary pb-1 transition-all"
-              href="#"
-            >
-              Homepage
-            </a>
-            <a
-              className="text-muted-foreground hover:text-primary transition-colors"
-              href="#"
-            >
-              About Us
-            </a>
-            <a
-              className="text-muted-foreground hover:text-primary transition-colors"
-              href="#"
-            >
-              Gallery
-            </a>
-            <a
-              className="text-muted-foreground hover:text-primary transition-colors"
-              href="#"
-            >
-              Contact Us
-            </a>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Link href="/admin">Login</Link>
-            <button className="font-bold text-xs text-foreground hover:text-primary transition-colors uppercase hidden md:block">
-              मराठी
-            </button>
-            <Button
-              size="lg"
-              className="uppercase font-bold tracking-wide border-b-4 border-b-secondary/50 active:border-b-0 active:translate-y-1"
-            >
-              Donate Now
-            </Button>
-          </div>
-        </div>
-      </nav>
-
       {/* Main Content */}
       <main className="flex-grow">
         {/* Hero Section */}
@@ -539,11 +492,11 @@ export default function HomePage() {
         <div className="border-t border-white/10 px-4 md:px-8 py-6 bg-black/20">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-4">
             <p className="text-xs text-muted-foreground">
-              © 2024 SMSM Vari. All Rights Reserved. Committed to Heritage &
+              © 2026 SMSM Vari. All Rights Reserved. Committed to Heritage &
               Healing.
             </p>
             <div className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
-              Organized By Sri Vithhal Rukmini Mandir Samiti
+              Organized By Sahyadri Manav Seva Manch Vari Trust
             </div>
           </div>
         </div>
