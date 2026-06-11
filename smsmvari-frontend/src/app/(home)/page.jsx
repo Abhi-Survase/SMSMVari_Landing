@@ -7,6 +7,7 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Route, CalendarDays } from "lucide-react";
 import Link from "next/link";
 
 export default function HomePage() {
@@ -78,12 +79,16 @@ export default function HomePage() {
                   <div className="h-1.5 w-full bg-[#a93200] absolute top-0 left-0"></div>
                   <CardContent className="p-8 pt-10">
                     <div className="flex items-center gap-3 mb-6 text-[#6D1B13]">
-                      <span
-                        className="material-symbols-outlined text-4xl text-[#F39C12]"
-                        style={{ fontVariationSettings: "'FILL' 1" }}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="34"
+                        viewBox="0 0 24 24"
+                        width="34"
+                        fill="#F39C12"
                       >
-                        directions_walk
-                      </span>
+                        <path d="M0 0h24v24H0z" fill="none" />
+                        <path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7" />
+                      </svg>
                       <h3 className="font-heading text-3xl font-black">
                         A Journey of Faith
                       </h3>
@@ -112,32 +117,22 @@ export default function HomePage() {
 
                 {/* Stats Vertical - Restored exact solid colors and heavy borders */}
                 <div className="md:col-span-4 flex flex-col gap-6">
-                  <Card className="bg-[#F39C12] text-white rounded-none border-2 border-[#6D1B13] shadow-none flex flex-col justify-center items-center text-center h-full py-10">
-                    <span
-                      className="material-symbols-outlined text-6xl mb-2 opacity-90"
-                      style={{ fontVariationSettings: "'FILL' 1" }}
-                    >
-                      route
-                    </span>
-                    <div className="font-heading text-5xl font-black mb-2">
+                  <Card className="bg-[#F39C12] text-white rounded-none border-2 border-[#6D1B13] shadow-none flex flex-col justify-center items-center text-center h-full py-5">
+                    <Route size={54} strokeWidth={3} />
+                    <div className="font-heading text-5xl font-black mb-1">
                       250km
                     </div>
-                    <div className="text-sm uppercase tracking-[0.15em] font-bold">
+                    <div className="text-base uppercase tracking-[0.15em] font-bold">
                       Sacred Journey
                     </div>
                   </Card>
 
-                  <Card className="bg-[#a93200] text-white rounded-none border-2 border-[#6D1B13] shadow-none flex flex-col justify-center items-center text-center h-full py-10">
-                    <span
-                      className="material-symbols-outlined text-5xl mb-2 opacity-90"
-                      style={{ fontVariationSettings: "'FILL' 1" }}
-                    >
-                      calendar_month
-                    </span>
-                    <div className="font-heading text-5xl font-black mb-2">
+                  <Card className="bg-[#a93200] text-white rounded-none border-2 border-[#6D1B13] shadow-none flex flex-col justify-center items-center text-center h-full py-5">
+                    <CalendarDays size={56} strokeWidth={3} />
+                    <div className="font-heading text-5xl font-black mb-1">
                       21 Days
                     </div>
-                    <div className="text-sm uppercase tracking-[0.15em] font-bold">
+                    <div className="text-base uppercase tracking-[0.15em] font-bold">
                       Aashad Ekadashi
                     </div>
                   </Card>
@@ -177,9 +172,9 @@ export default function HomePage() {
                     Critical Need
                   </Badge>
                   <img
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1-TN0K8T3Pvi8c8_NK6IgMXc7GAt-9nTcd3vLbiAGTLZTNkDJDsFmHE1F6dWypWdp1dSW4Gs6UsdsrehvsO9NW4YDKxvVxO1zPvbXt611fuK0CU0ZFm_867zjvOobJffqMilPnJ8OpILoimMYnloa7Tf_g1j1MbZClfI5xxuGFDTVA5wV-fHgHPHs0drC0hzIuc4od49GVitjQT5MpIzYwVKnYvg9kOiVXvOXdsT_o-myGcznfrldp86DQIVAaCS0q_Jmw17yyVo"
+                    src="/medical-camps.webp"
                     alt="Medical Camps"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full origin-bottom object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
                 <CardHeader className="pb-2">
@@ -202,7 +197,7 @@ export default function HomePage() {
                     illness.
                   </CardDescription>
                   <div className="w-full border-t border-border mt-4 pt-4 flex justify-between items-center text-secondary font-bold text-sm uppercase">
-                    Support Team{" "}
+                    Support Team
                     <span className="material-symbols-outlined">
                       chevron_right
                     </span>
@@ -215,7 +210,7 @@ export default function HomePage() {
                 <div className="h-1 w-full bg-primary"></div>
                 <div className="h-48 relative overflow-hidden">
                   <img
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqMeb8xbpKEFWqFX_XpnikABmdfhCNL1QPvRSv907AVufKdo0sE2jHK2SWsHO3PuHfWM8VlhKpyz7_NExswCXJa-gVXGd4RbwTsn_7XNaqXuLH3Dd0P9382RBiHYKSejb53hLg7Ls0T6hZwNiDQCua9-rBKnvVuVV79cw8rocRMiGshRNPJ4hMgIAOICrhGZ0gdCqbv2CW43VpW491kIENUKZrPl40GcVutrdh-MBdHnFTv9Xh6qdRgrPBrEko5Gc7Fl6BZ8B1rOA"
+                    src="/wound-care.webp"
                     alt="Wound Care"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
@@ -258,7 +253,7 @@ export default function HomePage() {
                     24/7 Active
                   </Badge>
                   <img
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxeGewWN9EPgfa6QpNkSQSpvzLVKDSqTSPHfh4owUvyPWhPsa33kl0ZS-A5sT8eqo3L-HTEe6TuITspSAC9cHT0gd6fvvlufXmcbGmbWDTKYmTJVGKguRB9zTq_v9YTfdgB8qdPPcs-ty271Qbz3xEsHn7osGer2w7GdP6tHOZMzS3kN7XIOVKOid3-AC50W-247oddJ6tpYWy04LqAGoxEN5nTAwew5gc4WOGLkTvzjRSRwvz87kksQK9Y-BrTfXUMStC1GL75yI"
+                    src="emergency-response.webp"
                     alt="Emergency Response"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
