@@ -1,13 +1,15 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
 
-  // Array to make rendering and styling the links much cleaner
   const navLinks = [
     { name: "Homepage", href: "/" },
     { name: "About Us", href: "/about" },
@@ -26,11 +28,10 @@ export default function Navbar() {
           SMSM Vari
         </Link>
 
-        {/* Dynamic Navigation Links */}
+        {/* Desktop Navigation Links — unchanged, hidden below md */}
         <div className="hidden md:flex space-x-6">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
-
             return (
               <Link
                 key={link.name}
@@ -51,21 +52,68 @@ export default function Navbar() {
         <div className="flex items-center space-x-4">
           <Link
             href="/admin"
-            className={`transition-colors ${pathname === "/admin" ? "text-primary font-bold border-primary" : "text-muted-foreground hover:text-primary font-medium"}`}
+            className={`transition-colors ${
+              pathname === "/admin"
+                ? "text-primary font-bold border-primary"
+                : "text-muted-foreground hover:text-primary font-medium"
+            }`}
           >
             Login
           </Link>
+
+          {/* Language toggle — desktop only */}
           <button className="font-bold text-xs text-foreground hover:text-primary transition-colors uppercase hidden md:block">
             मराठी
           </button>
+
           <Button
             size="lg"
             className="uppercase font-bold tracking-wide border-b-4 border-b-secondary/50 active:border-b-0 active:translate-y-1"
           >
             Donate Now
           </Button>
+
+          {/* Hamburger — mobile only, sits right of Donate Now */}
+          <button
+            className="md:hidden p-1 text-foreground hover:text-primary transition-colors"
+            onClick={() => setIsOpen((prev) => !prev)}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isOpen}
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile dropdown — only rendered when open, hidden on md+ */}
+      {isOpen && (
+        <div className="md:hidden border-t border-border bg-card px-4 py-3 flex flex-col">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                className={`py-2.5 px-3 rounded-md font-medium transition-all ${
+                  isActive
+                    ? "text-primary font-bold bg-primary/10"
+                    : "text-muted-foreground hover:text-primary hover:bg-primary/5"
+                }`}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
+
+          {/* Language toggle in mobile menu */}
+          <div className="mt-2 pt-2 border-t border-border">
+            <button className="font-bold text-xs text-foreground hover:text-primary transition-colors uppercase py-2 px-3">
+              मराठी
+            </button>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }

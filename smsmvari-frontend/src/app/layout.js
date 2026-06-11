@@ -1,6 +1,7 @@
 import { Mukta } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const muktaSans = Mukta({
   variable: "--font-mukta",
@@ -30,6 +31,7 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col">
         <Navbar />
         <div>{children}</div>
+        <Footer />
       </body>
     </html>
   );
