@@ -11,6 +11,7 @@ const muktaSans = Mukta({
 });
 
 export const metadata = {
+  metadataBase: new URL("https://smsmvari.com"),
   title: "Sahyadri Manav Seva Manch Vari Trust",
   description:
     "Providing basic medical and healthcare services to people in remote areas who lack easy access.",
