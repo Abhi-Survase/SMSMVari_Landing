@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -16,11 +16,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { AlertCircle } from "lucide-react";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080";
 
-const Login = () => {
+const LoginForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -150,4 +151,10 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <LoginForm />
+    </Suspense>
+  );
+}
