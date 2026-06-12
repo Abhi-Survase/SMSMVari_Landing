@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { AlertCircle, ArrowLeft } from "lucide-react";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080";
@@ -160,4 +161,10 @@ const SendOtp = () => {
   );
 };
 
-export default SendOtp;
+export default function SendOtpPage() {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <SendOtp />
+    </Suspense>
+  );
+}

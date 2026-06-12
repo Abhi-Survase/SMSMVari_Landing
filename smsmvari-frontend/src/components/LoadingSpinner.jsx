@@ -1,0 +1,24 @@
+"use client";
+
+import { LoaderIcon } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+
+function Spinner({ className, ...props }) {
+  return (
+    <LoaderIcon
+      role="status"
+      aria-label="Loading"
+      className={cn("size-4 animate-spin", className)}
+      {...props}
+    />
+  );
+}
+
+export default function LoadingSpinner() {
+  return (
+    <div className="flex h-screen items-center justify-center">
+      <Spinner />
+    </div>
+  );
+}
