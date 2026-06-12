@@ -66,12 +66,14 @@ export default function Navbar() {
             मराठी
           </button>
 
-          <Button
-            size="lg"
-            className="uppercase font-bold tracking-wide border-b-4 border-b-secondary/50 active:border-b-0 active:translate-y-1"
-          >
-            Donate Now
-          </Button>
+          <Link href={"/donate"}>
+            <Button
+              size="lg"
+              className="uppercase font-bold tracking-wide border-b-4 border-b-secondary/50 active:border-b-0 active:translate-y-1"
+            >
+              Donate Now
+            </Button>
+          </Link>
 
           {/* Hamburger — mobile only, sits right of Donate Now */}
           <button

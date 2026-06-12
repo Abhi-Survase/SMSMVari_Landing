@@ -53,12 +53,18 @@ export default function QrSection() {
 
             {/* The Divider (Heart Icon) */}
             {/* Desktop: Vertical Divider */}
-            <div className="hidden md:flex absolute left-1/2 top-4 bottom-4 w-px bg-border/60 -translate-x-1/2 items-center justify-center z-10">
-              <Heart
-                className="bg-card text-[#F39C12] p-1.5 fill-[#F39C12]/10 rounded-full border border-border/50 shadow-sm"
-                size={48}
-                strokeWidth={1.5}
-              />
+            <div className="hidden md:flex absolute left-1/2 top-4 bottom-4 flex-col items-center -translate-x-1/2 z-10">
+              {/* The vertical line */}
+              <div className="w-px h-full bg-border/60"></div>
+
+              {/* The icon (absolutely centered on the line) */}
+              <div className="absolute top-1/2 -translate-y-1/2 bg-card rounded-full">
+                <Heart
+                  className="text-[#F39C12] p-1.5 fill-[#F39C12]/10 rounded-full border border-border/50 shadow-sm"
+                  size={48}
+                  strokeWidth={1.5}
+                />
+              </div>
             </div>
 
             {/* Mobile: Horizontal Divider */}
