@@ -13,6 +13,22 @@ export default function Footer() {
             Committed to providing medical aid and support to the devoted
             Varkaris during the sacred Pandharpur Wari.
           </p>
+
+          {/* Donation QR Card */}
+          <div className="bg-white p-3 rounded w-48 flex flex-col items-center my-2 shadow-sm">
+            <span className="text-primary font-bold text-xs mb-2 text-center">
+              SMSM Vari Trust
+            </span>
+            <img
+              src="/dummy_qr.webp"
+              alt="Scan to Donate"
+              className="w-full h-auto object-contain"
+            />
+            <span className="text-primary font-bold text-[11px] mt-2 text-center">
+              UPI ID: smsmvari@upi
+            </span>
+          </div>
+
           <div className="flex gap-4 mt-2">
             <a
               href="#"

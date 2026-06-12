@@ -9,6 +9,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Route, CalendarDays } from "lucide-react";
 import Link from "next/link";
+import QrSection from "@/components/QrSection";
 
 export default function HomePage() {
   return (
@@ -287,6 +288,8 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        <QrSection />
 
         {/* Leadership Section */}
         <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
