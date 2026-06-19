@@ -1,7 +1,12 @@
 self.__BUILD_MANIFEST = {
   "__rewrites": {
     "afterFiles": [],
-    "beforeFiles": [],
+    "beforeFiles": [
+      {
+        "source": "/SMSMVari_Landing//_next/:path+",
+        "destination": "/SMSMVari_Landing/_next/:path+"
+      }
+    ],
     "fallback": []
   },
   "sortedPages": [

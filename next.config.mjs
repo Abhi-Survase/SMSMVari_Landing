@@ -2,7 +2,12 @@
 const nextConfig = {
   /* config options here */
   output: "export",
-  distDir: "docs",
+  assetPrefix: "/SMSMVari_Landing/",
+  basePath: "/SMSMVari_Landing",
+  // distDir: "docs",
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;
