@@ -91,7 +91,7 @@ export default function HomePage() {
             {/* Hero Image Background */}
             <div className="relative h-[614px] md:h-[819px] w-full">
               <Image
-                src="/home-hero.webp"
+                src="home-hero.webp"
                 alt="A grand procession of thousands of Varkaris (devotees) during the Pandharpur Wari"
                 fill
                 className="object-cover object-center"
@@ -246,7 +246,7 @@ export default function HomePage() {
                       Critical Need
                     </Badge>
                     <img
-                      src="/medical-camps.webp"
+                      src="medical-camps.webp"
                       alt="Medical Camps"
                       className="w-full h-full origin-bottom object-cover group-hover:scale-105 transition-transform duration-500"
                     />
@@ -284,7 +284,7 @@ export default function HomePage() {
                   <div className="h-1 w-full bg-primary"></div>
                   <div className="h-48 relative overflow-hidden">
                     <img
-                      src="/wound-care.webp"
+                      src="wound-care.webp"
                       alt="Wound Care"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
@@ -398,7 +398,7 @@ export default function HomePage() {
                     <div className="flex items-start gap-4">
                       <div className="w-20 h-20 bg-muted rounded-full overflow-hidden border-2 border-secondary shrink-0">
                         <img
-                          src="/cmo_image.webp"
+                          src="cmo_image.webp"
                           alt="Dr. Anjali Deshmukh"
                           className="w-full h-full object-cover"
                         />
@@ -427,7 +427,7 @@ export default function HomePage() {
                     <div className="flex items-start gap-4">
                       <div className="w-20 h-20 bg-muted rounded-full overflow-hidden border-2 border-secondary shrink-0">
                         <img
-                          src="/log-head_image.webp"
+                          src="log-head_image.webp"
                           alt="Mr. Prakash Patil"
                           className="w-full h-full object-cover"
                         />

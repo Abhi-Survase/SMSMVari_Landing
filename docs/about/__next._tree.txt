@@ -12,4 +12,4 @@
 :HL["/SMSMVari_Landing/_next/static/media/ed113078b1c8eb25-s.p.2yibybzdd5zj9.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/SMSMVari_Landing/_next/static/media/f1e720a33d6babe4-s.p.3_sihifhi5zdx.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"(home)","param":null,"prefetchHints":0,"slots":{"children":{"name":"about","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"58Otf7znDzchvnG3vitrJ"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"(home)","param":null,"prefetchHints":0,"slots":{"children":{"name":"about","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"bYZ1Oky75xmlpCRRPH6PE"}
