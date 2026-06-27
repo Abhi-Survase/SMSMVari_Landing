@@ -3,6 +3,7 @@
 
 import QrSection from "@/components/QrSection";
 import { Heart, Users, Stethoscope, ShieldCheck } from "lucide-react";
+import { NumberTicker } from "@/components/shadcn-space/number-ticker/number-ticker-01";
 
 export const metadata = {
   title: "Donate | SMSM Vari – Fund Varkari Healthcare",
@@ -20,11 +21,11 @@ export const metadata = {
     description:
       "Fund life-saving medical care for lakhs of Varkaris during the sacred 250 km Pandharpur Wari pilgrimage.",
     type: "website",
-    url: "https://smsmvari.com/donate", // TODO: replace with your real domain
+    url: "https://smsmvari.com/donate",
     siteName: "SMSM Vari",
     images: [
       {
-        url: "/og_donate.webp", // TODO: create a 1200×630 OG image
+        url: "/og_donate.webp",
         width: 1200,
         height: 630,
         alt: "Volunteer providing medical care to a Varkari during the Pandharpur Wari",
@@ -63,9 +64,15 @@ const jsonLd = {
   },
 };
 
+// Updated array to pass numeric values to the animated ticker
 const impactStats = [
-  { icon: Users, value: "12,000+", label: "Varkaris Treated Annually" },
-  { icon: Stethoscope, value: "40+", label: "Medical Camps Set Up" },
+  {
+    icon: Users,
+    number: 12000,
+    suffix: "+",
+    label: "Varkaris Treated Annually",
+  },
+  { icon: Stethoscope, number: 40, suffix: "+", label: "Medical Camps Set Up" },
   { icon: Heart, value: "250 km", label: "Route Covered" },
   { icon: ShieldCheck, value: "21 Days", label: "Continuous Service" },
 ];
@@ -102,11 +109,20 @@ export default function DonatePage() {
         className="bg-muted/40 border-b border-border py-10 px-4 md:px-8"
       >
         <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          {impactStats.map(({ icon: Icon, value, label }) => (
+          {impactStats.map(({ icon: Icon, number, suffix, value, label }) => (
             <div key={label} className="flex flex-col items-center gap-2">
               <Icon className="text-primary" size={28} strokeWidth={2} />
               <p className="font-heading text-2xl md:text-3xl font-black text-secondary">
-                {value}
+                {number ? (
+                  <NumberTicker
+                    start={number * 0.85}
+                    end={number}
+                    suffix={suffix}
+                    duration={8}
+                  />
+                ) : (
+                  value
+                )}
               </p>
               <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
                 {label}
