@@ -20,7 +20,7 @@ export default function Footer() {
               SMSM Vari Trust
             </span>
             <img
-              src="dummy_qr.webp"
+              src="/dummy_qr.webp"
               alt="Scan to Donate"
               className="w-full h-auto object-contain"
             />

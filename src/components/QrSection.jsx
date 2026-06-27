@@ -30,7 +30,7 @@ export default function QrSection() {
               {/* QR Code Container */}
               <div className="bg-white p-4 border-4 border-muted rounded-xl shadow-sm hover:scale-105 transition-transform duration-300">
                 <img
-                  src="dummy_qr.webp"
+                  src="/dummy_qr.webp"
                   alt="Scan to Donate"
                   className="w-56 h-56 object-contain"
                 />
