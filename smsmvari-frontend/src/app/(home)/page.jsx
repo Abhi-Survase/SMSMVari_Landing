@@ -271,7 +271,7 @@ export default function HomePage() {
                       </CardTitle>
                     </div>
                   </CardHeader>
-                  <CardContent className="flex flex-col flex-grow">
+                  <CardContent className="flex flex-col grow">
                     <CardDescription className="text-foreground/80 mb-4 flex-grow text-base">
                       Since 1984, the organization has continuously conducted
                       this Health Pilgrimage Service during Ashadhi Ekadashi. We
