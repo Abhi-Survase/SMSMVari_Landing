@@ -48,10 +48,19 @@ public class SecurityConfig {
                         // public auth APIs
                         .requestMatchers("/api/v1/auth/**").permitAll()
 
-                        // everything else secured
+                        // public event read APIs (used by customer-facing UI, no login required)
+                        // covers /api/events, /api/events/{slug}, /api/events/categories, etc.
+                        .requestMatchers(HttpMethod.GET, "/api/events/**").permitAll()
+
+                        // public gallery read APIs (used by customer-facing UI, no login required)
+                        .requestMatchers(HttpMethod.GET, "/api/gallery/**").permitAll()
+
+                        // static image/thumbnail files served from disk
+                        .requestMatchers(HttpMethod.GET, "/gallery/**").permitAll()
+
+                        // everything else secured (admin endpoints etc.)
                         .anyRequest().authenticated()
                 )
-
                 // JWT filter
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 

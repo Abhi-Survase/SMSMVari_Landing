@@ -11,4 +11,5 @@ public class UserInfoDto {
     private String email;
     private String mobile;
     private String status;
+    private Boolean isAdmin;
 }

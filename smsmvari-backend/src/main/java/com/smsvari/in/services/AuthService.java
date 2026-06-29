@@ -65,4 +65,7 @@ public interface AuthService {
      * @return success confirmation
      */
     ApiResponseDto resetPassword(ResetPasswordRequestDto request);
+
+    ApiResponseDto logout(LogoutRequestDto request);
+    ApiResponseDto logoutAll(String userUuid);
 }

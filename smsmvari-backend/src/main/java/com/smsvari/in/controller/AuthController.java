@@ -22,13 +22,6 @@ public class AuthController {
     // ─────────────────────────────────────────────────────────────────────────
     // POST /api/v1/auth/login
     // ─────────────────────────────────────────────────────────────────────────
-    /**
-     * Authenticates a user.
-     * - Validates credentials
-     * - Enforces account lockout after N failed attempts
-     * - Records last-login IP
-     * - Returns access + refresh JWTs on success
-     */
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDto> login(
             @Valid @RequestBody LoginRequestDto request,
@@ -41,10 +34,6 @@ public class AuthController {
     // ─────────────────────────────────────────────────────────────────────────
     // POST /api/v1/auth/refresh
     // ─────────────────────────────────────────────────────────────────────────
-    /**
-     * Issues a new access token from a valid refresh token.
-     * The refresh token itself is not rotated (stateless design).
-     */
     @PostMapping("/refresh")
     public ResponseEntity<AuthResponseDto> refresh(
             @Valid @RequestBody RefreshTokenRequestDto request) {
@@ -54,12 +43,43 @@ public class AuthController {
     }
 
     // ─────────────────────────────────────────────────────────────────────────
-    // POST /api/v1/auth/forgot-password
+    // POST /api/v1/auth/logout
     // ─────────────────────────────────────────────────────────────────────────
     /**
-     * Triggers OTP email for password reset.
-     * Always returns 200 to prevent user enumeration.
+     * Revokes the supplied refresh token, ending that single session/device.
+     * Deliberately does NOT require a valid access token — a user should be
+     * able to log out even if their access token already expired, as long
+     * as they still hold the refresh token to invalidate. Must stay
+     * permitAll() in SecurityConfig for that reason. Idempotent.
      */
+    @PostMapping("/logout")
+    public ResponseEntity<ApiResponseDto> logout(
+            @Valid @RequestBody LogoutRequestDto request) {
+
+        ApiResponseDto response = authService.logout(request);
+        return ResponseEntity.ok(response);
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // POST /api/v1/auth/logout-all   (protected – requires valid access token)
+    // ─────────────────────────────────────────────────────────────────────────
+    /**
+     * Revokes every refresh token belonging to the authenticated user —
+     * "log out of all devices". Requires a valid access token so an
+     * attacker can't mass-revoke an arbitrary user's sessions by uuid.
+     */
+    @PostMapping("/logout-all")
+    public ResponseEntity<ApiResponseDto> logoutAll(
+            org.springframework.security.core.Authentication authentication) {
+
+        String userUuid = authentication.getName();
+        ApiResponseDto response = authService.logoutAll(userUuid);
+        return ResponseEntity.ok(response);
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // POST /api/v1/auth/forgot-password
+    // ─────────────────────────────────────────────────────────────────────────
     @PostMapping("/forgot-password")
     public ResponseEntity<ApiResponseDto> forgotPassword(
             @Valid @RequestBody ForgotPasswordRequestDto request) {
@@ -71,10 +91,6 @@ public class AuthController {
     // ─────────────────────────────────────────────────────────────────────────
     // POST /api/v1/auth/verify-otp
     // ─────────────────────────────────────────────────────────────────────────
-    /**
-     * Verifies the OTP (step 2 of 3-step password reset flow).
-     * Marks OTP as verified so the reset step doesn't require re-validation.
-     */
     @PostMapping("/verify-otp")
     public ResponseEntity<ApiResponseDto> verifyOtp(
             @Valid @RequestBody VerifyOtpRequestDto request) {
@@ -86,10 +102,6 @@ public class AuthController {
     // ─────────────────────────────────────────────────────────────────────────
     // POST /api/v1/auth/reset-password
     // ─────────────────────────────────────────────────────────────────────────
-    /**
-     * Resets the password after OTP verification.
-     * Also unlocks accounts that were locked due to failed login attempts.
-     */
     @PostMapping("/reset-password")
     public ResponseEntity<ApiResponseDto> resetPassword(
             @Valid @RequestBody ResetPasswordRequestDto request) {
@@ -101,10 +113,6 @@ public class AuthController {
     // ─────────────────────────────────────────────────────────────────────────
     // GET /api/v1/auth/me   (protected – requires valid access token)
     // ─────────────────────────────────────────────────────────────────────────
-    /**
-     * Returns the UUID of the currently authenticated user.
-     * Useful for frontend token validation checks.
-     */
     @GetMapping("/me")
     public ResponseEntity<ApiResponseDto> me(
             org.springframework.security.core.Authentication authentication) {

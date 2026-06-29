@@ -118,4 +118,9 @@ public class JwtUtil {
     public boolean isResetToken(String token) {
         return "reset".equals(extractTokenType(token));
     }
+
+    public boolean isAdmin(String token) {
+        Boolean isAdmin = extractAllClaims(token).get("isAdmin", Boolean.class);
+        return isAdmin != null && isAdmin;
+    }
 }
