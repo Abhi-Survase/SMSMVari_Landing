@@ -5,6 +5,7 @@ import com.smsvari.in.dto.response.ApiResponseDto;
 import com.smsvari.in.dto.response.AuthResponseDto;
 import com.smsvari.in.dto.response.UserInfoDto;
 import com.smsvari.in.entity.PasswordResetOtp;
+import com.smsvari.in.entity.RefreshToken;
 import com.smsvari.in.entity.User;
 import com.smsvari.in.enums.UserStatus;
 import com.smsvari.in.exception.AccountLockedException;
@@ -13,6 +14,7 @@ import com.smsvari.in.exception.InvalidTokenException;
 import com.smsvari.in.exception.OtpException;
 import com.smsvari.in.exception.UserNotFoundException;
 import com.smsvari.in.repository.PasswordResetOtpRepository;
+import com.smsvari.in.repository.RefreshTokenRepository;
 import com.smsvari.in.repository.UserRepository;
 import com.smsvari.in.services.AuthService;
 import com.smsvari.in.util.IpUtil;
@@ -26,7 +28,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.HexFormat;
 import java.util.Map;
 
 @Slf4j
@@ -44,6 +52,7 @@ public class AuthServiceImpl implements AuthService {
     // ─── Dependencies ─────────────────────────────────────────────────────────
     private final UserRepository             userRepository;
     private final PasswordResetOtpRepository otpRepository;
+    private final RefreshTokenRepository     refreshTokenRepository;
     private final PasswordEncoder            passwordEncoder;
     private final JwtUtil                    jwtUtil;
     private final OtpUtil                    otpUtil;
@@ -101,7 +110,7 @@ public class AuthServiceImpl implements AuthService {
     // =========================================================================
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public AuthResponseDto refreshToken(RefreshTokenRequestDto request) {
         String token = request.getRefreshToken();
 
@@ -111,6 +120,15 @@ public class AuthServiceImpl implements AuthService {
 
         if (!jwtUtil.isRefreshToken(token)) {
             throw new InvalidTokenException("Provided token is not a refresh token");
+        }
+
+        // Check the token hasn't been revoked (e.g. via logout) since it was issued.
+        String hash = hashToken(token);
+        RefreshToken storedToken = refreshTokenRepository.findByTokenHash(hash)
+                .orElseThrow(() -> new InvalidTokenException("Refresh token is no longer recognized"));
+
+        if (storedToken.getRevoked()) {
+            throw new InvalidTokenException("Refresh token has been revoked. Please log in again.");
         }
 
         String uuid = jwtUtil.extractUuid(token);
@@ -126,7 +144,7 @@ public class AuthServiceImpl implements AuthService {
 
         String newAccessToken = jwtUtil.generateAccessToken(
                 user.getUuid(), user.getEmail(),
-                Map.of("fullName", user.getFullName()));
+                Map.of("fullName", user.getFullName(), "isAdmin", user.getIsAdmin()));
 
         return AuthResponseDto.builder()
                 .success(true)
@@ -136,6 +154,56 @@ public class AuthServiceImpl implements AuthService {
                 .accessTokenExpiresIn(jwtUtil.getAccessTokenExpiryMs())
                 .refreshTokenExpiresIn(jwtUtil.getRefreshTokenExpiryMs())
                 .user(toUserInfoDto(user))
+                .build();
+    }
+
+    // =========================================================================
+    // LOGOUT
+    // =========================================================================
+
+    /**
+     * Revokes the single refresh token supplied — ends this one session/device.
+     * Idempotent: logging out twice with the same token (or an unrecognized
+     * token) is treated as a no-op success rather than an error, since the
+     * end state the caller wants ("I am logged out") is already true.
+     */
+    @Override
+    @Transactional
+    public ApiResponseDto logout(LogoutRequestDto request) {
+        String token = request.getRefreshToken();
+
+        // Don't bother validating signature/expiry strictly here — even an
+        // expired or malformed token's hash simply won't match a stored row,
+        // and that's fine. We just want to revoke it if we recognize it.
+        String hash = hashToken(token);
+
+        refreshTokenRepository.findByTokenHash(hash).ifPresent(stored -> {
+            stored.setRevoked(true);
+            stored.setRevokedAt(LocalDateTime.now());
+            refreshTokenRepository.save(stored);
+            log.info("Refresh token revoked on logout [userUuid={}]", stored.getUserUuid());
+        });
+
+        return ApiResponseDto.builder()
+                .success(true)
+                .message("Logged out successfully")
+                .build();
+    }
+
+    /**
+     * Revokes every active refresh token for a user — "log out of all
+     * devices". Useful for a security-conscious account settings page,
+     * or to call automatically after a password reset.
+     */
+    @Override
+    @Transactional
+    public ApiResponseDto logoutAll(String userUuid) {
+        int count = refreshTokenRepository.revokeAllForUser(userUuid, LocalDateTime.now());
+        log.info("All refresh tokens revoked [userUuid={}] [count={}]", userUuid, count);
+
+        return ApiResponseDto.builder()
+                .success(true)
+                .message("Logged out of all sessions")
                 .build();
     }
 
@@ -234,6 +302,10 @@ public class AuthServiceImpl implements AuthService {
 
         userRepository.save(user);
 
+        // Password reset is a security-sensitive event — kill all existing
+        // sessions so a previously-leaked credential/token can't linger.
+        refreshTokenRepository.revokeAllForUser(user.getUuid(), LocalDateTime.now());
+
         return ApiResponseDto.builder()
                 .success(true)
                 .message("Password reset successful")
@@ -274,11 +346,22 @@ public class AuthServiceImpl implements AuthService {
     private AuthResponseDto buildAuthResponse(User user) {
         Map<String, Object> claims = Map.of(
                 "fullName", user.getFullName(),
-                "status",   user.getStatus().name()
+                "status",   user.getStatus().name(),
+                "isAdmin",  user.getIsAdmin()
         );
 
         String accessToken  = jwtUtil.generateAccessToken(user.getUuid(), user.getEmail(), claims);
         String refreshToken = jwtUtil.generateRefreshToken(user.getUuid(), user.getEmail());
+
+        // Persist a hash of the refresh token so it can be looked up and
+        // revoked later (logout / logout-all), without ever storing the raw JWT.
+        RefreshToken tokenRecord = RefreshToken.builder()
+                .userUuid(user.getUuid())
+                .tokenHash(hashToken(refreshToken))
+                .revoked(false)
+                .expiresAt(toLocalDateTime(jwtUtil.extractAllClaims(refreshToken).getExpiration()))
+                .build();
+        refreshTokenRepository.save(tokenRecord);
 
         return AuthResponseDto.builder()
                 .success(true)
@@ -298,7 +381,28 @@ public class AuthServiceImpl implements AuthService {
                 .email(user.getEmail())
                 .mobile(user.getMobile())
                 .status(user.getStatus().name())
+                .isAdmin(user.getIsAdmin())
                 .build();
+    }
+
+    /**
+     * SHA-256 hash of a raw JWT string, hex-encoded. Used as a lookup key for
+     * {@link RefreshToken} rows so the raw refresh token is never persisted —
+     * same defense-in-depth principle as hashing OTPs and passwords.
+     */
+    private String hashToken(String rawToken) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = digest.digest(rawToken.getBytes(StandardCharsets.UTF_8));
+            return HexFormat.of().formatHex(hashBytes);
+        } catch (NoSuchAlgorithmException e) {
+            // SHA-256 is always available on any standard JVM — this is unreachable in practice.
+            throw new IllegalStateException("SHA-256 algorithm unavailable", e);
+        }
+    }
+
+    private LocalDateTime toLocalDateTime(java.util.Date date) {
+        return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     // TODO: uncomment and wire JavaMailSender before deployment

@@ -60,6 +60,9 @@ public class User {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
+    @Column(nullable = false)
+    private Boolean isAdmin;
+
     @PrePersist
     public void prePersist() {
 
@@ -73,6 +76,9 @@ public class User {
 
         if (failedLoginAttempts == null) {
             failedLoginAttempts = 0;
+        }
+        if (isAdmin == null) {
+            isAdmin = false;
         }
 
 
