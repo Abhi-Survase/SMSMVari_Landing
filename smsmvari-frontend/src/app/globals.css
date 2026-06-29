@@ -71,6 +71,7 @@
     --shadow-opacity: var(--shadow-opacity);
     --color-shadow-color: var(--shadow-color);
     --color-destructive-foreground: var(--destructive-foreground);
+    --color-brand-blue: var(--brand-blue);
     --text-sm: 0.95rem; /* Bumps up from default 0.875rem */
     --text-sm--line-height: 1.5rem;
     --text-base: 1.05rem; /* Bumps up from default 1rem */
@@ -111,6 +112,7 @@
     --sidebar-border: oklch(0.8505 0.0177 67.5871);
     --sidebar-ring: oklch(0.6606 0.1963 38.2094);
     --destructive-foreground: oklch(1 0 0);
+    --brand-blue: #0047ab; /* Logo cobalt — caring hands; use only for medical/care highlights */
     --font-sans: Mukta, ui-sans-serif, sans-serif, system-ui;
     --font-serif: Martel, ui-serif, serif;
     --font-mono: Geist Mono, ui-monospace, monospace;
@@ -171,6 +173,7 @@
     --sidebar-border: oklch(0.275 0 0);
     --sidebar-ring: oklch(0.439 0 0);
     --destructive-foreground: oklch(0.985 0 0);
+    --brand-blue: #3a7bd5; /* lightened for dark surfaces */
     --radius: 0.625rem;
     --font-sans: Mukta, ui-sans-serif, sans-serif, system-ui;
     --font-serif: Martel, ui-serif, serif;

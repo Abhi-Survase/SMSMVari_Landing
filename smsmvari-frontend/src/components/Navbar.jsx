@@ -23,7 +23,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="font-heading text-2xl font-black text-primary tracking-tight"
+          className="font-heading text-2xl font-black text-primary tracking-tight hover:text-brand-blue"
         >
           SMSM Vari
         </Link>
@@ -39,7 +39,7 @@ export default function Navbar() {
                 className={`transition-all pb-1 border-b-2 ${
                   isActive
                     ? "text-primary font-bold border-primary"
-                    : "text-muted-foreground border-transparent hover:text-primary"
+                    : "text-muted-foreground border-transparent hover:text-brand-blue"
                 }`}
               >
                 {link.name}

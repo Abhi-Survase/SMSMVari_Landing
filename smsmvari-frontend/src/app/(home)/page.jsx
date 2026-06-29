@@ -147,7 +147,7 @@ export default function HomePage() {
                 <div className="mb-10 text-center">
                   {/* Restored font-black (900 weight) and uppercase */}
                   <h2 className="font-heading text-4xl md:text-5xl text-[#a93200] font-black uppercase tracking-tight">
-                    पंढरीची आरोग्यवारी
+                    सह्याद्री मानव सेवा मंचची आरोग्यवारी
                   </h2>
                   <div className="h-1.5 w-32 bg-[#F39C12] mx-auto mt-4"></div>
                 </div>
@@ -183,13 +183,13 @@ export default function HomePage() {
                         deity of Pandharpur, regarded as a form of Krishna.
                       </p>
                       <blockquote className="text-[#333333]/80 leading-relaxed border-l-4 border-[#F39C12] pl-6 italic text-md font-medium">
-                        This walk is not just an escape from reality for lakhs
+                        "This walk is not just an escape from reality for lakhs
                         of people. It is something that keeps them focused and
                         connected to a power bigger than them. People spend 21
                         days on the road withering bad weather with no
                         luxuries... This is not a walk of blind faith, but the
                         Pandharpur Waari is a walk of love and showing respect
-                        to Lord Vitthal.
+                        to Lord Vitthal."
                       </blockquote>
                     </CardContent>
                   </Card>
@@ -333,15 +333,9 @@ export default function HomePage() {
 
                 {/* Card 3: Comprehensive Care & Services */}
                 <Card className="flex flex-col overflow-hidden group cursor-pointer border-border/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                  <div
-                    className="h-1 w-full"
-                    style={{ backgroundColor: "#0047ab" }}
-                  ></div>
+                  <div className="h-1 w-full bg-brand-blue"></div>
                   <div className="h-48 relative overflow-hidden shrink-0">
-                    <Badge
-                      className="absolute top-3 left-3 z-10 uppercase font-bold tracking-wider"
-                      style={{ backgroundColor: "#0047ab", color: "#fff" }}
-                    >
+                    <Badge className="absolute top-3 left-3 z-10 uppercase font-bold tracking-wider bg-brand-blue text-white hover:bg-brand-blue">
                       24/7 Active
                     </Badge>
                     <Image
@@ -353,10 +347,7 @@ export default function HomePage() {
                     />
                   </div>
                   <CardHeader className="pb-2">
-                    <div
-                      className="flex items-center gap-2"
-                      style={{ color: "#0047ab" }}
-                    >
+                    <div className="flex items-center gap-2 text-brand-blue">
                       <span
                         className="material-symbols-outlined"
                         style={{ fontVariationSettings: "'FILL' 1" }}
@@ -376,10 +367,7 @@ export default function HomePage() {
                       muscle pain, respiratory issues, fever, and various
                       infections.
                     </CardDescription>
-                    <div
-                      className="w-full border-t border-border mt-auto pt-4 flex justify-between items-center font-bold text-sm uppercase"
-                      style={{ color: "#0047ab" }}
-                    >
+                    <div className="w-full border-t border-border mt-auto pt-4 flex justify-between items-center text-brand-blue font-bold text-sm uppercase">
                       Volunteer{" "}
                       <span className="material-symbols-outlined">
                         chevron_right
@@ -421,9 +409,9 @@ export default function HomePage() {
                       format_quote
                     </span>
                     <p className="italic text-secondary font-semibold text-lg leading-snug">
-                      Service to the devotees is service to the divine. We
+                      "Service to the devotees is service to the divine. We
                       strive to provide the highest standard of care on this
-                      sacred journey.
+                      sacred journey."
                     </p>
                   </div>
                 </div>
@@ -444,10 +432,7 @@ export default function HomePage() {
                           <h4 className="font-heading text-xl text-secondary font-bold">
                             Dr. Anjali Deshmukh
                           </h4>
-                          <p
-                            className="text-xs font-bold uppercase tracking-wider mt-1"
-                            style={{ color: "#0047ab" }}
-                          >
+                          <p className="text-xs text-brand-blue font-bold uppercase tracking-wider mt-1">
                             Managing Trustee & CMO
                           </p>
                         </div>
@@ -476,10 +461,7 @@ export default function HomePage() {
                           <h4 className="font-heading text-xl text-secondary font-bold">
                             Mr. Prakash Patil
                           </h4>
-                          <p
-                            className="text-xs font-bold uppercase tracking-wider mt-1"
-                            style={{ color: "#0047ab" }}
-                          >
+                          <p className="text-xs text-brand-blue font-bold uppercase tracking-wider mt-1">
                             Trustee & Logistics Head
                           </p>
                         </div>
