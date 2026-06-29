@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>
+            SMSM Vari | Walking with Devotion, Serving with Compassion
+        </title>
+
+        <meta
+            name="description"
+            content="SMSM Vari is building a new digital home. Just as the Varkaris journey from Alandi to Pandharpur with faith and perseverance, our website is on its pilgrimage too."
+        />
+
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%23FF5733'/></svg>"
+        />
+        <meta
+            name="keywords"
+            content="SMSM Vari, Pandharpur Wari, Varkari, Alandi, Pandharpur, Medical Camp, Sahyadri Manav Seva Manch Vari Trust"
+        />
+
+        <meta name="author" content="Sahyadri Manav Seva Manch Vari Trust" />
+
+        <meta property="og:title" content="SMSM Vari" />
+
+        <meta
+            property="og:description"
+            content="Our website is currently walking the sacred Wari. We'll arrive soon."
+        />
+
+        <meta property="og:type" content="website" />
+
+        <meta property="og:url" content="https://smsmvari.com" />
+
+        <meta name="theme-color" content="#a93200" />
+
+        <link rel="canonical" href="https://smsmvari.com" />
+
+        <style>
+            /* =======================================================
+   RESET
+======================================================= */
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                font-family:
+                    Mukta,
+                    system-ui,
+                    Segoe UI,
+                    sans-serif;
+
+                background: #e6e2d3;
+
+                color: #333;
+
+                overflow-x: hidden;
+
+                min-height: 100vh;
+
+                display: flex;
+
+                justify-content: center;
+
+                align-items: center;
+
+                padding: 40px;
+
+                position: relative;
+            }
+
+            /* =======================================================
+   PAPER TEXTURE
+======================================================= */
+
+            body::before {
+                content: "";
+
+                position: fixed;
+
+                inset: 0;
+
+                background-image:
+                    radial-gradient(
+                        rgba(169, 50, 0, 0.06) 1px,
+                        transparent 1px
+                    ),
+                    radial-gradient(
+                        rgba(243, 156, 18, 0.04) 1px,
+                        transparent 1px
+                    );
+
+                background-size: 22px 22px;
+
+                background-position:
+                    0 0,
+                    11px 11px;
+
+                opacity: 0.45;
+
+                pointer-events: none;
+            }
+
+            /* =======================================================
+   CARD
+======================================================= */
+
+            .container {
+                width: min(1100px, 100%);
+
+                background: white;
+
+                border-radius: 22px;
+
+                padding: 56px;
+
+                box-shadow: 0 15px 45px rgba(0, 0, 0, 0.12);
+
+                position: relative;
+
+                overflow: hidden;
+            }
+
+            /* saffron strip */
+
+            .container::before {
+                content: "";
+
+                position: absolute;
+
+                left: 0;
+
+                top: 0;
+
+                width: 100%;
+
+                height: 8px;
+
+                background: linear-gradient(90deg, #a93200, #f39c12);
+            }
+
+            /* =======================================================
+   BRAND
+======================================================= */
+
+            .logo {
+                font-size: 18px;
+
+                letter-spacing: 0.35em;
+
+                font-weight: 800;
+
+                color: #a93200;
+
+                text-transform: uppercase;
+
+                margin-bottom: 18px;
+            }
+
+            h1 {
+                font-size: clamp(2.3rem, 5vw, 4rem);
+
+                line-height: 1.05;
+
+                font-weight: 900;
+
+                color: #6d1b13;
+
+                margin-bottom: 20px;
+            }
+
+            .tagline {
+                font-size: 1.15rem;
+
+                font-weight: 600;
+
+                color: #555;
+
+                margin-bottom: 38px;
+
+                max-width: 680px;
+
+                line-height: 1.7;
+            }
+
+            /* =======================================================
+   STATUS
+======================================================= */
+
+            .status {
+                display: inline-flex;
+
+                align-items: center;
+
+                gap: 12px;
+
+                background: #fff8e8;
+
+                padding: 12px 20px;
+
+                border-radius: 999px;
+
+                border: 1px solid rgba(169, 50, 0, 0.15);
+
+                margin-bottom: 50px;
+
+                font-weight: 700;
+
+                color: #a93200;
+            }
+
+            .status-dot {
+                width: 12px;
+
+                height: 12px;
+
+                border-radius: 50%;
+
+                background: #f39c12;
+
+                animation: pulse 2s infinite;
+            }
+
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+
+                50% {
+                    transform: scale(1.4);
+                    opacity: 0.4;
+                }
+
+                100% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+
+            /* =======================================================
+   ROUTE SECTION
+======================================================= */
+
+            .route-wrapper {
+                display: grid;
+
+                grid-template-columns:
+                    1fr
+                    420px;
+
+                gap: 60px;
+
+                align-items: center;
+
+                margin-top: 20px;
+            }
+
+            /* =======================================================
+   TEXT
+======================================================= */
+
+            .message h2 {
+                font-size: 2rem;
+
+                color: #6d1b13;
+
+                margin-bottom: 18px;
+            }
+
+            .message p {
+                line-height: 1.9;
+
+                font-size: 1.08rem;
+
+                margin-bottom: 18px;
+
+                color: #555;
+            }
+
+            .highlight {
+                color: #a93200;
+
+                font-weight: 800;
+            }
+
+            /* =======================================================
+   FOOTER
+======================================================= */
+
+            .footer {
+                margin-top: 60px;
+
+                padding-top: 24px;
+
+                border-top: 1px solid rgba(0, 0, 0, 0.08);
+
+                display: flex;
+
+                justify-content: space-between;
+
+                flex-wrap: wrap;
+
+                gap: 20px;
+
+                font-size: 0.95rem;
+
+                color: #666;
+            }
+
+            /* =======================================================
+   RESPONSIVE
+======================================================= */
+
+            @media (max-width: 900px) {
+                .container {
+                    padding: 32px;
+                }
+
+                .route-wrapper {
+                    grid-template-columns: 1fr;
+                }
+
+                .footer {
+                    flex-direction: column;
+
+                    text-align: center;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="logo">SMSM VARI</div>
+
+            <h1>Our Website is on its Pilgrimage</h1>
+
+            <p class="tagline">
+                Just as thousands of <strong>Varkaris</strong> journey from
+                <span class="highlight">Alandi</span> to
+                <span class="highlight">Pandharpur</span>
+                with faith and perseverance, we are carefully building a digital
+                home worthy of that same spirit.
+            </p>
+
+            <div class="status">
+                <div class="status-dot"></div>
+
+                Website under construction • Walking towards Pandharpur
+            </div>
+
+            <div class="route-wrapper">
+                <div class="message">
+                    <h2>One Step at a Time</h2>
+
+                    <p>
+                        Every year, lakhs of devotees walk more than
+                        <strong>250 kilometres</strong>
+                        towards Lord Vitthal.
+                    </p>
+
+                    <p>Our website is taking the same journey.</p>
+
+                    <p>
+                        Follow the tiny saffron
+                        <strong>भगवा पताका</strong>
+                        as it travels the sacred route.
+                    </p>
+                </div>
+                <!-- =====================================================
+     SVG PILGRIMAGE ROUTE
+====================================================== -->
+
+                <div class="route">
+                    <svg
+                        viewBox="0 0 420 720"
+                        width="100%"
+                        height="720"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <defs>
+                            <filter id="glow">
+                                <feGaussianBlur
+                                    stdDeviation="3"
+                                    result="blur"
+                                />
+
+                                <feMerge>
+                                    <feMergeNode in="blur" />
+                                    <feMergeNode in="SourceGraphic" />
+                                </feMerge>
+                            </filter>
+                        </defs>
+
+                        <!-- Route -->
+
+                        <path
+                            id="wariPath"
+                            d="
+
+M210 40
+
+C195 80 170 120 165 150
+
+C160 185 170 210 195 245
+
+C220 280 240 310 250 345
+
+C258 380 248 415 225 455
+
+C205 490 180 525 180 565
+
+C180 610 205 645 210 680
+
+"
+                            fill="none"
+                            stroke="#d6b48f"
+                            stroke-width="8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-dasharray="10 8"
+                        />
+
+                        <!-- WAYPOINTS -->
+
+                        <g
+                            font-family="Mukta, sans-serif"
+                            font-size="14"
+                            fill="#6D1B13"
+                        >
+                            <circle cx="210" cy="40" r="6" fill="#a93200" />
+                            <text x="230" y="45">Alandi</text>
+
+                            <circle cx="170" cy="150" r="5" fill="#999" />
+                            <text x="185" y="155">Saswad</text>
+
+                            <circle cx="195" cy="245" r="5" fill="#999" />
+                            <text x="210" y="250">Jejuri</text>
+
+                            <circle cx="250" cy="345" r="5" fill="#999" />
+                            <text x="265" y="350">Lonand</text>
+
+                            <circle cx="225" cy="455" r="5" fill="#999" />
+                            <text x="240" y="460">Phaltan</text>
+
+                            <circle cx="180" cy="565" r="5" fill="#999" />
+                            <text x="195" y="570">Natepute</text>
+
+                            <circle cx="195" cy="625" r="5" fill="#999" />
+                            <text x="210" y="630">Malshiras</text>
+
+                            <circle cx="205" cy="655" r="5" fill="#999" />
+                            <text x="220" y="660">Wakhri</text>
+
+                            <circle
+                                cx="210"
+                                cy="680"
+                                r="8"
+                                fill="#a93200"
+                                filter="url(#glow)"
+                            />
+
+                            <text x="230" y="685" font-weight="700">
+                                Pandharpur
+                            </text>
+                        </g>
+
+                        <!-- ==========================================
+     BHAGWA PATKA
+========================================== -->
+
+                        <g>
+                            <g id="flag">
+                                <!-- pole -->
+
+                                <line
+                                    x1="0"
+                                    y1="-12"
+                                    x2="0"
+                                    y2="12"
+                                    stroke="#6D1B13"
+                                    stroke-width="2"
+                                />
+
+                                <!-- saffron flag -->
+
+                                <polygon
+                                    points="
+0,-12
+18,-6
+0,0"
+                                    fill="#F39C12"
+                                >
+                                    <animate
+                                        attributeName="points"
+                                        values="
+0,-12 18,-6 0,0;
+0,-12 14,-5 0,0;
+0,-12 18,-6 0,0"
+                                        dur="0.4s"
+                                        repeatCount="indefinite"
+                                    />
+                                </polygon>
+
+                                <animateMotion
+                                    dur="12s"
+                                    repeatCount="indefinite"
+                                    rotate="auto"
+                                >
+                                    <mpath href="#wariPath" />
+                                </animateMotion>
+                            </g>
+                        </g>
+
+                        <!-- subtle moving glow -->
+
+                        <circle
+                            r="6"
+                            fill="#F39C12"
+                            opacity=".25"
+                            filter="url(#glow)"
+                        >
+                            <animateMotion
+                                dur="12s"
+                                repeatCount="indefinite"
+                                rotate="auto"
+                            >
+                                <mpath href="#wariPath" />
+                            </animateMotion>
+                        </circle>
+                    </svg>
+                </div>
+            </div>
+            <!-- ======================================================
+         DECORATIVE ELEMENTS
+    ====================================================== -->
+
+            <div class="sunrise"></div>
+
+            <div class="cloud cloud1"></div>
+            <div class="cloud cloud2"></div>
+
+            <div class="wari-blessing">
+                <div class="divider"></div>
+
+                <h2>जय हरी विठ्ठल</h2>
+
+                <p>
+                    Our destination is not merely a finished website, but a
+                    digital home that reflects the devotion, service and
+                    compassion of the Wari.
+                </p>
+
+                <div class="divider" style="margin-top: 1rem"></div>
+            </div>
+            <!-- FOOTER -->
+
+            <div class="footer">
+                <div>
+                    <strong>Walking with Devotion.</strong><br />
+
+                    Serving with Compassion.
+                </div>
+
+                <div>Sahyadri Manav Seva Manch Vari Trust</div>
+            </div>
+        </div>
+
+        <style>
+            /* ============================================
+   PAGE FADE
+============================================ */
+
+            body {
+                animation: fade 1.1s ease;
+            }
+
+            @keyframes fade {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: none;
+                }
+            }
+
+            /* ============================================
+   SUNRISE
+============================================ */
+
+            .sunrise {
+                position: absolute;
+
+                top: -180px;
+
+                right: -120px;
+
+                width: 420px;
+
+                height: 420px;
+
+                border-radius: 50%;
+
+                background: radial-gradient(
+                    circle,
+                    rgba(243, 156, 18, 0.18),
+                    rgba(243, 156, 18, 0.06),
+                    transparent 72%
+                );
+
+                pointer-events: none;
+            }
+
+            /* ============================================
+   CLOUDS
+============================================ */
+
+            .cloud {
+                position: absolute;
+
+                background: white;
+
+                opacity: 0.35;
+
+                border-radius: 999px;
+
+                filter: blur(2px);
+            }
+
+            .cloud::before,
+            .cloud::after {
+                content: "";
+
+                position: absolute;
+
+                background: white;
+
+                border-radius: 50%;
+            }
+
+            .cloud1 {
+                top: 80px;
+
+                left: 12%;
+
+                width: 120px;
+
+                height: 34px;
+
+                animation: cloud 24s linear infinite;
+            }
+
+            .cloud1::before {
+                width: 42px;
+
+                height: 42px;
+
+                left: 18px;
+
+                top: -16px;
+            }
+
+            .cloud1::after {
+                width: 54px;
+
+                height: 54px;
+
+                right: 18px;
+
+                top: -22px;
+            }
+
+            .cloud2 {
+                top: 180px;
+
+                right: 12%;
+
+                width: 90px;
+
+                height: 28px;
+
+                animation: cloud 32s linear infinite reverse;
+            }
+
+            .cloud2::before {
+                width: 34px;
+
+                height: 34px;
+
+                left: 14px;
+
+                top: -12px;
+            }
+
+            .cloud2::after {
+                width: 42px;
+
+                height: 42px;
+
+                right: 14px;
+
+                top: -18px;
+            }
+
+            @keyframes cloud {
+                0% {
+                    transform: translateX(0);
+                }
+
+                50% {
+                    transform: translateX(40px);
+                }
+
+                100% {
+                    transform: translateX(0);
+                }
+            }
+
+            /* ============================================
+   BLESSING
+============================================ */
+
+            .wari-blessing {
+                margin-top: 60px;
+
+                text-align: center;
+            }
+
+            .wari-blessing h2 {
+                font-size: 2rem;
+
+                color: #a93200;
+
+                margin: 18px 0;
+
+                font-weight: 900;
+
+                letter-spacing: 0.05em;
+            }
+
+            .wari-blessing p {
+                max-width: 650px;
+
+                margin: auto;
+
+                line-height: 1.9;
+
+                color: #666;
+
+                font-size: 1.05rem;
+            }
+
+            .divider {
+                width: 120px;
+
+                height: 4px;
+
+                margin: auto;
+
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    #f39c12,
+                    #a93200,
+                    #f39c12,
+                    transparent
+                );
+
+                border-radius: 99px;
+            }
+
+            /* ============================================
+   HOVER
+============================================ */
+
+            .route svg {
+                transition: 0.5s;
+            }
+
+            .route:hover svg {
+                transform: scale(1.02);
+            }
+
+            /* ============================================
+   MOBILE
+============================================ */
+
+            @media (max-width: 700px) {
+                .wari-blessing h2 {
+                    font-size: 1.5rem;
+                }
+
+                .wari-blessing p {
+                    font-size: 0.98rem;
+                }
+
+                .sunrise {
+                    width: 260px;
+
+                    height: 260px;
+
+                    top: -90px;
+
+                    right: -80px;
+                }
+            }
+        </style>
+    </body>
+</html>
