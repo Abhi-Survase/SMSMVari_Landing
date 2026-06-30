@@ -39,7 +39,7 @@ export const metadata = {
     siteName: "Sahyadri Manav Seva Manch",
     images: [
       {
-        url: "/initiative.webp", // TODO: create a 1200×630 OG image
+        url: "/og-activities.webp", // TODO: create a 1200×630 OG image
         width: 1200,
         height: 630,
         alt: "Sahyadri Manav Seva Manch volunteers at a medical camp",
@@ -51,7 +51,7 @@ export const metadata = {
     title: "Our Activities | Sahyadri Manav Seva Manch, Thane",
     description:
       "Tribal health camps, disaster relief, school health programmes, and the Aarogyawari pilgrimage service.",
-    images: ["/initiative.webp"],
+    images: ["/og-activities.webp"],
   },
   alternates: { canonical: "https://smsmvari.com/activities" },
 };
@@ -298,7 +298,7 @@ export default function ActivitiesPage() {
               Since 1984
             </Badge>
             <h2 className="font-heading text-3xl md:text-4xl text-[#a93200] font-black uppercase tracking-tight">
-              आरोग्यवारी — The Pandharpur Wari Service
+              Aarogyawari — The Pandharpur Wari Service
             </h2>
             <div className="h-1.5 w-32 bg-[#F39C12] mx-auto mt-4" />
           </div>
@@ -338,6 +338,18 @@ export default function ActivitiesPage() {
                 </p>
               </CardContent>
             </Card>
+          </div>
+
+          <div className="text-center mt-8">
+            <Button
+              asChild
+              variant="outline"
+              className="uppercase font-bold tracking-wide border-[#a93200] text-[#a93200] hover:bg-[#a93200] hover:text-white"
+            >
+              <Link href="/activities/aarogyawari">
+                Learn More About Aarogyawari
+              </Link>
+            </Button>
           </div>
         </div>
       </section>

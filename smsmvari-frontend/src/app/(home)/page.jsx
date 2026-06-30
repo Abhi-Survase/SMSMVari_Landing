@@ -125,7 +125,7 @@ export default function HomePage() {
                     Support the Mission
                   </Button>
                 </Link>
-                <Link href={"/about"}>
+                <Link href={"/activities/aarogyawari"}>
                   <Button
                     variant="secondary"
                     size="lg"
