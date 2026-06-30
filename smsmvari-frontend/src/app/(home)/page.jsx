@@ -189,13 +189,13 @@ export default function HomePage() {
                         deity of Pandharpur, regarded as a form of Krishna.
                       </p>
                       <blockquote className="text-[#333333]/80 leading-relaxed border-l-4 border-[#F39C12] pl-6 italic text-md font-medium">
-                        "This walk is not just an escape from reality for lakhs
+                        This walk is not just an escape from reality for lakhs
                         of people. It is something that keeps them focused and
                         connected to a power bigger than them. People spend 21
                         days on the road withering bad weather with no
                         luxuries... This is not a walk of blind faith, but the
                         Pandharpur Waari is a walk of love and showing respect
-                        to Lord Vitthal."
+                        to Lord Vitthal.
                       </blockquote>
                     </CardContent>
                   </Card>
@@ -278,7 +278,7 @@ export default function HomePage() {
                     </div>
                   </CardHeader>
                   <CardContent className="flex flex-col grow">
-                    <CardDescription className="text-foreground/80 mb-4 flex-grow text-base">
+                    <CardDescription className="text-foreground/80 mb-4 grow text-base">
                       Since 1984, the organization has continuously conducted
                       this Health Pilgrimage Service during Ashadhi Ekadashi. We
                       provide dedicated healthcare and support services for the
@@ -321,8 +321,8 @@ export default function HomePage() {
                       </CardTitle>
                     </div>
                   </CardHeader>
-                  <CardContent className="flex flex-col flex-grow">
-                    <CardDescription className="text-foreground/80 mb-4 flex-grow text-base">
+                  <CardContent className="flex flex-col grow">
+                    <CardDescription className="text-foreground/80 mb-4 grow text-base">
                       Medical camps are set up near Saswad and Phaltan. Our
                       first camp is positioned between Dive Ghat and Saswad to
                       assist pilgrims crossing steep inclines, and we continue
@@ -365,8 +365,8 @@ export default function HomePage() {
                       </CardTitle>
                     </div>
                   </CardHeader>
-                  <CardContent className="flex flex-col flex-grow">
-                    <CardDescription className="text-foreground/80 mb-4 flex-grow text-base">
+                  <CardContent className="flex flex-col grow">
+                    <CardDescription className="text-foreground/80 mb-4 grow text-base">
                       Volunteers provide milk distribution, medical
                       examinations, treatment, and referrals for surgeries. Our
                       dedicated doctors treat conditions such as severe fatigue,
@@ -416,9 +416,9 @@ export default function HomePage() {
                       format_quote
                     </span>
                     <p className="italic text-secondary font-semibold text-lg leading-snug">
-                      "Service to those in need is service to the divine. We
+                      Service to those in need is service to the divine. We
                       strive to provide the highest standard of care wherever
-                      our communities need us most."
+                      our communities need us most.
                     </p>
                   </div>
                 </div>
@@ -426,12 +426,14 @@ export default function HomePage() {
                 <div className="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Trustee 1 */}
                   <Card className="flex flex-col border-t-4 border-t-primary shadow-md border-x-border border-b-border bg-white">
-                    <CardContent className="p-6 pt-8 flex-grow">
+                    <CardContent className="p-6 pt-8 grow">
                       <div className="flex items-start gap-4">
                         <div className="w-20 h-20 bg-muted rounded-full overflow-hidden border-2 border-secondary shrink-0">
-                          <img
+                          <Image
                             src="/cmo_image.webp"
                             alt="Dr. Anjali Deshmukh"
+                            width={256}
+                            height={256}
                             className="w-full h-full object-cover"
                           />
                         </div>
@@ -456,12 +458,14 @@ export default function HomePage() {
 
                   {/* Trustee 2 */}
                   <Card className="flex flex-col border-t-4 border-t-primary shadow-md border-x-border border-b-border bg-white">
-                    <CardContent className="p-6 pt-8 flex-grow">
+                    <CardContent className="p-6 pt-8 grow">
                       <div className="flex items-start gap-4">
                         <div className="w-20 h-20 bg-muted rounded-full overflow-hidden border-2 border-secondary shrink-0">
-                          <img
+                          <Image
                             src="/log-head_image.webp"
                             alt="Mr. Prakash Patil"
+                            width={256}
+                            height={256}
                             className="w-full h-full object-cover"
                           />
                         </div>
