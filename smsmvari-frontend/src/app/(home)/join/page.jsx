@@ -1,9 +1,9 @@
 // app/(home)/join/page.jsx
 // Server component — exports metadata; interactive form is in ./JoinForm.jsx
 
-// import JoinForm from "./JoinForm";
-import ContactForm from "./ContactForm";
+import JoinForm from "./JoinForm";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export const metadata = {
   title: "Join Us | Sahyadri Manav Seva Manch, Thane",
@@ -250,10 +250,34 @@ export default function JoinUsPage() {
               Sign Up to Volunteer
             </h2>
             <div className="h-1 w-16 bg-primary rounded-full mb-6" />
-            {/* <JoinForm />*/}
-            <ContactForm />
+            <JoinForm />
           </div>
         </div>
+      </section>
+
+      {/* Prefer to donate instead? */}
+      <section className="py-14 px-4 md:px-8 bg-secondary text-white text-center border-t-4 border-primary">
+        <span
+          className="material-symbols-outlined text-primary text-4xl mb-4 inline-block"
+          style={{ fontVariationSettings: "'FILL' 1" }}
+        >
+          favorite
+        </span>
+        <h2 className="font-heading text-3xl font-black uppercase tracking-tight mb-4">
+          Prefer to Support Us Financially?
+        </h2>
+        <p className="text-white/80 max-w-xl mx-auto mb-8 font-medium">
+          Not everyone can volunteer their time, and that's alright. Your
+          donation directly funds medical camps, supplies, and emergency relief
+          for the communities who need it most.
+        </p>
+        <Button
+          asChild
+          size="lg"
+          className="uppercase font-bold tracking-wide border-b-4 border-b-primary/50 active:border-b-0 active:translate-y-1"
+        >
+          <Link href="/donate">Donate Now</Link>
+        </Button>
       </section>
     </>
   );
