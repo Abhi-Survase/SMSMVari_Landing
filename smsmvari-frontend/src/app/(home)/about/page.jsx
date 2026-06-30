@@ -9,18 +9,21 @@ import { Button } from "@/components/ui/button";
 export const metadata = {
   title: "About Us | SMSM Vari – Sahyadri Manav Seva Manch Vari Trust",
   description:
-    "Learn about Sahyadri Manav Seva Manch Vari Trust — our mission to provide free medical care, wound management, and emergency response to Varkaris during the Pandharpur Wari.",
+    "Learn about Sahyadri Manav Seva Manch Vari Trust — providing free medical care to remote tribal villages, disaster-affected communities, and pilgrims across Maharashtra since 1984.",
   keywords: [
     "Sahyadri Manav Seva Manch Vari Trust",
     "SMSM Vari about",
     "Pandharpur Wari NGO",
-    "Varkari medical trust Maharashtra",
-    "Wari healthcare organisation",
+    "remote tribal healthcare Maharashtra",
+    "free medical camps Maharashtra",
+    "disaster relief Maharashtra NGO",
+    "Varkari medical trust",
+    "rural healthcare Maharashtra",
   ],
   openGraph: {
-    title: "About SMSM Vari – Serving Varkaris Since Our Founding",
+    title: "About SMSM Vari – Healthcare Without Boundaries",
     description:
-      "We set up medical camps, wound-care stations, and ambulance units along the 250 km Pandharpur Wari route every Aashad Ekadashi.",
+      "We bring free medical care to remote tribal villages, disaster zones, and pilgrimage routes across Maharashtra — wherever people need it and no one else reaches.",
     type: "website",
     url: "https://smsmvari.org/about",
     siteName: "SMSM Vari",
@@ -35,9 +38,9 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "About SMSM Vari – Serving Varkaris Since Our Founding",
+    title: "About SMSM Vari – Healthcare Without Boundaries",
     description:
-      "We set up medical camps, wound-care stations, and ambulance units along the 250 km Pandharpur Wari route every Aashad Ekadashi.",
+      "Free medical care for remote tribal villages, disaster-affected communities, and pilgrims across Maharashtra. Serving since 1984.",
     images: ["/og-about.webp"],
   },
   alternates: { canonical: "https://smsmvari.org/about" },
@@ -71,25 +74,25 @@ const values = [
     icon: "volunteer_activism",
     title: "Seva First",
     description:
-      "Every decision is guided by one principle: serve the devotee. We place no condition on the care we provide.",
+      "Every decision begins with one question: what does this person need right now? We place no condition — geographic, financial, or otherwise — on the care we provide.",
   },
   {
     icon: "verified",
     title: "Medical Excellence",
     description:
-      "Trained doctors, nurses, and paramedics deliver standardised protocols, not ad-hoc help.",
+      "Trained doctors, nurses, and paramedics deliver standardised protocols whether we are at a pilgrimage camp, a flood relief site, or a tribal health camp deep in the hills.",
   },
   {
     icon: "groups",
     title: "Community Driven",
     description:
-      "Our volunteers are drawn from local communities who walk alongside the Varkaris they serve.",
+      "Our volunteers are local — they speak the language, know the terrain, and often share the hardship of those they serve. This is not charity from a distance.",
   },
   {
     icon: "transparency",
     title: "Transparency",
     description:
-      "Every donation is accounted for. We publish yearly impact reports so you can see exactly where your support goes.",
+      "Every donation is accounted for. We publish yearly impact reports so you can see exactly where your support goes — whether it bought medicines or fuel for an ambulance.",
   },
 ];
 
@@ -105,16 +108,28 @@ export default function AboutUsPage() {
       <section className="bg-secondary text-white py-16 px-4 md:px-8 border-b-4 border-primary">
         <div className="max-w-3xl mx-auto text-center">
           <Badge className="mb-4 bg-primary/20 text-primary border-primary/30 uppercase tracking-widest text-xs">
-            Our Story
+            Since 1984
           </Badge>
-          <h1 className="font-heading text-4xl md:text-5xl font-black uppercase tracking-tight mb-6">
+          <h1 className="font-heading text-4xl md:text-5xl font-black uppercase tracking-tight mb-3">
             About SMSM Vari
           </h1>
+          {/* Sub-tagline — feel free to pick one or rotate these:
+              "Healthcare Without Boundaries"
+              "Healing Where Help Doesn't Reach"
+              "Medicine for the Many, Care for All"
+              "Serving Maharashtra's Unreached"
+              "Beyond the Wari — Healthcare at Every Step"
+          */}
+          <p className="text-primary font-bold uppercase tracking-widest text-sm mb-6">
+            Healthcare Without Boundaries
+          </p>
           <p className="text-white/80 text-lg font-medium leading-relaxed">
-            Sahyadri Manav Seva Manch Vari Trust was born from a simple
-            conviction: that every Varkari who undertakes the sacred 250 km
-            Pandharpur Wari deserves access to dignified, professional medical
-            care — free of charge.
+            Sahyadri Manav Seva Manch Vari Trust was founded on a single
+            conviction: that geography should never be a barrier to dignified
+            medical care. We carry healthcare into Maharashtra's most
+            underserved spaces — remote tribal villages, disaster-affected
+            communities, rural fair grounds, and pilgrimage routes — wherever
+            people have the least access and need it most.
           </p>
         </div>
       </section>
@@ -128,17 +143,21 @@ export default function AboutUsPage() {
             </h2>
             <div className="h-1 w-20 bg-primary mb-6 rounded-full" />
             <p className="text-foreground/80 font-medium leading-relaxed mb-4">
-              {/* TODO: replace with actual mission statement from the trust */}
-              We mobilise medical professionals, trained volunteers, and
-              essential supplies to set up camps at key points along the Wari
-              route every Aashad Ekadashi. From basic first aid and wound care
-              for bare feet to emergency ambulance response, our teams are
-              present wherever the procession walks.
+              We mobilise doctors, nurses, trained volunteers, and essential
+              supplies to bring healthcare to places the system rarely reaches.
+              From wound-care stations along pilgrimage routes to health camps
+              in remote tribal belts and emergency response during floods and
+              disasters — our teams go wherever there is need and no one else
+              going.
             </p>
             <p className="text-foreground/80 font-medium leading-relaxed">
-              The Wari is not just a pilgrimage — it is a 21-day act of devotion
-              in gruelling conditions. We exist so that no Varkari has to choose
-              between faith and health.
+              Our founding programme — the Pandharpur Aarogyawari — has provided
+              free medical care to thousands of Varkaris every Aashad Ekadashi
+              since 1984. But our work extends well beyond the Wari: year-round
+              health camps in tribal villages, disaster relief medical units,
+              and medical support at regional fairs and pilgrimages across
+              Maharashtra. Wherever communities are underserved, that is where
+              we belong.
             </p>
           </div>
           <div className="bg-muted rounded-xl overflow-hidden border border-border aspect-video">
@@ -163,32 +182,39 @@ export default function AboutUsPage() {
             <div className="h-1 w-24 bg-primary mt-3 mx-auto rounded-full" />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((v) => (
-              <Card
-                key={v.title}
-                className="border-t-4 border-t-primary hover:shadow-md transition-shadow"
-              >
-                <CardContent className="pt-8 pb-6 px-6">
-                  <span
-                    className="material-symbols-outlined text-primary text-4xl mb-4 block"
-                    style={{ fontVariationSettings: "'FILL' 1" }}
-                  >
-                    {v.icon}
-                  </span>
-                  <h3 className="font-heading text-lg font-black text-secondary mb-2 uppercase tracking-tight">
-                    {v.title}
-                  </h3>
-                  <p className="text-sm text-foreground/80 font-medium leading-relaxed">
-                    {v.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
+            {values.map((v) => {
+              const isMedical = v.title === "Medical Excellence";
+              return (
+                <Card
+                  key={v.title}
+                  className={`border-t-4 hover:shadow-md transition-shadow ${
+                    isMedical ? "border-t-brand-blue" : "border-t-primary"
+                  }`}
+                >
+                  <CardContent className="pt-8 pb-6 px-6">
+                    <span
+                      className={`material-symbols-outlined text-4xl mb-4 block ${
+                        isMedical ? "text-brand-blue" : "text-primary"
+                      }`}
+                      style={{ fontVariationSettings: "'FILL' 1" }}
+                    >
+                      {v.icon}
+                    </span>
+                    <h3 className="font-heading text-lg font-black text-secondary mb-2 uppercase tracking-tight">
+                      {v.title}
+                    </h3>
+                    <p className="text-sm text-foreground/80 font-medium leading-relaxed">
+                      {v.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Leadership — reused from homepage, centralised here for the About page */}
+      {/* Leadership — Trustees get full cards, Members get compact cards */}
       <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="font-heading text-3xl md:text-4xl text-primary font-black uppercase tracking-tight">
@@ -196,19 +222,35 @@ export default function AboutUsPage() {
           </h2>
           <div className="h-1 w-24 bg-primary mt-3 mx-auto rounded-full" />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+
+        {/* Trustees — full cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
           {[
             {
               name: "Dr. Anjali Deshmukh",
               role: "Managing Trustee & CMO",
-              bio: "With over 25 years of experience in public health, Dr. Deshmukh coordinates the entire medical strategy for the Wari route, ensuring standardised care protocols across all camps.",
+              bio: "With over 25 years of experience in public health, Dr. Deshmukh coordinates the entire medical strategy across all camps, ensuring standardised care protocols wherever our teams operate.",
               img: "/cmo_image.webp",
             },
             {
               name: "Mr. Prakash Patil",
               role: "Trustee & Logistics Head",
-              bio: "A veteran in large-scale event management, Mr. Patil oversees the complex logistics of setting up mobile camps, supply chains, and volunteer deployment across the 250 km stretch.",
+              bio: "A veteran in large-scale event management, Mr. Patil oversees the complex logistics of setting up mobile camps, supply chains, and volunteer deployment across every region we serve.",
               img: "/log-head_image.webp",
+            },
+            {
+              // TODO: confirm name, role, and bio with the trust
+              name: "Trustee Name 3",
+              role: "Trustee & [Designation]",
+              bio: "Brief bio describing this trustee's background, responsibilities, and contribution to the trust's work.",
+              img: "/trustee3_image.webp",
+            },
+            {
+              // TODO: confirm name, role, and bio with the trust
+              name: "Trustee Name 4",
+              role: "Trustee & [Designation]",
+              bio: "Brief bio describing this trustee's background, responsibilities, and contribution to the trust's work.",
+              img: "/trustee4_image.webp",
             },
           ].map((person) => (
             <Card
@@ -228,7 +270,7 @@ export default function AboutUsPage() {
                     <h3 className="font-heading text-xl text-secondary font-bold">
                       {person.name}
                     </h3>
-                    <p className="text-xs text-primary font-bold uppercase tracking-wider mt-1">
+                    <p className="text-xs text-brand-blue font-bold uppercase tracking-wider mt-1">
                       {person.role}
                     </p>
                   </div>
@@ -240,6 +282,74 @@ export default function AboutUsPage() {
             </Card>
           ))}
         </div>
+
+        {/* Members — compact cards */}
+        <div className="text-center mb-8">
+          <h3 className="font-heading text-xl md:text-2xl text-secondary font-black uppercase tracking-tight">
+            Our Members
+          </h3>
+          <div className="h-1 w-16 bg-primary mt-2 mx-auto rounded-full" />
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-5xl mx-auto">
+          {[
+            // TODO: confirm names and designations with the trust
+            { name: "Member Name 1", role: "Designation" },
+            { name: "Member Name 2", role: "Designation" },
+            { name: "Member Name 3", role: "Designation" },
+            { name: "Member Name 4", role: "Designation" },
+            { name: "Member Name 5", role: "Designation" },
+            { name: "Member Name 6", role: "Designation" },
+          ].map((person) => (
+            <Card
+              key={person.name}
+              className="border-t-2 border-t-brand-blue text-center"
+            >
+              <CardContent className="p-4">
+                <h4 className="font-heading text-sm text-secondary font-bold leading-snug">
+                  {person.name}
+                </h4>
+                <p className="text-[10px] text-brand-blue font-bold uppercase tracking-wider mt-1">
+                  {person.role}
+                </p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+        {/* 6 Members Grid - Compact Cards */}
+        {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+          {[
+            { name: "[Member Name 1]", role: "Executive Member" },
+            { name: "[Member Name 2]", role: "Executive Member" },
+            { name: "[Member Name 3]", role: "Executive Member" },
+            { name: "[Member Name 4]", role: "Executive Member" },
+            { name: "[Member Name 5]", role: "Executive Member" },
+            { name: "[Member Name 6]", role: "Executive Member" },
+          ].map((member) => (
+            <Card
+              key={member.name}
+              className="border-l-4 border-l-secondary shadow-sm hover:shadow-md transition-shadow"
+            >
+              <CardContent className="p-4 flex items-center gap-4">
+                <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center shrink-0 border border-border">
+                  <span
+                    className="material-symbols-outlined text-muted-foreground"
+                    style={{ fontVariationSettings: "'FILL' 1" }}
+                  >
+                    person
+                  </span>
+                </div>
+                <div>
+                  <h4 className="font-heading text-lg text-secondary font-bold leading-tight">
+                    {member.name}
+                  </h4>
+                  <p className="text-xs text-foreground/70 font-bold uppercase tracking-wider mt-0.5">
+                    {member.role}
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>*/}
       </section>
 
       {/* CTA */}
@@ -249,7 +359,8 @@ export default function AboutUsPage() {
         </h2>
         <p className="text-white/80 max-w-xl mx-auto mb-8 font-medium">
           Whether you donate, volunteer, or simply spread the word — every act
-          of support keeps a Varkari safe on their sacred journey.
+          of support helps us reach one more village, one more patient, one more
+          person who needs care and has nowhere else to turn.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <Button
