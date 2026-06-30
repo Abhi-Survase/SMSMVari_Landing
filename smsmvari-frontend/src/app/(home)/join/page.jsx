@@ -1,53 +1,58 @@
-// app/(home)/contact/page.jsx
-// Server component — exports metadata; interactive form is in ./ContactForm.jsx
+// app/(home)/join/page.jsx
+// Server component — exports metadata; interactive form is in ./JoinForm.jsx
 
+// import JoinForm from "./JoinForm";
 import ContactForm from "./ContactForm";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Contact Us | Sahyadri Manav Seva Manch, Thane",
+  title: "Join Us | Sahyadri Manav Seva Manch, Thane",
   description:
-    "Reach out to Sahyadri Manav Seva Manch, Thane. Contact us to volunteer, support our medical camps, or get involved in our work across Thane, tribal villages, and the annual Aarogyawari pilgrimage service.",
+    "Volunteer with Sahyadri Manav Seva Manch, Thane. Join our doctors, nurses, and volunteers serving tribal villages, disaster-affected communities, and pilgrims across Maharashtra.",
   keywords: [
-    "contact Sahyadri Manav Seva Manch",
-    "SMSM Thane contact",
+    "volunteer Sahyadri Manav Seva Manch",
+    "join SMSM Thane",
     "Aarogyawari volunteer",
-    "Devbandh medical camp contact",
-    "tribal health camp Thane NGO",
+    "Devbandh medical camp volunteer",
+    "tribal health camp volunteer Maharashtra",
+    "medical volunteer NGO Thane",
   ],
   openGraph: {
-    title: "Contact Sahyadri Manav Seva Manch – Get in Touch",
+    title: "Join Sahyadri Manav Seva Manch – Become a Volunteer",
     description:
-      "Questions, donations, or volunteering — we would love to hear from you.",
+      "Doctors, nurses, students, and dedicated citizens — there is a place for you in our work across Maharashtra.",
     type: "website",
-    url: "https://smsmvari.org/contact",
+    url: "https://smsmvari.org/join",
     siteName: "Sahyadri Manav Seva Manch",
     images: [
       {
-        url: "/og-contact.webp",
+        url: "/og-join.webp", // TODO: create a 1200×630 OG image
         width: 1200,
         height: 630,
-        alt: "Sahyadri Manav Seva Manch contact",
+        alt: "Sahyadri Manav Seva Manch volunteers at a medical camp",
       },
     ],
   },
   twitter: {
     card: "summary",
-    title: "Contact Sahyadri Manav Seva Manch – Get in Touch",
+    title: "Join Sahyadri Manav Seva Manch – Become a Volunteer",
     description:
-      "Questions, donations, or volunteering — we would love to hear from you.",
+      "Doctors, nurses, students, and dedicated citizens — there is a place for you in our work across Maharashtra.",
   },
-  alternates: { canonical: "https://smsmvari.org/contact" },
+  alternates: { canonical: "https://smsmvari.org/join" },
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "ContactPage",
-  name: "Contact Sahyadri Manav Seva Manch",
-  url: "https://smsmvari.org/contact",
-  mainEntity: {
+  "@type": "WebPage",
+  name: "Join Sahyadri Manav Seva Manch",
+  description:
+    "Volunteer sign-up page for Sahyadri Manav Seva Manch, Thane — covering tribal health camps, disaster relief, school programmes, and the Aarogyawari pilgrimage service.",
+  url: "https://smsmvari.org/join",
+  about: {
     "@type": "NGO",
     name: "Sahyadri Manav Seva Manch, Thane",
+    alternateName: "SMSM Vari",
     // TODO: confirm registered phone number with the trust
     telephone: "+912186235550",
     // TODO: confirm official email address with the trust
@@ -88,7 +93,28 @@ const contactDetails = [
   },
 ];
 
-export default function ContactUsPage() {
+const waysToHelp = [
+  {
+    icon: "medical_services",
+    title: "Medical Professionals",
+    description:
+      "Doctors, nurses, and paramedics lend their skills at camps in Devbandh, disaster sites, and along the Wari route.",
+  },
+  {
+    icon: "groups",
+    title: "Field Volunteers",
+    description:
+      "Help with camp logistics, supply distribution, registration, and on-ground coordination — no medical background required.",
+  },
+  {
+    icon: "school",
+    title: "Education & Outreach",
+    description:
+      "Support school health check-ups, awareness lectures, and the distribution of uniforms and learning materials.",
+  },
+];
+
+export default function JoinUsPage() {
   return (
     <>
       <script
@@ -100,24 +126,57 @@ export default function ContactUsPage() {
       <section className="bg-secondary text-white py-16 px-4 md:px-8 border-b-4 border-primary">
         <div className="max-w-2xl mx-auto text-center">
           <h1 className="font-heading text-4xl md:text-5xl font-black uppercase tracking-tight mb-4">
-            Get in Touch
+            Join Us
           </h1>
           <p className="text-white/80 text-lg font-medium leading-relaxed">
-            Whether you want to volunteer at a tribal health camp, support
-            Aarogyawari, donate supplies, or simply learn more about our work —
-            we would love to hear from you.
+            Doctors, nurses, students, and dedicated citizens — every camp we
+            run depends on people who choose to show up. There's a place for you
+            here.
           </p>
         </div>
       </section>
 
-      {/* Two-column layout: contact info + form */}
+      {/* Ways to help */}
+      <section className="py-14 px-4 md:px-8 bg-muted/30 border-b border-border">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="font-heading text-2xl md:text-3xl text-primary font-black uppercase tracking-tight">
+              Ways to Help
+            </h2>
+            <div className="h-1 w-16 bg-primary mt-3 mx-auto rounded-full" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {waysToHelp.map(({ icon, title, description }) => (
+              <div
+                key={title}
+                className="bg-card rounded-lg border border-border p-6 text-center"
+              >
+                <span
+                  className="material-symbols-outlined text-primary text-4xl mb-3 block"
+                  style={{ fontVariationSettings: "'FILL' 1" }}
+                >
+                  {icon}
+                </span>
+                <h3 className="font-heading text-lg font-black text-secondary mb-2 uppercase tracking-tight">
+                  {title}
+                </h3>
+                <p className="text-sm text-foreground/80 font-medium leading-relaxed">
+                  {description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Two-column layout: contact info + sign-up form */}
       <section className="py-16 px-4 md:px-8">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-12">
           {/* Contact info — 2 of 5 columns */}
           <aside className="lg:col-span-2 flex flex-col gap-8">
             <div>
               <h2 className="font-heading text-2xl text-primary font-black uppercase tracking-tight mb-2">
-                Contact Details
+                Reach Us Directly
               </h2>
               <div className="h-1 w-16 bg-primary rounded-full mb-6" />
               <ul className="space-y-5">
@@ -160,11 +219,10 @@ export default function ContactUsPage() {
                 During Aarogyawari (Ashadhi Ekadashi)
               </p>
               <p className="text-sm text-foreground/80 font-medium leading-relaxed mb-2">
-                Every year, our teams set up medical camps along the
-                Alandi–Pandharpur pilgrimage route, with key camps near Dive
-                Ghat, Saswad, Phaltan, and Natepute. During this period our core
-                team is deployed on the route and response times for other
-                enquiries may be longer.
+                Our teams set up medical camps along the Alandi–Pandharpur
+                pilgrimage route, with key camps near Dive Ghat, Saswad,
+                Phaltan, and Natepute. This is one of our biggest annual
+                opportunities for volunteers.
               </p>
               <p className="text-sm text-foreground/80 font-medium leading-relaxed">
                 For medical emergencies on the route during the pilgrimage,
@@ -181,17 +239,18 @@ export default function ContactUsPage() {
                 Outside of the pilgrimage season, our office in Thane
                 coordinates tribal health camps in Devbandh, school health
                 programmes, and disaster relief efforts across Maharashtra.
-                Reach out anytime to volunteer or get involved.
+                Volunteers are welcome year-round.
               </p>
             </div>
           </aside>
 
-          {/* Contact form — 3 of 5 columns */}
+          {/* Sign-up form — 3 of 5 columns */}
           <div className="lg:col-span-3">
             <h2 className="font-heading text-2xl text-primary font-black uppercase tracking-tight mb-2">
-              Send Us a Message
+              Sign Up to Volunteer
             </h2>
             <div className="h-1 w-16 bg-primary rounded-full mb-6" />
+            {/* <JoinForm />*/}
             <ContactForm />
           </div>
         </div>

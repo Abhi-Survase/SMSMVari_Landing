@@ -7,7 +7,7 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Route, CalendarDays } from "lucide-react";
+import { Route, CalendarDays, MoveRight } from "lucide-react";
 import QrSection from "@/components/QrSection";
 import Image from "next/image";
 import Link from "next/link";
@@ -237,14 +237,21 @@ export default function HomePage() {
                   </h2>
                   <div className="h-1 w-24 bg-primary mt-2 rounded-full"></div>
                 </div>
+
                 <Button
+                  asChild
                   variant="link"
                   className="text-primary font-bold uppercase tracking-wide px-0 mt-4 md:mt-0 group"
                 >
-                  View All Services{" "}
-                  <span className="material-symbols-outlined ml-1 group-hover:translate-x-1 transition-transform">
-                    arrow_forward
-                  </span>
+                  <Link href="/activities">
+                    <span className="group-hover:underline">
+                      View All Services
+                    </span>{" "}
+                    <MoveRight
+                      strokeWidth={3}
+                      className="ml-1 group-hover:translate-x-1 transition-transform"
+                    />
+                  </Link>
                 </Button>
               </div>
 
