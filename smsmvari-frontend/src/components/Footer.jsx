@@ -114,7 +114,7 @@ export default function Footer() {
             <span className="material-symbols-outlined text-sm mt-0.5">
               location_on
             </span>
-            <span>Main Road, Chouphala, Pandharpur, Maharashtra 4133</span>
+            <span>Thane, Maharashtra 400601</span>
           </div>
           <div className="flex items-center gap-2 text-muted-foreground text-sm mt-1">
             <span className="material-symbols-outlined text-sm">call</span>
