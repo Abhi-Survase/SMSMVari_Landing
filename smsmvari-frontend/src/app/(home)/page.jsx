@@ -13,24 +13,25 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
-  title: "SMSM Vari – Walking with Devotion, Serving with Compassion",
+  title: "Sahyadri Manav Seva Manch – Healthcare Without Boundaries",
   description:
-    "Sahyadri Manav Seva Manch Vari Trust provides essential medical care, wound management, and emergency response to Varkaris during the sacred 250 km Pandharpur Wari.",
+    "Sahyadri Manav Seva Manch, Thane provides free medical care to remote tribal villages, disaster-affected communities, and pilgrims across Maharashtra — including the annual Aarogyawari service during the Pandharpur Wari.",
   keywords: [
+    "Sahyadri Manav Seva Manch",
+    "tribal health camp Maharashtra",
+    "disaster relief NGO Maharashtra",
     "Pandharpur Wari medical camp",
+    "Aarogyawari",
     "Varkari healthcare",
     "SMSM Vari",
-    "Sahyadri Manav Seva Manch Vari Trust",
-    "Wari volunteer medical",
-    "Pandharpur pilgrimage medical aid",
   ],
   openGraph: {
-    title: "SMSM Vari – Medical Aid for the Pandharpur Wari",
+    title: "Sahyadri Manav Seva Manch – Healthcare Without Boundaries",
     description:
-      "Providing essential healthcare to thousands of devoted Varkaris walking 250 km to Pandharpur during the sacred Aashad Ekadashi Wari.",
+      "Free medical care for remote tribal villages, disaster-affected communities, and pilgrims across Maharashtra since 1982.",
     type: "website",
     url: "https://smsmvari.com", // TODO: replace with your real domain
-    siteName: "SMSM Vari",
+    siteName: "Sahyadri Manav Seva Manch",
     images: [
       {
         url: "/camp_services.webp", // TODO: create a 1200×630 OG image
@@ -42,9 +43,9 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "SMSM Vari – Medical Aid for the Pandharpur Wari",
+    title: "Sahyadri Manav Seva Manch – Healthcare Without Boundaries",
     description:
-      "Providing essential healthcare to thousands of devoted Varkaris walking 250 km to Pandharpur.",
+      "Free medical care for remote tribal villages, disaster-affected communities, and pilgrims across Maharashtra since 1982.",
     images: ["/medical_camps.webp"],
   },
   alternates: { canonical: "https://smsmvari.com" },
@@ -53,22 +54,27 @@ export const metadata = {
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "NGO",
-  name: "Sahyadri Manav Seva Manch Vari Trust",
+  name: "Sahyadri Manav Seva Manch, Thane",
   alternateName: "SMSM Vari",
   url: "https://smsmvari.com",
   description:
-    "Providing essential medical care, wound management, and emergency response to Varkaris during the sacred Pandharpur Wari.",
+    "Providing free medical care to remote tribal villages, disaster-affected communities, and pilgrims across Maharashtra since 1982, including the annual Aarogyawari service during the Pandharpur Wari.",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Main Road, Chouphala",
-    addressLocality: "Pandharpur",
+    // TODO: confirm exact HQ street address in Thane with the trust
+    streetAddress: "[Office Address], Thane",
+    addressLocality: "Thane",
     addressRegion: "Maharashtra",
-    postalCode: "413304",
+    postalCode: "400601",
     addressCountry: "IN",
   },
+  // TODO: confirm registered phone number with the trust
   telephone: "+912186235550",
   areaServed: "Maharashtra, India",
   knowsAbout: [
+    "Tribal healthcare",
+    "Disaster relief medical aid",
+    "School health camps",
     "Pandharpur Wari",
     "Varkari pilgrimage",
     "Emergency medical care",
@@ -399,7 +405,8 @@ export default function HomePage() {
                   <p className="text-[#333333]/80 mb-6 font-medium">
                     Guided by steadfast devotion and professional excellence,
                     our trustees ensure that every donation translates directly
-                    into impactful medical aid for the Varkaris.
+                    into impactful medical aid — for tribal villages,
+                    disaster-affected communities, and Varkaris alike.
                   </p>
                   <div className="bg-white/60 backdrop-blur-sm p-6 rounded-lg border-l-4 border-l-primary shadow-sm">
                     <span
@@ -409,9 +416,9 @@ export default function HomePage() {
                       format_quote
                     </span>
                     <p className="italic text-secondary font-semibold text-lg leading-snug">
-                      "Service to the devotees is service to the divine. We
-                      strive to provide the highest standard of care on this
-                      sacred journey."
+                      "Service to those in need is service to the divine. We
+                      strive to provide the highest standard of care wherever
+                      our communities need us most."
                     </p>
                   </div>
                 </div>
@@ -439,9 +446,10 @@ export default function HomePage() {
                       </div>
                       <p className="text-sm text-[#333333]/80 mt-6 font-medium leading-relaxed">
                         With over 25 years of experience in public health, Dr.
-                        Deshmukh coordinates the entire medical strategy for the
-                        Wari route, ensuring standardized care protocols across
-                        all camps.
+                        Deshmukh coordinates the organisation's entire medical
+                        strategy, ensuring standardised care protocols across
+                        tribal health camps, disaster relief efforts, and the
+                        annual Aarogyawari pilgrimage service.
                       </p>
                     </CardContent>
                   </Card>
@@ -470,7 +478,8 @@ export default function HomePage() {
                         A veteran in large-scale event management, Mr. Patil
                         oversees the complex logistics of setting up mobile
                         camps, supply chains, and volunteer deployment across
-                        the 250km stretch.
+                        every region the organisation serves — from remote
+                        tribal villages to the 250 km Wari route.
                       </p>
                     </CardContent>
                   </Card>

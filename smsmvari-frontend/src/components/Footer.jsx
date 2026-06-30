@@ -10,8 +10,9 @@ export default function Footer() {
             SMSM Vari
           </div>
           <p className="text-sm text-muted-foreground max-w-xs">
-            Committed to providing medical aid and support to the devoted
-            Varkaris during the sacred Pandharpur Wari.
+            Providing free medical care to remote tribal villages,
+            disaster-affected communities, and devoted Varkaris during the
+            sacred Pandharpur Wari — wherever care is needed most.
           </p>
 
           {/* Donation QR Card */}
@@ -111,7 +112,7 @@ export default function Footer() {
             Reach Us
           </h5>
           <div className="flex items-start gap-2 text-muted-foreground text-sm">
-            <span className="material-symbols-outlined text-sm mt-0.5">
+            <span className="material-symbols-outlined text-sm mt-0.5 text-brand-blue">
               location_on
             </span>
             <span>Thane, Maharashtra 400601</span>
@@ -130,7 +131,7 @@ export default function Footer() {
             Healing.
           </p>
           <div className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
-            Organized By Sahyadri Manav Seva Manch Vari Trust
+            Organized By Sahyadri Manav Seva Manch, Thane
           </div>
         </div>
       </div>
