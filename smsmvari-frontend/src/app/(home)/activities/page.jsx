@@ -158,12 +158,19 @@ export default function ActivitiesPage() {
       />
 
       {/* Page Hero */}
-      <section className="bg-secondary text-white py-16 px-4 md:px-8 border-b-4 border-primary">
-        <div className="max-w-3xl mx-auto text-center">
+      <section className="relative py-16 px-4 md:px-8 border-b-4 border-primary overflow-hidden">
+        {/* Stock placeholder — replace with a real SMSM photo */}
+        <img
+          src="https://images.unsplash.com/photo-1717820775574-bc200d22ce40?fm=jpg&q=80&w=2000&auto=format&fit=crop"
+          alt="Aerial view of a remote village in the mountains"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-secondary/90" />
+        <div className="max-w-3xl mx-auto text-center relative z-10">
           <Badge className="mb-4 bg-primary/20 text-primary border-primary/30 uppercase tracking-widest text-xs">
             Since 1982
           </Badge>
-          <h1 className="font-heading text-4xl md:text-5xl font-black uppercase tracking-tight mb-6">
+          <h1 className="font-heading text-4xl md:text-5xl font-black uppercase tracking-tight mb-6 text-white">
             Our Activities
           </h1>
           <p className="text-white/80 text-lg font-medium leading-relaxed">
@@ -185,6 +192,14 @@ export default function ActivitiesPage() {
             Year-round, our doctors and volunteers carry healthcare into
             villages that the system rarely reaches.
           </p>
+        </div>
+        <div className="rounded-xl overflow-hidden border border-border mb-8 h-56 md:h-72">
+          {/* Stock placeholder — replace with a real SMSM photo of Devbandh camps */}
+          <img
+            src="https://images.unsplash.com/photo-1641465756589-dc84610af2d1?fm=jpg&q=80&w=2000&auto=format&fit=crop"
+            alt="A man standing in a rural field, representing the tribal villages we serve"
+            className="w-full h-full object-cover"
+          />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {tribalCamps.map((item) => (
@@ -223,6 +238,14 @@ export default function ActivitiesPage() {
               emergency medical care to affected communities.
             </p>
           </div>
+          <div className="rounded-xl overflow-hidden border border-border mb-8 h-56 md:h-72 bg-muted">
+            {/* TODO: replace with a real SMSM disaster relief photo */}
+            <img
+              src="/activities-disaster-relief.webp"
+              alt="Medical volunteers providing emergency aid to a disaster-affected community"
+              className="w-full h-full object-cover"
+            />
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {disasterRelief.map((item) => (
               <Card
@@ -258,6 +281,14 @@ export default function ActivitiesPage() {
           <p className="text-foreground/80 font-medium leading-relaxed max-w-2xl mx-auto mt-4">
             Healthcare and education go hand in hand — we invest in both.
           </p>
+        </div>
+        <div className="rounded-xl overflow-hidden border border-border mb-8 h-56 md:h-72">
+          {/* Stock placeholder — replace with a real SMSM school programme photo */}
+          <img
+            src="https://images.unsplash.com/photo-1673146416489-98c2e139f680?fm=jpg&q=80&w=2000&auto=format&fit=crop"
+            alt="A group of people gathered outside a school building"
+            className="w-full h-full object-cover"
+          />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {educationInitiatives.map((item) => (

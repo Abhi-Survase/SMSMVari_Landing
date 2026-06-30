@@ -108,6 +108,7 @@ const routePoints = [
     icon: Mountain,
     title: "Dive Ghat – Saswad",
     tag: "First Camp",
+    image: "/aarogyawari-divegaht.webp", // TODO: replace with a real SMSM photo
     description:
       "One of the most physically demanding stretches of the entire pilgrimage. Pilgrims cross steep inclines during the heat of the day, and the added physical strain creates the greatest need for medical assistance on the route. Our first camp is set up here to meet that need head-on.",
   },
@@ -115,6 +116,7 @@ const routePoints = [
     icon: MapPin,
     title: "Saswad & Phaltan",
     tag: "Core Camps",
+    image: "/aarogyawari-saswad-phaltan.webp", // TODO: replace with a real SMSM photo
     description:
       "Our dedicated medical camps near Saswad and Phaltan are where most pilgrims receive milk distribution, examinations, treatment, and — where needed — referrals for surgery.",
   },
@@ -122,6 +124,7 @@ const routePoints = [
     icon: Wind,
     title: "After Natepute",
     tag: "Recovery Stretch",
+    image: "/aarogyawari-natepute.webp", // TODO: replace with a real SMSM photo
     description:
       "Past Natepute, fatigue catches up with many pilgrims. Leg pain, muscle pain, respiratory issues, and infections of the eyes, ears, and skin become common, alongside fever, chest infections, and occasionally high blood pressure. Our doctors and volunteers are stationed here to respond.",
   },
@@ -135,17 +138,26 @@ export default function AarogyawariPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Hero — full heritage treatment */}
+      {/* Hero — full heritage treatment with photo background */}
       <section
-        className="py-20 px-4 md:px-8 border-b-4"
-        style={{
-          backgroundColor: "#6D1B13",
-          borderColor: "#F39C12",
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23F39C12' fill-opacity='0.06' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E\")",
-        }}
+        className="relative py-20 px-4 md:px-8 border-b-4 overflow-hidden"
+        style={{ borderColor: "#F39C12" }}
       >
-        <div className="max-w-3xl mx-auto text-center">
+        {/* Stock placeholder — replace with a real SMSM Aarogyawari photo */}
+        <img
+          src="https://images.unsplash.com/photo-1722030736304-5f07165707b5?fm=jpg&q=80&w=2000&auto=format&fit=crop"
+          alt="Warkari pilgrims gathered during the Pandharpur Wari"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundColor: "rgba(109, 27, 19, 0.88)",
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23F39C12' fill-opacity='0.06' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E\")",
+          }}
+        />
+        <div className="max-w-3xl mx-auto text-center relative z-10">
           <Badge className="mb-4 bg-[#F39C12]/15 text-[#F39C12] border-[#F39C12]/40 uppercase tracking-widest text-xs">
             Since 1984
           </Badge>
@@ -185,26 +197,38 @@ export default function AarogyawariPage() {
         </div>
       </section>
 
-      {/* The Journey — context */}
-      <section className="py-16 px-4 md:px-8 max-w-4xl mx-auto text-center">
-        <h2 className="font-heading text-3xl md:text-4xl text-[#a93200] font-black uppercase tracking-tight mb-4">
-          A Journey of Faith
-        </h2>
-        <div className="h-1.5 w-24 bg-[#F39C12] mx-auto mb-6" />
-        <p className="text-foreground/80 font-medium leading-relaxed mb-4">
-          Many of the Warkaris undertaking this pilgrimage are 50 years of age
-          or older, testing their physical strength and endurance over 250
-          kilometres on foot. Along the way, they face adverse weather, lack of
-          water, and exposure to disease — yet they continue with unwavering
-          devotion.
-        </p>
-        <p className="text-foreground/80 font-medium leading-relaxed">
-          Aarogyawari exists for this reason alone: so that no Warkari has to
-          choose between their faith and their health. This initiative has run
-          continuously since 1984, and continues to enjoy enthusiastic
-          participation from people of all age groups — both pilgrims and
-          volunteers.
-        </p>
+      {/* The Journey — context, with image */}
+      <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="bg-muted rounded-xl overflow-hidden border border-border aspect-video order-2 lg:order-1">
+            {/* Stock placeholder — replace with a real SMSM Aarogyawari photo */}
+            <img
+              src="https://images.unsplash.com/photo-1687577562667-370a09a48590?fm=jpg&q=80&w=2000&auto=format&fit=crop"
+              alt="Crowd of devotees gathered during the Pandharpur pilgrimage"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="order-1 lg:order-2">
+            <h2 className="font-heading text-3xl md:text-4xl text-[#a93200] font-black uppercase tracking-tight mb-4">
+              A Journey of Faith
+            </h2>
+            <div className="h-1.5 w-24 bg-[#F39C12] mb-6" />
+            <p className="text-foreground/80 font-medium leading-relaxed mb-4">
+              Many of the Warkaris undertaking this pilgrimage are 50 years of
+              age or older, testing their physical strength and endurance over
+              250 kilometres on foot. Along the way, they face adverse weather,
+              lack of water, and exposure to disease — yet they continue with
+              unwavering devotion.
+            </p>
+            <p className="text-foreground/80 font-medium leading-relaxed">
+              Aarogyawari exists for this reason alone: so that no Warkari has
+              to choose between their faith and their health. This initiative
+              has run continuously since 1984, and continues to enjoy
+              enthusiastic participation from people of all age groups — both
+              pilgrims and volunteers.
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* What We Provide */}
@@ -266,28 +290,37 @@ export default function AarogyawariPage() {
             {routePoints.map((point, index) => (
               <Card
                 key={point.title}
-                className="rounded-none border border-[rgba(140,98,57,0.2)] shadow-sm bg-white"
+                className="rounded-none border border-[rgba(140,98,57,0.2)] shadow-sm bg-white overflow-hidden"
               >
-                <CardContent className="p-8">
-                  <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                    <div className="flex items-center gap-3 sm:w-56 shrink-0">
-                      <point.icon
-                        className="text-[#6D1B13]"
-                        size={32}
-                        strokeWidth={2}
+                <CardContent className="p-0">
+                  <div className="flex flex-col sm:flex-row">
+                    <div className="sm:w-48 h-40 sm:h-auto shrink-0 bg-muted">
+                      <img
+                        src={point.image}
+                        alt={`${point.title} — Aarogyawari medical camp`}
+                        className="w-full h-full object-cover"
                       />
-                      <div>
-                        <Badge className="bg-[#F39C12]/15 text-[#a93200] border-[#F39C12]/40 uppercase tracking-wider text-[10px] mb-1">
-                          {point.tag}
-                        </Badge>
-                        <h3 className="font-heading text-lg font-black text-[#6D1B13] leading-tight">
-                          {point.title}
-                        </h3>
-                      </div>
                     </div>
-                    <p className="text-[#333333] text-sm leading-relaxed font-medium">
-                      {point.description}
-                    </p>
+                    <div className="p-8 flex flex-col sm:flex-row sm:items-start gap-4 flex-1">
+                      <div className="flex items-center gap-3 sm:w-48 shrink-0">
+                        <point.icon
+                          className="text-[#6D1B13]"
+                          size={32}
+                          strokeWidth={2}
+                        />
+                        <div>
+                          <Badge className="bg-[#F39C12]/15 text-[#a93200] border-[#F39C12]/40 uppercase tracking-wider text-[10px] mb-1">
+                            {point.tag}
+                          </Badge>
+                          <h3 className="font-heading text-lg font-black text-[#6D1B13] leading-tight">
+                            {point.title}
+                          </h3>
+                        </div>
+                      </div>
+                      <p className="text-[#333333] text-sm leading-relaxed font-medium">
+                        {point.description}
+                      </p>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -304,9 +337,9 @@ export default function AarogyawariPage() {
           strokeWidth={2}
         />
         <p className="text-xl md:text-2xl text-foreground/90 font-semibold italic leading-relaxed">
-          Despite adverse weather, lack of water, and the risk of disease, they
+          "Despite adverse weather, lack of water, and the risk of disease, they
           continue their journey with devotion. We are simply here to make sure
-          that devotion doesn't come at the cost of their health.
+          that devotion doesn't come at the cost of their health."
         </p>
       </section>
 
