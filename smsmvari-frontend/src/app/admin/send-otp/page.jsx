@@ -40,7 +40,8 @@ const SendOtp = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-
+      // Always advance to OTP step regardless of response — avoids
+      // leaking whether an email address is registered.
       setIsOtpSent(true);
     } catch (err) {
       setError("Network error. Please try again.");
@@ -68,7 +69,13 @@ const SendOtp = () => {
         return;
       }
 
-      // Pass email forward via URL parameters instead of routing state
+      // ── FIX: store the resetToken so reset-password/page.jsx can read it ──
+      // Without this, reset-password always fails with "Session expired".
+      if (data.resetToken) {
+        localStorage.setItem("resetToken", data.resetToken);
+      }
+
+      // Pass email forward via URL parameters
       router.push(`/admin/reset-password?email=${encodeURIComponent(email)}`);
     } catch (err) {
       setError("Network error. Please try again.");
