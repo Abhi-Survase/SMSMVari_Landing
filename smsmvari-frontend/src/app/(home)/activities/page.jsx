@@ -16,6 +16,9 @@ import {
   Stethoscope,
   BookOpen,
   Users,
+  Calendar,
+  MapPin,
+  Radio,
 } from "lucide-react";
 
 export const metadata = {
@@ -70,6 +73,38 @@ const jsonLd = {
     url: "https://smsmvari.com",
   },
 };
+
+// ── Live & Past Events ───────────────────────────────────────────────────
+// TODO: replace with real event data from your backend or CMS
+const liveEvent = {
+  title: "Monthly Devbandh Health Camp",
+  date: "Sunday, 13 July 2025",
+  location: "Devbandh, Mokhada Taluka, Thane District",
+  description:
+    "Our monthly medical camp at Devbandh — medical examinations, treatment, and essential medicines for tribal community residents affected by illness and malnutrition.",
+  category: "Tribal Health Camp",
+};
+
+const pastEvents = [
+  {
+    title: "Aarogyawari 2025",
+    date: "June 2025",
+    location: "Alandi to Pandharpur Route",
+    category: "Aarogyawari",
+  },
+  {
+    title: "School Health Camp — Thane",
+    date: "May 2025",
+    location: "Multiple Schools, Thane",
+    category: "Education",
+  },
+  {
+    title: "Monthly Devbandh Camp",
+    date: "June 2025",
+    location: "Devbandh, Mokhada",
+    category: "Tribal Health Camp",
+  },
+];
 
 // ── Section 1: Tribal & Community Health Camps ─────────────────────────
 const tribalCamps = [
@@ -178,6 +213,94 @@ export default function ActivitiesPage() {
             relief, school health programmes, and the annual Aarogyawari
             pilgrimage service — this is where the work happens.
           </p>
+        </div>
+      </section>
+
+      {/* Live & Past Events */}
+      <section className="py-14 px-4 md:px-8 bg-muted/30 border-b border-border">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center gap-3 mb-8">
+            <Radio className="text-primary" size={22} strokeWidth={2} />
+            <h2 className="font-heading text-2xl md:text-3xl text-primary font-black uppercase tracking-tight">
+              Events
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+            {/* Live event — full card, 2 of 3 columns */}
+            <Card className="lg:col-span-2 border-2 border-green-500 shadow-md">
+              <CardContent className="p-6 md:p-8">
+                <div className="flex items-center gap-3 mb-4">
+                  {/* Pulsing live badge */}
+                  <span className="relative flex items-center gap-1.5 bg-green-500 text-white text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full">
+                    <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-60 animate-ping" />
+                    <span className="relative h-1.5 w-1.5 rounded-full bg-white" />
+                    Live
+                  </span>
+                  <Badge className="bg-primary/10 text-primary border-primary/30 uppercase tracking-wider text-[10px]">
+                    {liveEvent.category}
+                  </Badge>
+                </div>
+                <h3 className="font-heading text-xl md:text-2xl font-black text-secondary uppercase tracking-tight mb-3">
+                  {liveEvent.title}
+                </h3>
+                <div className="flex flex-col sm:flex-row gap-3 mb-4 text-sm text-foreground/70 font-medium">
+                  <span className="flex items-center gap-1.5">
+                    <Calendar size={14} className="text-primary" />
+                    {liveEvent.date}
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <MapPin size={14} className="text-primary" />
+                    {liveEvent.location}
+                  </span>
+                </div>
+                <p className="text-sm text-foreground/80 font-medium leading-relaxed mb-6">
+                  {liveEvent.description}
+                </p>
+                <Button
+                  asChild
+                  size="sm"
+                  className="uppercase font-bold tracking-wide border-b-4 border-b-secondary/50 active:border-b-0 active:translate-y-1"
+                >
+                  <Link href="/join">Volunteer for This Camp</Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Past events — compact greyed cards, 1 of 3 columns */}
+            <div className="flex flex-col gap-3">
+              <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1">
+                Past Events
+              </p>
+              {pastEvents.map((event) => (
+                <Card
+                  key={event.title + event.date}
+                  className="border border-border opacity-60"
+                >
+                  <CardContent className="p-4">
+                    <div className="flex items-center justify-between mb-1">
+                      <Badge
+                        variant="outline"
+                        className="text-[9px] uppercase tracking-wider text-muted-foreground border-muted-foreground/30"
+                      >
+                        Completed
+                      </Badge>
+                      <span className="text-[10px] text-muted-foreground font-medium">
+                        {event.date}
+                      </span>
+                    </div>
+                    <p className="text-sm font-bold text-foreground/60 mt-1 leading-snug">
+                      {event.title}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1">
+                      <MapPin size={10} />
+                      {event.location}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -408,7 +531,7 @@ export default function ActivitiesPage() {
             size="lg"
             className="uppercase font-bold tracking-wide bg-transparent border-white text-white hover:bg-white hover:text-secondary"
           >
-            <Link href="/contact">Get Involved</Link>
+            <Link href="/join">Get Involved</Link>
           </Button>
         </div>
       </section>
