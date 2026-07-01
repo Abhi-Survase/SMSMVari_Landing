@@ -10,6 +10,9 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
+  // Don't render the public navbar on any admin route
+  if (pathname.startsWith("/admin")) return null;
+
   const navLinks = [
     { name: "Homepage", href: "/" },
     { name: "About Us", href: "/about" },

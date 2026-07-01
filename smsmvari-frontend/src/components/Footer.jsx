@@ -1,8 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  // Don't render the public footer on any admin route
+  if (pathname.startsWith("/admin")) return null;
+
   return (
     <footer className="bg-foreground text-background border-t-4 border-primary mt-auto">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 px-4 md:px-8 py-12 max-w-7xl mx-auto">
