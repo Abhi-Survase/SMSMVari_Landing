@@ -136,7 +136,7 @@ function EventsPanel() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const res = await fetch(`${BASE_URL}/api/v1/events`, {
+      const res = await fetch(`${BASE_URL}/api/admin/events`, {
         method: "POST",
         headers: authHeaders(),
         body: JSON.stringify(form),
@@ -350,8 +350,37 @@ function EventsPanel() {
 
       {/* Events List */}
       {loading ? (
-        <div className="text-center py-16 text-muted-foreground text-sm font-medium">
-          Loading events…
+        <div className="space-y-3">
+          {[1, 2, 3].map((i) => (
+            <Card key={i} className="animate-pulse">
+              <CardContent className="p-5">
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                  <div className="flex-1 space-y-2.5">
+                    {/* Badge row */}
+                    <div className="flex items-center gap-2">
+                      <div className="h-4 w-12 rounded-full bg-muted" />
+                      <div className="h-4 w-24 rounded-full bg-muted" />
+                    </div>
+                    {/* Title */}
+                    <div className="h-5 w-2/3 rounded bg-muted" />
+                    {/* Date + location */}
+                    <div className="flex gap-3">
+                      <div className="h-3.5 w-28 rounded bg-muted" />
+                      <div className="h-3.5 w-36 rounded bg-muted" />
+                    </div>
+                    {/* Description lines */}
+                    <div className="h-3 w-full rounded bg-muted" />
+                    <div className="h-3 w-4/5 rounded bg-muted" />
+                  </div>
+                  {/* Action buttons */}
+                  <div className="flex sm:flex-col gap-2 shrink-0">
+                    <div className="h-8 w-16 rounded bg-muted" />
+                    <div className="h-8 w-16 rounded bg-muted" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       ) : events.length === 0 ? (
         <div className="text-center py-16 border-2 border-dashed border-border rounded-lg">
