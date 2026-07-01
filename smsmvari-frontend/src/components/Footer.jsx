@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 export default function Footer() {
   return (
     <footer className="bg-foreground text-background border-t-4 border-primary mt-auto">
@@ -31,9 +33,11 @@ export default function Footer() {
           </div>
 
           <div className="flex gap-4 mt-2">
+            {/* TODO: replace # with your social media profile URL */}
             <a
               href="#"
               className="text-primary hover:text-white transition-colors"
+              aria-label="Share"
             >
               <span
                 className="material-symbols-outlined"
@@ -42,9 +46,11 @@ export default function Footer() {
                 share
               </span>
             </a>
+            {/* TODO: confirm official email address with the trust */}
             <a
-              href="#"
+              href="mailto:contact@smsmvari.org"
               className="text-primary hover:text-white transition-colors"
+              aria-label="Email us"
             >
               <span
                 className="material-symbols-outlined"
@@ -61,30 +67,30 @@ export default function Footer() {
           <h5 className="font-bold text-xs text-white uppercase tracking-widest mb-1 border-b border-white/10 pb-2">
             Organization
           </h5>
-          <a
-            href="#"
+          <Link
+            href="/about"
             className="text-sm text-muted-foreground hover:text-primary transition-colors"
           >
             About
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            href="/activities"
             className="text-sm text-muted-foreground hover:text-primary transition-colors"
           >
-            Services
-          </a>
-          <a
-            href="#"
+            Our Activities
+          </Link>
+          <Link
+            href="/gallery"
             className="text-sm text-muted-foreground hover:text-primary transition-colors"
           >
-            Media
-          </a>
-          <a
-            href="#"
+            Gallery
+          </Link>
+          <Link
+            href="/join"
             className="text-sm text-muted-foreground hover:text-primary transition-colors"
           >
-            Contact
-          </a>
+            Join Us
+          </Link>
         </div>
 
         {/* Links Column 2 */}
@@ -92,12 +98,14 @@ export default function Footer() {
           <h5 className="font-bold text-xs text-white uppercase tracking-widest mb-1 border-b border-white/10 pb-2">
             Legal
           </h5>
+          {/* TODO: create /privacy-policy page */}
           <a
             href="#"
             className="text-sm text-muted-foreground hover:text-primary transition-colors"
           >
             Privacy Policy
           </a>
+          {/* TODO: create /terms-of-service page */}
           <a
             href="#"
             className="text-sm text-muted-foreground hover:text-primary transition-colors"
@@ -111,16 +119,25 @@ export default function Footer() {
           <h5 className="font-bold text-xs text-white uppercase tracking-widest mb-1 border-b border-white/10 pb-2">
             Reach Us
           </h5>
-          <div className="flex items-start gap-2 text-muted-foreground text-sm">
+          <a
+            href="https://maps.google.com/?q=Thane,Maharashtra"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-start gap-2 text-muted-foreground text-sm hover:text-primary transition-colors"
+          >
             <span className="material-symbols-outlined text-sm mt-0.5 text-brand-blue">
               location_on
             </span>
             <span>Thane, Maharashtra 400601</span>
-          </div>
-          <div className="flex items-center gap-2 text-muted-foreground text-sm mt-1">
+          </a>
+          <a
+            href="tel:+912186235550"
+            className="flex items-center gap-2 text-muted-foreground text-sm mt-1 hover:text-primary transition-colors"
+          >
             <span className="material-symbols-outlined text-sm">call</span>
+            {/* TODO: confirm registered phone number with the trust */}
             <span>021862235550</span>
-          </div>
+          </a>
         </div>
       </div>
 

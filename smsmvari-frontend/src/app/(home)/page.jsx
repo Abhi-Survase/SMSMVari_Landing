@@ -394,6 +394,79 @@ export default function HomePage() {
 
           <QrSection />
 
+          {/* Become a Volunteer Section */}
+          <section className="py-16 px-4 md:px-8 bg-secondary border-t-4 border-primary">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-10">
+                <span
+                  className="material-symbols-outlined text-primary text-5xl mb-3 block"
+                  style={{ fontVariationSettings: "'FILL' 1" }}
+                >
+                  volunteer_activism
+                </span>
+                <h2 className="font-heading text-3xl md:text-4xl text-white font-black uppercase tracking-tight mb-4">
+                  Become a Volunteer
+                </h2>
+                <p className="text-white/80 text-lg font-medium leading-relaxed max-w-2xl mx-auto">
+                  Every camp we run depends on people who choose to show up.
+                  Doctors, nurses, students, and dedicated citizens — there is a
+                  place for you here.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+                {[
+                  {
+                    icon: "medical_services",
+                    title: "Medical Professionals",
+                    description:
+                      "Lend your skills at tribal camps, disaster sites, and along the Wari route.",
+                  },
+                  {
+                    icon: "groups",
+                    title: "Field Volunteers",
+                    description:
+                      "Help with camp logistics, supply distribution, and on-ground coordination.",
+                  },
+                  {
+                    icon: "school",
+                    title: "Education & Outreach",
+                    description:
+                      "Support school health check-ups, awareness lectures, and material distribution.",
+                  },
+                ].map(({ icon, title, description }) => (
+                  <div
+                    key={title}
+                    className="bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 p-6 text-center"
+                  >
+                    <span
+                      className="material-symbols-outlined text-primary text-3xl mb-3 block"
+                      style={{ fontVariationSettings: "'FILL' 1" }}
+                    >
+                      {icon}
+                    </span>
+                    <h3 className="font-heading text-base font-black text-white mb-2 uppercase tracking-tight">
+                      {title}
+                    </h3>
+                    <p className="text-sm text-white/70 font-medium leading-relaxed">
+                      {description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="text-center">
+                <Button
+                  asChild
+                  size="lg"
+                  className="uppercase font-bold tracking-wide border-b-4 border-b-primary/50 active:border-b-0 active:translate-y-1"
+                >
+                  <Link href="/join">Join the Mission</Link>
+                </Button>
+              </div>
+            </div>
+          </section>
+
           {/* Leadership Section */}
           <div
             className="w-full border-t border-[rgba(140,98,57,0.2)]"
