@@ -140,6 +140,26 @@
     --tracking-normal: 0em;
 }
 
+/* ─── Heartbeat pulse ────────────────────────────────────────────────────────
+   Used on the primary CTA button (Support the Mission) to draw the eye
+   without demanding it. Scale range is intentionally small: 1.015 is visible
+   but never distracting. Period of 2.5s feels organic, not mechanical.
+   Add the `animate-heartbeat` class anywhere you want this behaviour.
+─────────────────────────────────────────────────────────────────────────── */
+@keyframes heartbeat {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.015);
+    }
+}
+
+@theme inline {
+    --animate-heartbeat: heartbeat 2.5s ease-in-out infinite;
+}
+
 .dark {
     --background: oklch(0.145 0 0);
     --foreground: oklch(0.985 0 0);
@@ -211,5 +231,6 @@
     }
     html {
         @apply font-sans;
+        scroll-behavior: smooth;
     }
 }
