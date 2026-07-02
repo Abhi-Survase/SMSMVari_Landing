@@ -1,6 +1,14 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 export default function Footer() {
+  const pathname = usePathname();
+
+  // Don't render the public footer on any admin route
+  if (pathname.startsWith("/admin")) return null;
+
   return (
     <footer className="bg-foreground text-background border-t-4 border-primary mt-auto">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 px-4 md:px-8 py-12 max-w-7xl mx-auto">
@@ -10,8 +18,9 @@ export default function Footer() {
             SMSM Vari
           </div>
           <p className="text-sm text-muted-foreground max-w-xs">
-            Committed to providing medical aid and support to the devoted
-            Varkaris during the sacred Pandharpur Wari.
+            Providing free medical care to remote tribal villages,
+            disaster-affected communities, and devoted Varkaris during the
+            sacred Pandharpur Wari — wherever care is needed most.
           </p>
 
           {/* Donation QR Card */}
@@ -30,9 +39,11 @@ export default function Footer() {
           </div>
 
           <div className="flex gap-4 mt-2">
+            {/* TODO: replace # with your social media profile URL */}
             <a
               href="#"
               className="text-primary hover:text-white transition-colors"
+              aria-label="Share"
             >
               <span
                 className="material-symbols-outlined"
@@ -41,9 +52,11 @@ export default function Footer() {
                 share
               </span>
             </a>
+            {/* TODO: confirm official email address with the trust */}
             <a
-              href="#"
+              href="mailto:contact@smsmvari.org"
               className="text-primary hover:text-white transition-colors"
+              aria-label="Email us"
             >
               <span
                 className="material-symbols-outlined"
@@ -60,30 +73,30 @@ export default function Footer() {
           <h5 className="font-bold text-xs text-white uppercase tracking-widest mb-1 border-b border-white/10 pb-2">
             Organization
           </h5>
-          <a
-            href="#"
+          <Link
+            href="/about"
             className="text-sm text-muted-foreground hover:text-primary transition-colors"
           >
             About
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            href="/activities"
             className="text-sm text-muted-foreground hover:text-primary transition-colors"
           >
-            Services
-          </a>
-          <a
-            href="#"
+            Our Activities
+          </Link>
+          <Link
+            href="/gallery"
             className="text-sm text-muted-foreground hover:text-primary transition-colors"
           >
-            Media
-          </a>
-          <a
-            href="#"
+            Gallery
+          </Link>
+          <Link
+            href="/join"
             className="text-sm text-muted-foreground hover:text-primary transition-colors"
           >
-            Contact
-          </a>
+            Join Us
+          </Link>
         </div>
 
         {/* Links Column 2 */}
@@ -91,12 +104,14 @@ export default function Footer() {
           <h5 className="font-bold text-xs text-white uppercase tracking-widest mb-1 border-b border-white/10 pb-2">
             Legal
           </h5>
+          {/* TODO: create /privacy-policy page */}
           <a
             href="#"
             className="text-sm text-muted-foreground hover:text-primary transition-colors"
           >
             Privacy Policy
           </a>
+          {/* TODO: create /terms-of-service page */}
           <a
             href="#"
             className="text-sm text-muted-foreground hover:text-primary transition-colors"
@@ -110,16 +125,25 @@ export default function Footer() {
           <h5 className="font-bold text-xs text-white uppercase tracking-widest mb-1 border-b border-white/10 pb-2">
             Reach Us
           </h5>
-          <div className="flex items-start gap-2 text-muted-foreground text-sm">
-            <span className="material-symbols-outlined text-sm mt-0.5">
+          <a
+            href="https://maps.google.com/?q=Thane,Maharashtra"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-start gap-2 text-muted-foreground text-sm hover:text-primary transition-colors"
+          >
+            <span className="material-symbols-outlined text-sm mt-0.5 text-brand-blue">
               location_on
             </span>
-            <span>Main Road, Chouphala, Pandharpur, Maharashtra 4133</span>
-          </div>
-          <div className="flex items-center gap-2 text-muted-foreground text-sm mt-1">
+            <span>Thane, Maharashtra 400601</span>
+          </a>
+          <a
+            href="tel:+912186235550"
+            className="flex items-center gap-2 text-muted-foreground text-sm mt-1 hover:text-primary transition-colors"
+          >
             <span className="material-symbols-outlined text-sm">call</span>
+            {/* TODO: confirm registered phone number with the trust */}
             <span>021862235550</span>
-          </div>
+          </a>
         </div>
       </div>
 
@@ -130,7 +154,7 @@ export default function Footer() {
             Healing.
           </p>
           <div className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
-            Organized By Sahyadri Manav Seva Manch Vari Trust
+            Organized By Sahyadri Manav Seva Manch, Thane
           </div>
         </div>
       </div>

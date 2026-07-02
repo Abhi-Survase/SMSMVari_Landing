@@ -74,79 +74,93 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted/40 p-4">
-      <Card className="w-full max-w-md shadow-lg">
-        <CardHeader className="space-y-1 text-center">
-          <CardTitle className="text-3xl font-bold tracking-tight">
-            Welcome back
-          </CardTitle>
-          <CardDescription>
-            Please enter your details to sign in
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {error && (
-              <Alert variant="destructive">
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
+    <div className="relative flex min-h-screen items-center justify-center bg-muted/40 p-4">
+      <div className="w-full max-w-md flex flex-col items-center gap-6">
+        {/* SMSM wordmark — confirms to the admin they are on the right site */}
+        <div className="text-center">
+          <p className="font-heading text-3xl font-black text-primary tracking-tight uppercase">
+            SMSM Vari
+          </p>
+          <p className="text-muted-foreground text-xs font-semibold uppercase tracking-widest mt-1">
+            Admin Portal
+          </p>
+        </div>
 
-            {successMsg && (
-              <Alert className="border-green-500 text-green-600">
-                <AlertDescription>{successMsg}</AlertDescription>
-              </Alert>
-            )}
+        <Card className="w-full shadow-xl">
+          <CardHeader className="space-y-1 text-center">
+            <CardTitle className="text-2xl font-bold tracking-tight">
+              Welcome back
+            </CardTitle>
+            <CardDescription>
+              Please enter your details to sign in
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {error && (
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
 
-            <div className="space-y-2">
-              <Label htmlFor="email">Email address</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
+              {successMsg && (
+                <Alert className="border-green-500 text-green-600">
+                  <AlertDescription>{successMsg}</AlertDescription>
+                </Alert>
+              )}
 
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-
-            <div className="flex items-center justify-between pt-2">
-              <div className="flex items-center space-x-2">
-                <Checkbox id="remember-me" />
-                <Label
-                  htmlFor="remember-me"
-                  className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Remember me
-                </Label>
+              <div className="space-y-2">
+                <Label htmlFor="email">Email address</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
-              <Link
-                href="/admin/send-otp"
-                className="text-sm font-medium text-primary underline-offset-4 hover:underline"
-              >
-                Forgot your password?
-              </Link>
-            </div>
 
-            <Button type="submit" className="w-full mt-4" disabled={loading}>
-              {loading ? "Signing in…" : "Sign in"}
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+
+              <div className="flex items-center justify-between pt-2">
+                <div className="flex items-center space-x-2">
+                  {/* TODO: wire remember-me to extended token TTL or a persistent
+                      cookie — currently UI-only and has no effect on session */}
+                  <Checkbox id="remember-me" />
+                  <Label
+                    htmlFor="remember-me"
+                    className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Remember me
+                  </Label>
+                </div>
+                <Link
+                  href="/admin/send-otp"
+                  className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+                >
+                  Forgot your password?
+                </Link>
+              </div>
+
+              <Button type="submit" className="w-full mt-4" disabled={loading}>
+                {loading ? "Signing in…" : "Sign in"}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
