@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,14 @@ import { Menu, X } from "lucide-react";
 export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  // True once the page has scrolled past 50px — deepens the nav shadow.
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Don't render the public navbar on any admin route
   if (pathname.startsWith("/admin")) return null;
@@ -22,7 +30,11 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="bg-card border-b-2 border-primary w-full sticky top-0 z-50 shadow-sm">
+    <nav
+      className={`bg-card border-b-2 border-primary w-full sticky top-0 z-50 transition-shadow duration-300 ${
+        scrolled ? "shadow-lg shadow-foreground/10" : "shadow-sm"
+      }`}
+    >
       <div className="flex justify-between items-center w-full px-4 md:px-8 py-2 max-w-7xl mx-auto">
         {/* Logo */}
         <Link
