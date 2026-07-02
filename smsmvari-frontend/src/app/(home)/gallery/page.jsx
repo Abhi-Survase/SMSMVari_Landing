@@ -170,7 +170,7 @@ export default function GalleryPage() {
             size="lg"
             className="uppercase font-bold tracking-wide bg-transparent border-white text-white hover:bg-white hover:text-secondary"
           >
-            <Link href="/contact">Volunteer With Us</Link>
+            <Link href="/join">Volunteer With Us</Link>
           </Button>
         </div>
       </section>

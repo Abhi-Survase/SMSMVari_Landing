@@ -5,11 +5,11 @@ import { useState, useEffect, useCallback } from "react";
 import { Badge } from "@/components/ui/badge";
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 
-// ---------------------------------------------------------------------------
-// Data — replace src paths with your real images. alt text is read by screen
-// readers and crawled by Google Images so keep it descriptive.
-// ---------------------------------------------------------------------------
-const galleryItems = [
+// ─────────────────────────────────────────────────────────────────────────────
+// Static data — active until the fetch block below is wired up.
+// Shape must match the API response: { id, src, alt, title, category }
+// ─────────────────────────────────────────────────────────────────────────────
+export const STATIC_GALLERY_ITEMS = [
   // Medical Camps
   {
     id: 1,
@@ -27,14 +27,14 @@ const galleryItems = [
   },
   {
     id: 3,
-    src: "/gallery-medcamp3.webp", // TODO: add your image
+    src: "/gallery-medcamp3.webp", // TODO: add image
     alt: "First-aid station set up under a tent for Varkari pilgrims during the Wari",
     title: "First Aid Station",
     category: "Medical Camps",
   },
   {
     id: 4,
-    src: "/gallery-medcamp4.webp", // TODO: add your image
+    src: "/gallery-medcamp4.webp", // TODO: add image
     alt: "A doctor checking the blood pressure of an elderly Varkari at a medical camp",
     title: "Health Check Camp",
     category: "Medical Camps",
@@ -50,14 +50,14 @@ const galleryItems = [
   },
   {
     id: 6,
-    src: "/gallery-wound2.webp", // TODO: add your image
+    src: "/gallery-wound2.webp", // TODO: add image
     alt: "Paramedic applying wound dressing to a Varkari's feet after 250 km of walking",
     title: "Wound Dressing",
     category: "Wound Care",
   },
   {
     id: 7,
-    src: "/gallery-wound3.webp", // TODO: add your image
+    src: "/gallery-wound3.webp", // TODO: add image
     alt: "Medical supplies and wound-care materials laid out at a Sahyadri Manav Seva Manch camp",
     title: "Medical Supplies",
     category: "Wound Care",
@@ -73,7 +73,7 @@ const galleryItems = [
   },
   {
     id: 9,
-    src: "/gallery-emergency2.webp", // TODO: add your image
+    src: "/gallery-emergency2.webp", // TODO: add image
     alt: "Emergency response team assisting a Varkari who collapsed during the pilgrimage",
     title: "Rapid Response Team",
     category: "Emergency Response",
@@ -96,14 +96,14 @@ const galleryItems = [
   },
   {
     id: 12,
-    src: "/gallery-wari3.webp", // TODO: add your image
+    src: "/gallery-wari3.webp", // TODO: add image
     alt: "The Palkhi procession carrying padukas of saints through a village during the Wari",
     title: "Palkhi Procession",
     category: "Wari Journey",
   },
   {
     id: 13,
-    src: "/gallery-wari4.webp", // TODO: add your image
+    src: "/gallery-wari4.webp", // TODO: add image
     alt: "Aerial view of the Pandharpur Wari procession stretching kilometres through the countryside",
     title: "The Journey Ahead",
     category: "Wari Journey",
@@ -112,21 +112,21 @@ const galleryItems = [
   // Tribal & Disaster Relief
   {
     id: 16,
-    src: "/gallery-tribal1.webp", // TODO: add your image
+    src: "/gallery-tribal1.webp", // TODO: add image
     alt: "Doctors examining patients at a tribal health camp in Devbandh, Mokhada Taluka",
     title: "Devbandh Health Camp",
     category: "Tribal & Disaster Relief",
   },
   {
     id: 17,
-    src: "/gallery-tribal2.webp", // TODO: add your image
+    src: "/gallery-tribal2.webp", // TODO: add image
     alt: "Volunteers distributing school uniforms and notebooks to children at a tribal Anganwadi",
     title: "School Supplies Distribution",
     category: "Tribal & Disaster Relief",
   },
   {
     id: 18,
-    src: "/gallery-disaster1.webp", // TODO: add your image
+    src: "/gallery-disaster1.webp", // TODO: add image
     alt: "Medical team providing emergency aid to flood-affected residents",
     title: "Flood Relief Camp",
     category: "Tribal & Disaster Relief",
@@ -135,14 +135,14 @@ const galleryItems = [
   // Volunteers
   {
     id: 14,
-    src: "/gallery-vol1.webp", // TODO: add your image
+    src: "/gallery-vol1.webp", // TODO: add image
     alt: "Sahyadri Manav Seva Manch medical volunteers assembled for a briefing before the Wari begins",
     title: "Volunteer Briefing",
     category: "Volunteers",
   },
   {
     id: 15,
-    src: "/gallery-vol2.webp", // TODO: add your image
+    src: "/gallery-vol2.webp", // TODO: add image
     alt: "Young volunteers distributing medicines to Varkaris",
     title: "Medicines Distribution",
     category: "Volunteers",
@@ -159,18 +159,90 @@ const CATEGORIES = [
   "Volunteers",
 ];
 
-// ---------------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
+// Skeleton sub-components
+// Pulse count mirrors the default "All" view so the layout doesn't jump.
+// ─────────────────────────────────────────────────────────────────────────────
+
+function SkeletonFilterTabs() {
+  // Approximate widths to match real tab labels
+  const widths = ["w-8", "w-28", "w-24", "w-36", "w-24", "w-44", "w-24"];
+  return (
+    <div className="flex flex-wrap gap-2 justify-center mb-10" aria-hidden>
+      {widths.map((w, i) => (
+        <div
+          key={i}
+          className={`${w} h-7 rounded-full bg-muted animate-pulse`}
+        />
+      ))}
+    </div>
+  );
+}
+
+function SkeletonCard() {
+  return (
+    <div className="aspect-square rounded-lg bg-muted animate-pulse overflow-hidden relative">
+      {/* Shimmer sweep */}
+      <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.6s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+    </div>
+  );
+}
+
+function SkeletonGrid({ count = 12 }) {
+  return (
+    <div
+      className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4"
+      aria-label="Loading gallery…"
+      aria-busy="true"
+    >
+      {Array.from({ length: count }).map((_, i) => (
+        <SkeletonCard key={i} />
+      ))}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GalleryGrid
+// ─────────────────────────────────────────────────────────────────────────────
 
 export default function GalleryGrid() {
+  const [items, setItems] = useState(STATIC_GALLERY_ITEMS);
+  const [isLoading, setIsLoading] = useState(false);
   const [activeCategory, setActiveCategory] = useState("All");
   const [lightbox, setLightbox] = useState(null); // index into filteredItems
 
+  // ── TODO: uncomment this block when the API route is ready ───────────────
+  //
+  // useEffect(() => {
+  //   let cancelled = false;
+  //   async function loadGallery() {
+  //     setIsLoading(true);
+  //     try {
+  //       const res = await fetch("/api/gallery");
+  //       if (!res.ok) throw new Error(`Gallery fetch failed: ${res.status}`);
+  //       const data = await res.json();
+  //       // Expected shape: { items: GalleryItem[] }
+  //       if (!cancelled) setItems(data.items);
+  //     } catch (err) {
+  //       console.error("[GalleryGrid] Could not load from API:", err);
+  //       // Silent fallback — STATIC_GALLERY_ITEMS already in state.
+  //     } finally {
+  //       if (!cancelled) setIsLoading(false);
+  //     }
+  //   }
+  //   loadGallery();
+  //   return () => { cancelled = true; };
+  // }, []);
+  //
+  // ─────────────────────────────────────────────────────────────────────────
+
   const filteredItems =
     activeCategory === "All"
-      ? galleryItems
-      : galleryItems.filter((item) => item.category === activeCategory);
+      ? items
+      : items.filter((item) => item.category === activeCategory);
 
-  // ── Lightbox helpers ────────────────────────────────────────────────────
+  // ── Lightbox helpers ─────────────────────────────────────────────────────
   const openLightbox = (index) => setLightbox(index);
   const closeLightbox = () => setLightbox(null);
 
@@ -204,87 +276,98 @@ export default function GalleryGrid() {
 
   const selectedItem = lightbox !== null ? filteredItems[lightbox] : null;
 
+  // ── Badge colour helper ───────────────────────────────────────────────────
+  const badgeClass = (category) =>
+    category === "Tribal & Disaster Relief"
+      ? "bg-brand-blue hover:bg-brand-blue text-white"
+      : "bg-primary hover:bg-primary text-primary-foreground";
+
   return (
     <section className="py-14 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
-        {/* ── Category filter tabs ─────────────────────────────────────── */}
-        <div className="flex flex-wrap gap-2 justify-center mb-10">
-          {CATEGORIES.map((cat) => {
-            const isTribalDisaster = cat === "Tribal & Disaster Relief";
-            const isActive = activeCategory === cat;
-            return (
-              <button
-                key={cat}
-                onClick={() => {
-                  setActiveCategory(cat);
-                  setLightbox(null);
-                }}
-                className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border transition-all duration-200 ${
-                  isActive
-                    ? isTribalDisaster
-                      ? "bg-brand-blue text-white border-brand-blue shadow-sm"
-                      : "bg-primary text-primary-foreground border-primary shadow-sm"
-                    : isTribalDisaster
-                      ? "bg-card text-muted-foreground border-border hover:border-brand-blue hover:text-brand-blue"
-                      : "bg-card text-muted-foreground border-border hover:border-primary hover:text-primary"
-                }`}
-              >
-                {cat}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* ── Image grid ───────────────────────────────────────────────── */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-          {filteredItems.map((item, index) => (
-            <button
-              key={item.id}
-              onClick={() => openLightbox(index)}
-              aria-label={`View image: ${item.title}`}
-              className="group relative overflow-hidden rounded-lg border border-border/50 bg-muted aspect-square cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              {/* Image */}
-              <img
-                src={item.src}
-                alt={item.alt}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
-              />
-
-              {/* Hover overlay */}
-              <div className="absolute inset-0 bg-secondary/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
-                <div className="flex items-end justify-between gap-2">
-                  <div>
-                    <Badge
-                      className={`uppercase text-[10px] tracking-wider mb-1.5 ${
-                        item.category === "Tribal & Disaster Relief"
-                          ? "bg-brand-blue hover:bg-brand-blue text-white"
-                          : "bg-primary hover:bg-primary text-primary-foreground"
-                      }`}
-                    >
-                      {item.category}
-                    </Badge>
-                    <p className="text-white font-bold text-sm leading-tight">
-                      {item.title}
-                    </p>
-                  </div>
-                  <ZoomIn className="text-white shrink-0" size={20} />
-                </div>
-              </div>
-            </button>
-          ))}
-        </div>
-
-        {/* Empty state */}
-        {filteredItems.length === 0 && (
-          <div className="text-center py-20 text-muted-foreground font-medium">
-            No photos in this category yet.
+        {/* ── Category filter tabs ────────────────────────────────────────── */}
+        {isLoading ? (
+          <SkeletonFilterTabs />
+        ) : (
+          <div className="flex flex-wrap gap-2 justify-center mb-10">
+            {CATEGORIES.map((cat) => {
+              const isTribalDisaster = cat === "Tribal & Disaster Relief";
+              const isActive = activeCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => {
+                    setActiveCategory(cat);
+                    setLightbox(null);
+                  }}
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border transition-all duration-200 ${
+                    isActive
+                      ? isTribalDisaster
+                        ? "bg-brand-blue text-white border-brand-blue shadow-sm"
+                        : "bg-primary text-primary-foreground border-primary shadow-sm"
+                      : isTribalDisaster
+                        ? "bg-card text-muted-foreground border-border hover:border-brand-blue hover:text-brand-blue"
+                        : "bg-card text-muted-foreground border-border hover:border-primary hover:text-primary"
+                  }`}
+                >
+                  {cat}
+                </button>
+              );
+            })}
           </div>
+        )}
+
+        {/* ── Image grid / skeleton ────────────────────────────────────────── */}
+        {isLoading ? (
+          <SkeletonGrid count={12} />
+        ) : (
+          <>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+              {filteredItems.map((item, index) => (
+                <button
+                  key={item.id}
+                  onClick={() => openLightbox(index)}
+                  aria-label={`View image: ${item.title}`}
+                  className="group relative overflow-hidden rounded-lg border border-border/50 bg-muted aspect-square cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 bg-secondary/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
+                    <div className="flex items-end justify-between gap-2">
+                      <div>
+                        <Badge
+                          className={`uppercase text-[10px] tracking-wider mb-1.5 ${badgeClass(item.category)}`}
+                        >
+                          {item.category}
+                        </Badge>
+                        <p className="text-white font-bold text-sm leading-tight">
+                          {item.title}
+                        </p>
+                      </div>
+                      <ZoomIn className="text-white shrink-0" size={20} />
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {/* Empty state */}
+            {filteredItems.length === 0 && (
+              <div className="text-center py-20 text-muted-foreground font-medium">
+                No photos in this category yet.
+              </div>
+            )}
+          </>
         )}
       </div>
 
-      {/* ── Lightbox ─────────────────────────────────────────────────────── */}
+      {/* ── Lightbox ───────────────────────────────────────────────────────── */}
       {selectedItem && (
         <div
           className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 md:p-8"
@@ -293,7 +376,6 @@ export default function GalleryGrid() {
           aria-modal="true"
           aria-label={selectedItem.title}
         >
-          {/* Inner panel — stop propagation so clicking image doesn't close */}
           <div
             className="relative w-full max-w-4xl flex flex-col items-center gap-4"
             onClick={(e) => e.stopPropagation()}
@@ -325,11 +407,7 @@ export default function GalleryGrid() {
                 {selectedItem.title}
               </p>
               <Badge
-                className={`mt-1 uppercase text-[10px] tracking-wider ${
-                  selectedItem.category === "Tribal & Disaster Relief"
-                    ? "bg-brand-blue hover:bg-brand-blue text-white"
-                    : "bg-primary hover:bg-primary"
-                }`}
+                className={`mt-1 uppercase text-[10px] tracking-wider ${badgeClass(selectedItem.category)}`}
               >
                 {selectedItem.category}
               </Badge>
