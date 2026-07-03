@@ -4,6 +4,9 @@
 import JoinForm from "./JoinForm";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import AnimatedPageHero from "@/components/AnimatedPageHero";
+import FadeUp from "@/components/FadeUp";
+import { StaggerContainer, StaggerItem } from "@/components/StaggerChildren";
 
 export const metadata = {
   title: "Join Us | Sahyadri Manav Seva Manch, Thane",
@@ -124,7 +127,7 @@ export default function JoinUsPage() {
 
       {/* Page Hero */}
       <section className="bg-secondary text-white py-16 px-4 md:px-8 border-b-4 border-primary">
-        <div className="max-w-2xl mx-auto text-center">
+        <AnimatedPageHero className="max-w-2xl mx-auto text-center">
           <h1 className="font-heading text-4xl md:text-5xl font-black uppercase tracking-tight mb-4">
             Join Us
           </h1>
@@ -133,21 +136,21 @@ export default function JoinUsPage() {
             run depends on people who choose to show up. There's a place for you
             here.
           </p>
-        </div>
+        </AnimatedPageHero>
       </section>
 
       {/* Ways to help */}
       <section className="py-14 px-4 md:px-8 bg-muted/30 border-b border-border">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10">
+          <FadeUp className="text-center mb-10">
             <h2 className="font-heading text-2xl md:text-3xl text-primary font-black uppercase tracking-tight">
               Ways to Help
             </h2>
             <div className="h-1 w-16 bg-primary mt-3 mx-auto rounded-full" />
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          </FadeUp>
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {waysToHelp.map(({ icon, title, description }) => (
-              <div
+              <StaggerItem
                 key={title}
                 className="bg-card rounded-lg border border-border p-6 text-center"
               >
@@ -163,9 +166,9 @@ export default function JoinUsPage() {
                 <p className="text-sm text-foreground/80 font-medium leading-relaxed">
                   {description}
                 </p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -173,111 +176,119 @@ export default function JoinUsPage() {
       <section className="py-16 px-4 md:px-8">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-12">
           {/* Contact info — 2 of 5 columns */}
-          <aside className="lg:col-span-2 flex flex-col gap-8">
-            <div>
-              <h2 className="font-heading text-2xl text-primary font-black uppercase tracking-tight mb-2">
-                Reach Us Directly
-              </h2>
-              <div className="h-1 w-16 bg-primary rounded-full mb-6" />
-              <ul className="space-y-5">
-                {contactDetails.map(({ icon, label, value, href }) => {
-                  const isOffice = label === "Head Office";
-                  return (
-                    <li key={label}>
-                      <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1">
-                        {label}
-                      </p>
-                      <Link
-                        href={href}
-                        target={href.startsWith("http") ? "_blank" : undefined}
-                        rel={
-                          href.startsWith("http")
-                            ? "noopener noreferrer"
-                            : undefined
-                        }
-                        className="flex items-start gap-3 text-foreground hover:text-primary transition-colors font-medium"
-                      >
-                        <span
-                          className={`material-symbols-outlined mt-0.5 text-xl ${
-                            isOffice ? "text-brand-blue" : "text-primary"
-                          }`}
-                          style={{ fontVariationSettings: "'FILL' 1" }}
+          <FadeUp className="lg:col-span-2">
+            <aside className="flex flex-col gap-8">
+              <div>
+                <h2 className="font-heading text-2xl text-primary font-black uppercase tracking-tight mb-2">
+                  Reach Us Directly
+                </h2>
+                <div className="h-1 w-16 bg-primary rounded-full mb-6" />
+                <ul className="space-y-5">
+                  {contactDetails.map(({ icon, label, value, href }) => {
+                    const isOffice = label === "Head Office";
+                    return (
+                      <li key={label}>
+                        <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-1">
+                          {label}
+                        </p>
+                        <Link
+                          href={href}
+                          target={
+                            href.startsWith("http") ? "_blank" : undefined
+                          }
+                          rel={
+                            href.startsWith("http")
+                              ? "noopener noreferrer"
+                              : undefined
+                          }
+                          className="flex items-start gap-3 text-foreground hover:text-primary transition-colors font-medium"
                         >
-                          {icon}
-                        </span>
-                        {value}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+                          <span
+                            className={`material-symbols-outlined mt-0.5 text-xl ${
+                              isOffice ? "text-brand-blue" : "text-primary"
+                            }`}
+                            style={{ fontVariationSettings: "'FILL' 1" }}
+                          >
+                            {icon}
+                          </span>
+                          {value}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
 
-            {/* Seasonal camp note — Aarogyawari / Pandharpur Wari */}
-            <div className="bg-muted rounded-lg p-5 border-l-4 border-brand-blue">
-              <p className="text-xs font-bold uppercase tracking-widest text-brand-blue mb-2">
-                During Aarogyawari (Ashadhi Ekadashi)
-              </p>
-              <p className="text-sm text-foreground/80 font-medium leading-relaxed mb-2">
-                Our teams set up medical camps along the Alandi–Pandharpur
-                pilgrimage route, with key camps near Dive Ghat, Saswad,
-                Phaltan, and Natepute. This is one of our biggest annual
-                opportunities for volunteers.
-              </p>
-              <p className="text-sm text-foreground/80 font-medium leading-relaxed">
-                For medical emergencies on the route during the pilgrimage,
-                please contact our camp coordinators directly or call us.
-              </p>
-            </div>
+              {/* Seasonal camp note — Aarogyawari / Pandharpur Wari */}
+              <div className="bg-muted rounded-lg p-5 border-l-4 border-brand-blue">
+                <p className="text-xs font-bold uppercase tracking-widest text-brand-blue mb-2">
+                  During Aarogyawari (Ashadhi Ekadashi)
+                </p>
+                <p className="text-sm text-foreground/80 font-medium leading-relaxed mb-2">
+                  Our teams set up medical camps along the Alandi–Pandharpur
+                  pilgrimage route, with key camps near Dive Ghat, Saswad,
+                  Phaltan, and Natepute. This is one of our biggest annual
+                  opportunities for volunteers.
+                </p>
+                <p className="text-sm text-foreground/80 font-medium leading-relaxed">
+                  For medical emergencies on the route during the pilgrimage,
+                  please contact our camp coordinators directly or call us.
+                </p>
+              </div>
 
-            {/* HQ note */}
-            <div className="bg-muted rounded-lg p-5 border-l-4 border-primary">
-              <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">
-                Year-Round Work
-              </p>
-              <p className="text-sm text-foreground/80 font-medium leading-relaxed">
-                Outside of the pilgrimage season, our office in Thane
-                coordinates tribal health camps in Devbandh, school health
-                programmes, and disaster relief efforts across Maharashtra.
-                Volunteers are welcome year-round.
-              </p>
-            </div>
-          </aside>
+              {/* HQ note */}
+              <div className="bg-muted rounded-lg p-5 border-l-4 border-primary">
+                <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">
+                  Year-Round Work
+                </p>
+                <p className="text-sm text-foreground/80 font-medium leading-relaxed">
+                  Outside of the pilgrimage season, our office in Thane
+                  coordinates tribal health camps in Devbandh, school health
+                  programmes, and disaster relief efforts across Maharashtra.
+                  Volunteers are welcome year-round.
+                </p>
+              </div>
+            </aside>
+          </FadeUp>
 
           {/* Sign-up form — 3 of 5 columns */}
-          <div className="lg:col-span-3">
-            <h2 className="font-heading text-2xl text-primary font-black uppercase tracking-tight mb-2">
-              Sign Up to Volunteer
-            </h2>
-            <div className="h-1 w-16 bg-primary rounded-full mb-6" />
-            <JoinForm />
-          </div>
+          <FadeUp className="lg:col-span-3" delay={0.12}>
+            <div>
+              <h2 className="font-heading text-2xl text-primary font-black uppercase tracking-tight mb-2">
+                Sign Up to Volunteer
+              </h2>
+              <div className="h-1 w-16 bg-primary rounded-full mb-6" />
+              <JoinForm />
+            </div>
+          </FadeUp>
         </div>
       </section>
 
       {/* Prefer to donate instead? */}
       <section className="py-14 px-4 md:px-8 bg-secondary text-white text-center border-t-4 border-primary">
-        <span
-          className="material-symbols-outlined text-primary text-4xl mb-4 inline-block"
-          style={{ fontVariationSettings: "'FILL' 1" }}
-        >
-          favorite
-        </span>
-        <h2 className="font-heading text-3xl font-black uppercase tracking-tight mb-4">
-          Prefer to Support Us Financially?
-        </h2>
-        <p className="text-white/80 max-w-xl mx-auto mb-8 font-medium">
-          Not everyone can volunteer their time, and that's alright. Your
-          donation directly funds medical camps, supplies, and emergency relief
-          for the communities who need it most.
-        </p>
-        <Button
-          asChild
-          size="lg"
-          className="uppercase font-bold tracking-wide border-b-4 border-b-primary/50 active:border-b-0 active:translate-y-1"
-        >
-          <Link href="/donate">Donate Now</Link>
-        </Button>
+        <FadeUp>
+          <span
+            className="material-symbols-outlined text-primary text-4xl mb-4 inline-block"
+            style={{ fontVariationSettings: "'FILL' 1" }}
+          >
+            favorite
+          </span>
+          <h2 className="font-heading text-3xl font-black uppercase tracking-tight mb-4">
+            Prefer to Support Us Financially?
+          </h2>
+          <p className="text-white/80 max-w-xl mx-auto mb-8 font-medium">
+            Not everyone can volunteer their time, and that's alright. Your
+            donation directly funds medical camps, supplies, and emergency
+            relief for the communities who need it most.
+          </p>
+          <Button
+            asChild
+            size="lg"
+            className="uppercase font-bold tracking-wide border-b-4 border-b-primary/50 active:border-b-0 active:translate-y-1 animate-heartbeat"
+          >
+            <Link href="/donate">Donate Now</Link>
+          </Button>
+        </FadeUp>
       </section>
     </>
   );

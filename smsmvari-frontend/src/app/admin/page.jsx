@@ -15,7 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, ChevronLeft } from "lucide-react";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 const BASE_URL =
@@ -157,6 +157,13 @@ const LoginForm = () => {
               <Button type="submit" className="w-full mt-4" disabled={loading}>
                 {loading ? "Signing in…" : "Sign in"}
               </Button>
+              <Link
+                href="/"
+                className="flex items-center justify-center gap-1 text-sm font-medium text-secondary underline-offset-4 hover:underline"
+              >
+                <ChevronLeft size={16} />
+                Homepage
+              </Link>
             </form>
           </CardContent>
         </Card>

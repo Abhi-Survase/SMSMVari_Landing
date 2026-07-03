@@ -331,9 +331,9 @@ export default function AarogyawariPage() {
             strokeWidth={2}
           />
           <p className="text-xl md:text-2xl text-foreground/90 font-semibold italic leading-relaxed">
-            "Despite adverse weather, lack of water, and the risk of disease,
+            Despite adverse weather, lack of water, and the risk of disease,
             they continue their journey with devotion. We are simply here to
-            make sure that devotion doesn't come at the cost of their health."
+            make sure that devotion doesn't come at the cost of their health.
           </p>
         </FadeUp>
       </section>
