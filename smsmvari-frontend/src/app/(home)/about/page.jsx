@@ -1,10 +1,17 @@
 // app/(home)/about/page.jsx
-// Server component — exports metadata, no "use client" needed
+// Server component — exports metadata, no "use client" needed.
+// Motion lives entirely in the imported client components below.
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+
+// ── Motion components (client, safe to import from a server component) ───────
+import AnimatedPageHero from "@/components/AnimatedPageHero";
+import MissionSection from "@/components/MissionSection";
+import FadeUp from "@/components/FadeUp";
+import { StaggerContainer, StaggerItem } from "@/components/StaggerChildren";
 
 export const metadata = {
   title: "About Us | SMSM Vari – Sahyadri Manav Seva Manch Vari Trust",
@@ -104,22 +111,20 @@ export default function AboutUsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Page Hero */}
+      {/* ── Page Hero ─────────────────────────────────────────────────────
+          AnimatedPageHero staggers each direct child on mount:
+          Badge (100ms) → h1 (220ms) → tagline p (340ms) → body p (460ms).
+          The outer section stays in this server component so its background
+          and border render immediately without waiting for hydration.
+      ─────────────────────────────────────────────────────────────────── */}
       <section className="bg-secondary text-white py-16 px-4 md:px-8 border-b-4 border-primary">
-        <div className="max-w-3xl mx-auto text-center">
+        <AnimatedPageHero className="max-w-3xl mx-auto text-center">
           <Badge className="mb-4 bg-primary/20 text-primary border-primary/30 uppercase tracking-widest text-xs">
             Since 1984
           </Badge>
           <h1 className="font-heading text-4xl md:text-5xl font-black uppercase tracking-tight mb-3">
             About SMSM Vari
           </h1>
-          {/* Sub-tagline — feel free to pick one or rotate these:
-              "Healthcare Without Boundaries"
-              "Healing Where Help Doesn't Reach"
-              "Medicine for the Many, Care for All"
-              "Serving Maharashtra's Unreached"
-              "Beyond the Wari — Healthcare at Every Step"
-          */}
           <p className="text-primary font-bold uppercase tracking-widest text-sm mb-6">
             Healthcare Without Boundaries
           </p>
@@ -131,100 +136,76 @@ export default function AboutUsPage() {
             communities, rural fair grounds, and pilgrimage routes — wherever
             people have the least access and need it most.
           </p>
-        </div>
+        </AnimatedPageHero>
       </section>
 
-      {/* Mission */}
-      <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 className="font-heading text-3xl md:text-4xl text-primary font-black uppercase tracking-tight mb-4">
-              Our Mission
-            </h2>
-            <div className="h-1 w-20 bg-primary mb-6 rounded-full" />
-            <p className="text-foreground/80 font-medium leading-relaxed mb-4">
-              We mobilise doctors, nurses, trained volunteers, and essential
-              supplies to bring healthcare to places the system rarely reaches.
-              From wound-care stations along pilgrimage routes to health camps
-              in remote tribal belts and emergency response during floods and
-              disasters — our teams go wherever there is need and no one else
-              going.
-            </p>
-            <p className="text-foreground/80 font-medium leading-relaxed">
-              Our founding programme — the Pandharpur Aarogyawari — has provided
-              free medical care to thousands of Varkaris every Aashad Ekadashi
-              since 1984. But our work extends well beyond the Wari: year-round
-              health camps in tribal villages, disaster relief medical units,
-              and medical support at regional fairs and pilgrimages across
-              Maharashtra. Wherever communities are underserved, that is where
-              we belong.
-            </p>
-          </div>
-          <div className="bg-muted rounded-xl overflow-hidden border border-border aspect-video">
-            {/* TODO: replace with an actual photo from the trust */}
-            <img
-              src="/heritage1.webp"
-              // alt="SMSM Vari volunteers treating Varkaris at a medical camp along the Wari route"
-              alt="Varkaris chanting during vaari"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-      </section>
+      {/* ── Mission ───────────────────────────────────────────────────────
+          Extracted to MissionSection.jsx (client component).
+          Left text slides from the left; image slides from the right
+          with an additional zoom-out on the img itself.
+      ─────────────────────────────────────────────────────────────────── */}
+      <MissionSection />
 
-      {/* Values */}
+      {/* ── Values ────────────────────────────────────────────────────── */}
       <section className="py-16 px-4 md:px-8 bg-muted/30 border-y border-border">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
+
+          {/* Heading + underline fade up together */}
+          <FadeUp className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl text-secondary font-black uppercase tracking-tight">
               What We Stand For
             </h2>
             <div className="h-1 w-24 bg-primary mt-3 mx-auto rounded-full" />
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          </FadeUp>
+
+          {/* 4 value cards stagger in 100ms apart */}
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((v) => {
               const isMedical = v.title === "Medical Excellence";
               return (
-                <Card
-                  key={v.title}
-                  className={`border-t-4 hover:shadow-md transition-shadow ${
-                    isMedical ? "border-t-brand-blue" : "border-t-primary"
-                  }`}
-                >
-                  <CardContent className="pt-8 pb-6 px-6">
-                    <span
-                      className={`material-symbols-outlined text-4xl mb-4 block ${
-                        isMedical ? "text-brand-blue" : "text-primary"
-                      }`}
-                      style={{ fontVariationSettings: "'FILL' 1" }}
-                    >
-                      {v.icon}
-                    </span>
-                    <h3 className="font-heading text-lg font-black text-secondary mb-2 uppercase tracking-tight">
-                      {v.title}
-                    </h3>
-                    <p className="text-sm text-foreground/80 font-medium leading-relaxed">
-                      {v.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                <StaggerItem key={v.title}>
+                  <Card
+                    className={`border-t-4 hover:shadow-md transition-shadow h-full ${
+                      isMedical ? "border-t-brand-blue" : "border-t-primary"
+                    }`}
+                  >
+                    <CardContent className="pt-8 pb-6 px-6">
+                      <span
+                        className={`material-symbols-outlined text-4xl mb-4 block ${
+                          isMedical ? "text-brand-blue" : "text-primary"
+                        }`}
+                        style={{ fontVariationSettings: "'FILL' 1" }}
+                      >
+                        {v.icon}
+                      </span>
+                      <h3 className="font-heading text-lg font-black text-secondary mb-2 uppercase tracking-tight">
+                        {v.title}
+                      </h3>
+                      <p className="text-sm text-foreground/80 font-medium leading-relaxed">
+                        {v.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </StaggerItem>
               );
             })}
-          </div>
+          </StaggerContainer>
+
         </div>
       </section>
 
-      {/* Leadership — Trustees get full cards, Members get compact cards */}
+      {/* ── Leadership ────────────────────────────────────────────────── */}
       <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
-        <div className="text-center mb-12">
+
+        <FadeUp className="text-center mb-12">
           <h2 className="font-heading text-3xl md:text-4xl text-primary font-black uppercase tracking-tight">
             Our Leadership
           </h2>
           <div className="h-1 w-24 bg-primary mt-3 mx-auto rounded-full" />
-        </div>
+        </FadeUp>
 
-        {/* Trustees — full cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
+        {/* Trustees — 4 full cards, stagger 100ms apart */}
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
           {[
             {
               name: "Dr. Anjali Deshmukh",
@@ -253,44 +234,46 @@ export default function AboutUsPage() {
               img: "/trustee4_image.webp",
             },
           ].map((person) => (
-            <Card
-              key={person.name}
-              className="border-t-4 border-t-primary shadow-md"
-            >
-              <CardContent className="p-6 pt-8">
-                <div className="flex items-start gap-4">
-                  <div className="w-20 h-20 bg-muted rounded-full overflow-hidden border-2 border-secondary shrink-0">
-                    <img
-                      src={person.img}
-                      alt={person.name}
-                      className="w-full h-full object-cover"
-                    />
+            <StaggerItem key={person.name}>
+              <Card className="border-t-4 border-t-primary shadow-md h-full">
+                <CardContent className="p-6 pt-8">
+                  <div className="flex items-start gap-4">
+                    <div className="w-20 h-20 bg-muted rounded-full overflow-hidden border-2 border-secondary shrink-0">
+                      <img
+                        src={person.img}
+                        alt={person.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="font-heading text-xl text-secondary font-bold">
+                        {person.name}
+                      </h3>
+                      <p className="text-xs text-brand-blue font-bold uppercase tracking-wider mt-1">
+                        {person.role}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-heading text-xl text-secondary font-bold">
-                      {person.name}
-                    </h3>
-                    <p className="text-xs text-brand-blue font-bold uppercase tracking-wider mt-1">
-                      {person.role}
-                    </p>
-                  </div>
-                </div>
-                <p className="text-sm text-foreground/80 mt-6 font-medium leading-relaxed">
-                  {person.bio}
-                </p>
-              </CardContent>
-            </Card>
+                  <p className="text-sm text-foreground/80 mt-6 font-medium leading-relaxed">
+                    {person.bio}
+                  </p>
+                </CardContent>
+              </Card>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
 
-        {/* Members — compact cards */}
-        <div className="text-center mb-8">
+        {/* Members sub-heading fades up before its grid */}
+        <FadeUp className="text-center mb-8">
           <h3 className="font-heading text-xl md:text-2xl text-secondary font-black uppercase tracking-tight">
             Our Members
           </h3>
           <div className="h-1 w-16 bg-primary mt-2 mx-auto rounded-full" />
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-5xl mx-auto">
+        </FadeUp>
+
+        {/* 6 compact member cards — uses the default 100ms stagger from StaggerContainer.
+            The cards are small so 100ms is still readable at this density. */}
+        <StaggerContainer className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-5xl mx-auto">
           {[
             // TODO: confirm names and designations with the trust
             { name: "Member Name 1", role: "Designation" },
@@ -300,85 +283,57 @@ export default function AboutUsPage() {
             { name: "Member Name 5", role: "Designation" },
             { name: "Member Name 6", role: "Designation" },
           ].map((person) => (
-            <Card
-              key={person.name}
-              className="border-t-2 border-t-brand-blue text-center"
-            >
-              <CardContent className="p-4">
-                <h4 className="font-heading text-sm text-secondary font-bold leading-snug">
-                  {person.name}
-                </h4>
-                <p className="text-[10px] text-brand-blue font-bold uppercase tracking-wider mt-1">
-                  {person.role}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-        {/* 6 Members Grid - Compact Cards */}
-        {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
-          {[
-            { name: "[Member Name 1]", role: "Executive Member" },
-            { name: "[Member Name 2]", role: "Executive Member" },
-            { name: "[Member Name 3]", role: "Executive Member" },
-            { name: "[Member Name 4]", role: "Executive Member" },
-            { name: "[Member Name 5]", role: "Executive Member" },
-            { name: "[Member Name 6]", role: "Executive Member" },
-          ].map((member) => (
-            <Card
-              key={member.name}
-              className="border-l-4 border-l-secondary shadow-sm hover:shadow-md transition-shadow"
-            >
-              <CardContent className="p-4 flex items-center gap-4">
-                <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center shrink-0 border border-border">
-                  <span
-                    className="material-symbols-outlined text-muted-foreground"
-                    style={{ fontVariationSettings: "'FILL' 1" }}
-                  >
-                    person
-                  </span>
-                </div>
-                <div>
-                  <h4 className="font-heading text-lg text-secondary font-bold leading-tight">
-                    {member.name}
+            <StaggerItem key={person.name}>
+              <Card className="border-t-2 border-t-brand-blue text-center h-full">
+                <CardContent className="p-4">
+                  <h4 className="font-heading text-sm text-secondary font-bold leading-snug">
+                    {person.name}
                   </h4>
-                  <p className="text-xs text-foreground/70 font-bold uppercase tracking-wider mt-0.5">
-                    {member.role}
+                  <p className="text-[10px] text-brand-blue font-bold uppercase tracking-wider mt-1">
+                    {person.role}
                   </p>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </StaggerItem>
           ))}
-        </div>*/}
+        </StaggerContainer>
+
       </section>
 
-      {/* CTA */}
+      {/* ── CTA ───────────────────────────────────────────────────────────
+          Single FadeUp on the whole block — it reads as one unit and the
+          section is short enough that individual item stagger would feel
+          fidgety. Donate button carries animate-heartbeat for consistency
+          with the homepage hero CTA.
+      ─────────────────────────────────────────────────────────────────── */}
       <section className="py-14 px-4 md:px-8 bg-secondary text-white text-center border-t-4 border-primary">
-        <h2 className="font-heading text-3xl font-black uppercase tracking-tight mb-4">
-          Join the Mission
-        </h2>
-        <p className="text-white/80 max-w-xl mx-auto mb-8 font-medium">
-          Whether you donate, volunteer, or simply spread the word — every act
-          of support helps us reach one more village, one more patient, one more
-          person who needs care and has nowhere else to turn.
-        </p>
-        <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <Button
-            asChild
-            size="lg"
-            className="uppercase font-bold tracking-wide border-b-4 border-b-primary/50 active:border-b-0 active:translate-y-1"
-          >
-            <Link href="/donate">Donate Now</Link>
-          </Button>
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="uppercase font-bold tracking-wide bg-transparent border-white text-white hover:bg-white hover:text-secondary"
-          >
-            <Link href="/contact">Contact Us</Link>
-          </Button>
-        </div>
+        <FadeUp className="max-w-xl mx-auto">
+          <h2 className="font-heading text-3xl font-black uppercase tracking-tight mb-4">
+            Join the Mission
+          </h2>
+          <p className="text-white/80 mb-8 font-medium">
+            Whether you donate, volunteer, or simply spread the word — every act
+            of support helps us reach one more village, one more patient, one
+            more person who needs care and has nowhere else to turn.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Button
+              asChild
+              size="lg"
+              className="uppercase font-bold tracking-wide border-b-4 border-b-primary/50 active:border-b-0 active:translate-y-1 animate-heartbeat"
+            >
+              <Link href="/donate">Donate Now</Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="uppercase font-bold tracking-wide bg-transparent border-white text-white hover:bg-white hover:text-secondary"
+            >
+              <Link href="/contact">Contact Us</Link>
+            </Button>
+          </div>
+        </FadeUp>
       </section>
     </>
   );

@@ -341,10 +341,7 @@ export default function HomePage() {
             </div>
           </section>
 
-          {/* ── QR / Donate section — fades up as a unit ────────────────── */}
-          <FadeUp>
-            <QrSection />
-          </FadeUp>
+          <QrSection />
 
           {/* ── Become a Volunteer ──────────────────────────────────────── */}
           <section className="py-16 px-4 md:px-8 bg-secondary border-t-4 border-primary">

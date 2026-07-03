@@ -1,5 +1,6 @@
 // app/(home)/activities/page.jsx
-// Server component — exports metadata, no "use client" needed
+// Server component — exports metadata, no "use client" needed.
+// Motion lives entirely in the imported client components.
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -18,6 +19,11 @@ import {
   Users,
 } from "lucide-react";
 import EventsSection from "./EventsSection";
+
+// ── Motion components ─────────────────────────────────────────────────────────
+import AnimatedPageHero from "@/components/AnimatedPageHero";
+import FadeUp from "@/components/FadeUp";
+import { StaggerContainer, StaggerItem } from "@/components/StaggerChildren";
 
 export const metadata = {
   title: "Our Activities | Sahyadri Manav Seva Manch, Thane",
@@ -40,7 +46,7 @@ export const metadata = {
     siteName: "Sahyadri Manav Seva Manch",
     images: [
       {
-        url: "/og-activities.webp", // TODO: create a 1200×630 OG image
+        url: "/og-activities.webp",
         width: 1200,
         height: 630,
         alt: "Sahyadri Manav Seva Manch volunteers at a medical camp",
@@ -72,7 +78,6 @@ const jsonLd = {
   },
 };
 
-// ── Section 1: Tribal & Community Health Camps ─────────────────────────
 const tribalCamps = [
   {
     icon: CalendarClock,
@@ -94,7 +99,6 @@ const tribalCamps = [
   },
 ];
 
-// ── Section 2: Disaster & Emergency Relief ──────────────────────────────
 const disasterRelief = [
   {
     icon: Droplets,
@@ -122,7 +126,6 @@ const disasterRelief = [
   },
 ];
 
-// ── Section 3: Education & Awareness ────────────────────────────────────
 const educationInitiatives = [
   {
     icon: BookOpen,
@@ -158,16 +161,19 @@ export default function ActivitiesPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Page Hero */}
+      {/* ── Page Hero ────────────────────────────────────────────────────
+          AnimatedPageHero staggers each direct child on mount.
+          The outer section (background image + overlay) stays server-side
+          so it renders immediately without waiting for hydration.
+      ─────────────────────────────────────────────────────────────────── */}
       <section className="relative py-16 px-4 md:px-8 border-b-4 border-primary overflow-hidden">
-        {/* Stock placeholder — replace with a real SMSM photo */}
         <img
           src="https://images.unsplash.com/photo-1717820775574-bc200d22ce40?fm=jpg&q=80&w=2000&auto=format&fit=crop"
           alt="Aerial view of a remote village in the mountains"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-secondary/90" />
-        <div className="max-w-3xl mx-auto text-center relative z-10">
+        <AnimatedPageHero className="max-w-3xl mx-auto text-center relative z-10">
           <Badge className="mb-4 bg-primary/20 text-primary border-primary/30 uppercase tracking-widest text-xs">
             Since 1982
           </Badge>
@@ -179,14 +185,18 @@ export default function ActivitiesPage() {
             relief, school health programmes, and the annual Aarogyawari
             pilgrimage service — this is where the work happens.
           </p>
-        </div>
+        </AnimatedPageHero>
       </section>
 
-      <EventsSection />
+      {/* ── Events — FadeUp wraps the whole section as one unit ────────── */}
+      <FadeUp>
+        <EventsSection />
+      </FadeUp>
 
-      {/* Section 1: Tribal & Community Health Camps */}
+      {/* ── Section 1: Tribal & Community Health Camps ─────────────────── */}
       <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
-        <div className="text-center mb-12">
+        {/* Heading block fades up first */}
+        <FadeUp className="text-center mb-12">
           <h2 className="font-heading text-3xl md:text-4xl text-primary font-black uppercase tracking-tight">
             Tribal & Community Health Camps
           </h2>
@@ -195,43 +205,48 @@ export default function ActivitiesPage() {
             Year-round, our doctors and volunteers carry healthcare into
             villages that the system rarely reaches.
           </p>
-        </div>
-        <div className="rounded-xl overflow-hidden border border-border mb-8 h-56 md:h-72">
-          {/* Stock placeholder — replace with a real SMSM photo of Devbandh camps */}
-          <img
-            src="https://images.unsplash.com/photo-1641465756589-dc84610af2d1?fm=jpg&q=80&w=2000&auto=format&fit=crop"
-            alt="A man standing in a rural field, representing the tribal villages we serve"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        </FadeUp>
+
+        {/* Banner image fades up with a small offset after the heading */}
+        <FadeUp delay={0.08} className="mb-8">
+          <div className="rounded-xl overflow-hidden border border-border h-56 md:h-72">
+            {/* Stock placeholder — replace with a real SMSM photo of Devbandh camps */}
+            <img
+              src="https://images.unsplash.com/photo-1641465756589-dc84610af2d1?fm=jpg&q=80&w=2000&auto=format&fit=crop"
+              alt="A man standing in a rural field, representing the tribal villages we serve"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </FadeUp>
+
+        {/* 3 cards stagger in 100ms apart */}
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {tribalCamps.map((item) => (
-            <Card
-              key={item.title}
-              className="border-t-4 border-t-primary hover:shadow-md transition-shadow"
-            >
-              <CardContent className="pt-8 pb-6 px-6">
-                <item.icon
-                  className="text-primary mb-4"
-                  size={36}
-                  strokeWidth={2}
-                />
-                <h3 className="font-heading text-lg font-black text-secondary mb-2 uppercase tracking-tight">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-foreground/80 font-medium leading-relaxed">
-                  {item.description}
-                </p>
-              </CardContent>
-            </Card>
+            <StaggerItem key={item.title}>
+              <Card className="border-t-4 border-t-primary hover:shadow-md transition-shadow h-full">
+                <CardContent className="pt-8 pb-6 px-6">
+                  <item.icon
+                    className="text-primary mb-4"
+                    size={36}
+                    strokeWidth={2}
+                  />
+                  <h3 className="font-heading text-lg font-black text-secondary mb-2 uppercase tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-foreground/80 font-medium leading-relaxed">
+                    {item.description}
+                  </p>
+                </CardContent>
+              </Card>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </section>
 
-      {/* Section 2: Disaster & Emergency Relief — brand-blue accent */}
+      {/* ── Section 2: Disaster & Emergency Relief ─────────────────────── */}
       <section className="py-16 px-4 md:px-8 bg-muted/30 border-y border-border">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
+          <FadeUp className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl text-brand-blue font-black uppercase tracking-tight">
               Disaster & Emergency Relief
             </h2>
@@ -240,24 +255,73 @@ export default function ActivitiesPage() {
               When disaster strikes, our teams mobilise quickly to provide
               emergency medical care to affected communities.
             </p>
-          </div>
-          <div className="rounded-xl overflow-hidden border border-border mb-8 h-56 md:h-72 bg-muted">
-            {/* TODO: replace with a real SMSM disaster relief photo */}
+          </FadeUp>
+
+          <FadeUp delay={0.08} className="mb-8">
+            <div className="rounded-xl overflow-hidden border border-border h-56 md:h-72 bg-muted">
+              <img
+                src="/activities-disaster-relief.webp"
+                alt="Medical volunteers providing emergency aid to a disaster-affected community"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </FadeUp>
+
+          {/* 4 cards stagger in 100ms apart */}
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {disasterRelief.map((item) => (
+              <StaggerItem key={item.title}>
+                <Card className="border-t-4 border-t-brand-blue hover:shadow-md transition-shadow bg-white h-full">
+                  <CardContent className="pt-8 pb-6 px-6">
+                    <item.icon
+                      className="text-brand-blue mb-4"
+                      size={32}
+                      strokeWidth={2}
+                    />
+                    <h3 className="font-heading text-base font-black text-secondary mb-2 uppercase tracking-tight">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-foreground/80 font-medium leading-relaxed">
+                      {item.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        </div>
+      </section>
+
+      {/* ── Section 3: Education & Awareness ───────────────────────────── */}
+      <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
+        <FadeUp className="text-center mb-12">
+          <h2 className="font-heading text-3xl md:text-4xl text-primary font-black uppercase tracking-tight">
+            Education & Awareness
+          </h2>
+          <div className="h-1 w-24 bg-primary mt-3 mx-auto rounded-full" />
+          <p className="text-foreground/80 font-medium leading-relaxed max-w-2xl mx-auto mt-4">
+            Healthcare and education go hand in hand — we invest in both.
+          </p>
+        </FadeUp>
+
+        <FadeUp delay={0.08} className="mb-8">
+          <div className="rounded-xl overflow-hidden border border-border h-56 md:h-72">
+            {/* Stock placeholder — replace with a real SMSM school programme photo */}
             <img
-              src="/activities-disaster-relief.webp"
-              alt="Medical volunteers providing emergency aid to a disaster-affected community"
+              src="https://images.unsplash.com/photo-1673146416489-98c2e139f680?fm=jpg&q=80&w=2000&auto=format&fit=crop"
+              alt="A group of people gathered outside a school building"
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {disasterRelief.map((item) => (
-              <Card
-                key={item.title}
-                className="border-t-4 border-t-brand-blue hover:shadow-md transition-shadow bg-white"
-              >
+        </FadeUp>
+
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {educationInitiatives.map((item) => (
+            <StaggerItem key={item.title}>
+              <Card className="border-t-4 border-t-primary hover:shadow-md transition-shadow h-full">
                 <CardContent className="pt-8 pb-6 px-6">
                   <item.icon
-                    className="text-brand-blue mb-4"
+                    className="text-primary mb-4"
                     size={32}
                     strokeWidth={2}
                   />
@@ -269,55 +333,12 @@ export default function ActivitiesPage() {
                   </p>
                 </CardContent>
               </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Section 3: Education & Awareness */}
-      <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="font-heading text-3xl md:text-4xl text-primary font-black uppercase tracking-tight">
-            Education & Awareness
-          </h2>
-          <div className="h-1 w-24 bg-primary mt-3 mx-auto rounded-full" />
-          <p className="text-foreground/80 font-medium leading-relaxed max-w-2xl mx-auto mt-4">
-            Healthcare and education go hand in hand — we invest in both.
-          </p>
-        </div>
-        <div className="rounded-xl overflow-hidden border border-border mb-8 h-56 md:h-72">
-          {/* Stock placeholder — replace with a real SMSM school programme photo */}
-          <img
-            src="https://images.unsplash.com/photo-1673146416489-98c2e139f680?fm=jpg&q=80&w=2000&auto=format&fit=crop"
-            alt="A group of people gathered outside a school building"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {educationInitiatives.map((item) => (
-            <Card
-              key={item.title}
-              className="border-t-4 border-t-primary hover:shadow-md transition-shadow"
-            >
-              <CardContent className="pt-8 pb-6 px-6">
-                <item.icon
-                  className="text-primary mb-4"
-                  size={32}
-                  strokeWidth={2}
-                />
-                <h3 className="font-heading text-base font-black text-secondary mb-2 uppercase tracking-tight">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-foreground/80 font-medium leading-relaxed">
-                  {item.description}
-                </p>
-              </CardContent>
-            </Card>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </section>
 
-      {/* Section 4: Aarogyawari — Pandharpur Wari Service (heritage palette) */}
+      {/* ── Section 4: Aarogyawari (heritage palette) ──────────────────── */}
       <section
         className="py-16 px-4 md:px-8"
         style={{
@@ -327,7 +348,7 @@ export default function ActivitiesPage() {
         }}
       >
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
+          <FadeUp className="text-center mb-12">
             <Badge className="mb-4 bg-[#a93200]/10 text-[#a93200] border-[#a93200]/30 uppercase tracking-widest text-xs">
               Since 1984
             </Badge>
@@ -335,46 +356,52 @@ export default function ActivitiesPage() {
               Aarogyawari — The Pandharpur Wari Service
             </h2>
             <div className="h-1.5 w-32 bg-[#F39C12] mx-auto mt-4" />
-          </div>
+          </FadeUp>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <Card className="lg:col-span-2 rounded-none border border-[rgba(140,98,57,0.2)] shadow-sm bg-white">
-              <CardContent className="p-8">
-                <div className="flex items-center gap-3 mb-4 text-[#6D1B13]">
-                  <Footprints size={32} />
-                  <h3 className="font-heading text-2xl font-black">
-                    Camps Along the Route
+          {/* Bento cards — StaggerItem carries lg:col-span-2 to preserve the grid span */}
+          <StaggerContainer className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <StaggerItem className="lg:col-span-2">
+              <Card className="rounded-none border border-[rgba(140,98,57,0.2)] shadow-sm bg-white h-full">
+                <CardContent className="p-8">
+                  <div className="flex items-center gap-3 mb-4 text-[#6D1B13]">
+                    <Footprints size={32} />
+                    <h3 className="font-heading text-2xl font-black">
+                      Camps Along the Route
+                    </h3>
+                  </div>
+                  <p className="text-[#333333] leading-relaxed font-medium">
+                    Every year during Ashadhi Ekadashi, thousands of Warkari
+                    devotees walk from Alandi to Pandharpur for the darshan of
+                    Lord Vitthal. We organise healthcare and support services
+                    along the route — milk distribution, medical examinations,
+                    treatment, and referrals for surgeries — through dedicated
+                    camps near Saswad and Phaltan.
+                  </p>
+                </CardContent>
+              </Card>
+            </StaggerItem>
+
+            <StaggerItem>
+              <Card className="rounded-none border border-[rgba(140,98,57,0.2)] shadow-sm bg-white h-full">
+                <CardContent className="p-8">
+                  <h3 className="font-heading text-xl font-black text-[#6D1B13] mb-3">
+                    Where Help Is Needed Most
                   </h3>
-                </div>
-                <p className="text-[#333333] leading-relaxed font-medium">
-                  Every year during Ashadhi Ekadashi, thousands of Warkari
-                  devotees walk from Alandi to Pandharpur for the darshan of
-                  Lord Vitthal. We organise healthcare and support services
-                  along the route — milk distribution, medical examinations,
-                  treatment, and referrals for surgeries — through dedicated
-                  camps near Saswad and Phaltan.
-                </p>
-              </CardContent>
-            </Card>
+                  <p className="text-[#333333] text-sm leading-relaxed font-medium">
+                    Our first camp sits between Dive Ghat and Saswad — one of
+                    the most physically demanding stretches, where steep daytime
+                    climbs cause the greatest strain. After Natepute, many
+                    pilgrims face fatigue, muscle pain, respiratory issues,
+                    infections, fever, and high blood pressure. Our doctors and
+                    volunteers are there to meet that need.
+                  </p>
+                </CardContent>
+              </Card>
+            </StaggerItem>
+          </StaggerContainer>
 
-            <Card className="rounded-none border border-[rgba(140,98,57,0.2)] shadow-sm bg-white">
-              <CardContent className="p-8">
-                <h3 className="font-heading text-xl font-black text-[#6D1B13] mb-3">
-                  Where Help Is Needed Most
-                </h3>
-                <p className="text-[#333333] text-sm leading-relaxed font-medium">
-                  Our first camp sits between Dive Ghat and Saswad — one of the
-                  most physically demanding stretches, where steep daytime
-                  climbs cause the greatest strain. After Natepute, many
-                  pilgrims face fatigue, muscle pain, respiratory issues,
-                  infections, fever, and high blood pressure. Our doctors and
-                  volunteers are there to meet that need.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="text-center mt-8">
+          {/* Button fades up after the cards settle */}
+          <FadeUp delay={0.15} className="text-center mt-8">
             <Button
               asChild
               variant="outline"
@@ -384,36 +411,38 @@ export default function ActivitiesPage() {
                 Learn More About Aarogyawari
               </Link>
             </Button>
-          </div>
+          </FadeUp>
         </div>
       </section>
 
-      {/* CTA */}
+      {/* ── CTA ──────────────────────────────────────────────────────────── */}
       <section className="py-14 px-4 md:px-8 bg-secondary text-white text-center border-t-4 border-primary">
-        <h2 className="font-heading text-3xl font-black uppercase tracking-tight mb-4">
-          Support Our Work
-        </h2>
-        <p className="text-white/80 max-w-xl mx-auto mb-8 font-medium">
-          Every camp, every check-up, every relief effort is made possible by
-          people like you. Donate, volunteer, or get in touch to learn more.
-        </p>
-        <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <Button
-            asChild
-            size="lg"
-            className="uppercase font-bold tracking-wide border-b-4 border-b-primary/50 active:border-b-0 active:translate-y-1"
-          >
-            <Link href="/donate">Donate Now</Link>
-          </Button>
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="uppercase font-bold tracking-wide bg-transparent border-white text-white hover:bg-white hover:text-secondary"
-          >
-            <Link href="/join">Get Involved</Link>
-          </Button>
-        </div>
+        <FadeUp className="max-w-xl mx-auto">
+          <h2 className="font-heading text-3xl font-black uppercase tracking-tight mb-4">
+            Support Our Work
+          </h2>
+          <p className="text-white/80 mb-8 font-medium">
+            Every camp, every check-up, every relief effort is made possible by
+            people like you. Donate, volunteer, or get in touch to learn more.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Button
+              asChild
+              size="lg"
+              className="uppercase font-bold tracking-wide border-b-4 border-b-primary/50 active:border-b-0 active:translate-y-1 animate-heartbeat"
+            >
+              <Link href="/donate">Donate Now</Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="uppercase font-bold tracking-wide bg-transparent border-white text-white hover:bg-white hover:text-secondary"
+            >
+              <Link href="/join">Get Involved</Link>
+            </Button>
+          </div>
+        </FadeUp>
       </section>
     </>
   );
