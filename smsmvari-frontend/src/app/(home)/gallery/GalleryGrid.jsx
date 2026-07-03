@@ -4,6 +4,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Badge } from "@/components/ui/badge";
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import { StaggerContainer, StaggerItem } from "@/components/StaggerChildren";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Static data — active until the fetch block below is wired up.
@@ -322,40 +323,47 @@ export default function GalleryGrid() {
           <SkeletonGrid count={12} />
         ) : (
           <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+            <StaggerContainer
+              key={activeCategory}
+              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4"
+            >
               {filteredItems.map((item, index) => (
-                <button
+                <StaggerItem
                   key={item.id}
-                  onClick={() => openLightbox(index)}
-                  aria-label={`View image: ${item.title}`}
-                  className="group relative overflow-hidden rounded-lg border border-border/50 bg-muted aspect-square cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="group relative overflow-hidden rounded-lg border border-border/50 bg-muted aspect-square"
                 >
-                  <img
-                    src={item.src}
-                    alt={item.alt}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
+                  <button
+                    onClick={() => openLightbox(index)}
+                    aria-label={`View image: ${item.title}`}
+                    className="w-full h-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
 
-                  {/* Hover overlay */}
-                  <div className="absolute inset-0 bg-secondary/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
-                    <div className="flex items-end justify-between gap-2">
-                      <div>
-                        <Badge
-                          className={`uppercase text-[10px] tracking-wider mb-1.5 ${badgeClass(item.category)}`}
-                        >
-                          {item.category}
-                        </Badge>
-                        <p className="text-white font-bold text-sm leading-tight">
-                          {item.title}
-                        </p>
+                    {/* Hover overlay */}
+                    <div className="absolute inset-0 bg-secondary/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
+                      <div className="flex items-end justify-between gap-2">
+                        <div>
+                          <Badge
+                            className={`uppercase text-[10px] tracking-wider mb-1.5 ${badgeClass(item.category)}`}
+                          >
+                            {item.category}
+                          </Badge>
+                          <p className="text-white font-bold text-sm leading-tight">
+                            {item.title}
+                          </p>
+                        </div>
+                        <ZoomIn className="text-white shrink-0" size={20} />
                       </div>
-                      <ZoomIn className="text-white shrink-0" size={20} />
                     </div>
-                  </div>
-                </button>
+                  </button>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
 
             {/* Empty state */}
             {filteredItems.length === 0 && (

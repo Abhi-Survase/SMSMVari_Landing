@@ -1,6 +1,10 @@
 import GalleryGrid from "./GalleryGrid";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import AnimatedPageHero from "@/components/AnimatedPageHero";
+import FadeUp from "@/components/FadeUp";
+import { StaggerContainer, StaggerItem } from "@/components/StaggerChildren";
 
 export const metadata = {
   title: "Gallery | Sahyadri Manav Seva Manch – Our Work in Photos",
@@ -98,7 +102,14 @@ export default function GalleryPage() {
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section className="bg-secondary text-white py-16 px-4 md:px-8 border-b-4 border-primary">
-        <div className="max-w-3xl mx-auto text-center">
+        <AnimatedPageHero className="max-w-3xl mx-auto text-center">
+          <Image
+            src="/icon.webp"
+            alt="SMSM Vari"
+            width={64}
+            height={64}
+            className="mx-auto mb-4"
+          />
           <p className="text-primary font-bold uppercase tracking-widest text-sm mb-3">
             Through the Lens
           </p>
@@ -111,12 +122,12 @@ export default function GalleryPage() {
             efforts to the devotion of lakhs of Varkaris on the sacred
             Pandharpur Wari.
           </p>
-        </div>
+        </AnimatedPageHero>
       </section>
 
       {/* ── Stats bar ────────────────────────────────────────────────────── */}
       <div className="bg-muted/40 border-b border-border py-5 px-4 md:px-8">
-        <div className="max-w-3xl mx-auto flex flex-wrap justify-center gap-x-10 gap-y-2 text-center">
+        <StaggerContainer className="max-w-3xl mx-auto flex flex-wrap justify-center gap-x-10 gap-y-2 text-center">
           {[
             { value: "6", label: "Categories" },
             { value: "15+", label: "Photos" },
@@ -127,7 +138,7 @@ export default function GalleryPage() {
               accent: "blue",
             },
           ].map(({ value, label, accent }) => (
-            <div key={label}>
+            <StaggerItem key={label}>
               <span
                 className={`font-heading text-xl font-black ${
                   accent === "blue" ? "text-brand-blue" : "text-secondary"
@@ -138,9 +149,9 @@ export default function GalleryPage() {
               <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground ml-2">
                 {label}
               </span>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
 
       {/* ── Interactive grid (client component) ──────────────────────────── */}
@@ -148,31 +159,33 @@ export default function GalleryPage() {
 
       {/* ── CTA — matches About and Donate pages exactly ─────────────────── */}
       <section className="py-14 px-4 md:px-8 bg-secondary text-white text-center border-t-4 border-primary">
-        <h2 className="font-heading text-3xl font-black uppercase tracking-tight mb-4">
-          Be Part of the Mission
-        </h2>
-        <p className="text-white/80 max-w-xl mx-auto mb-8 font-medium">
-          These photographs represent thousands of lives touched. Your support
-          makes the next chapter possible — donate, volunteer, or share our
-          story.
-        </p>
-        <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <Button
-            asChild
-            size="lg"
-            className="uppercase font-bold tracking-wide border-b-4 border-b-primary/50 active:border-b-0 active:translate-y-1"
-          >
-            <Link href="/donate">Donate Now</Link>
-          </Button>
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="uppercase font-bold tracking-wide bg-transparent border-white text-white hover:bg-white hover:text-secondary"
-          >
-            <Link href="/join">Volunteer With Us</Link>
-          </Button>
-        </div>
+        <FadeUp>
+          <h2 className="font-heading text-3xl font-black uppercase tracking-tight mb-4">
+            Be Part of the Mission
+          </h2>
+          <p className="text-white/80 max-w-xl mx-auto mb-8 font-medium">
+            These photographs represent thousands of lives touched. Your support
+            makes the next chapter possible — donate, volunteer, or share our
+            story.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Button
+              asChild
+              size="lg"
+              className="uppercase font-bold tracking-wide border-b-4 border-b-primary/50 active:border-b-0 active:translate-y-1"
+            >
+              <Link href="/donate">Donate Now</Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="uppercase font-bold tracking-wide bg-transparent border-white text-white hover:bg-white hover:text-secondary"
+            >
+              <Link href="/join">Volunteer With Us</Link>
+            </Button>
+          </div>
+        </FadeUp>
       </section>
     </>
   );

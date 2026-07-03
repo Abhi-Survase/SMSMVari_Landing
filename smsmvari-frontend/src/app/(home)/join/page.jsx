@@ -4,6 +4,7 @@
 import JoinForm from "./JoinForm";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import AnimatedPageHero from "@/components/AnimatedPageHero";
 import FadeUp from "@/components/FadeUp";
 import { StaggerContainer, StaggerItem } from "@/components/StaggerChildren";
@@ -128,6 +129,13 @@ export default function JoinUsPage() {
       {/* Page Hero */}
       <section className="bg-secondary text-white py-16 px-4 md:px-8 border-b-4 border-primary">
         <AnimatedPageHero className="max-w-2xl mx-auto text-center">
+          <Image
+            src="/icon.webp"
+            alt="SMSM Vari"
+            width={64}
+            height={64}
+            className="mx-auto mb-4"
+          />
           <h1 className="font-heading text-4xl md:text-5xl font-black uppercase tracking-tight mb-4">
             Join Us
           </h1>

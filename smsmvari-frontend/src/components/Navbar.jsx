@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -36,12 +37,11 @@ export default function Navbar() {
       }`}
     >
       <div className="flex justify-between items-center w-full px-4 md:px-8 py-2 max-w-7xl mx-auto">
-        {/* Logo */}
-        <Link
-          href="/"
-          className="font-heading text-2xl font-black text-primary tracking-tight hover:text-brand-blue"
-        >
-          SMSM Vari
+        <Link href="/" className="flex items-center gap-2 ...">
+          <Image src="/icon.webp" alt="SMSM Vari" width={42} height={42} />
+          <span className="font-heading text-2xl font-black text-primary tracking-tight hover:text-brand-blue">
+            SMSM Vari
+          </span>
         </Link>
 
         {/* Desktop Navigation Links — unchanged, hidden below md */}

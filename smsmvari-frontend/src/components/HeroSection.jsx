@@ -54,6 +54,16 @@ export default function HeroSection() {
         initial="hidden"
         animate="show"
       >
+        <motion.div variants={item} className="mb-6">
+          <Image
+            src="/icon.webp"
+            alt="SMSM Vari"
+            width={80}
+            height={80}
+            className="drop-shadow-xl"
+          />
+        </motion.div>
+
         <motion.h1
           variants={item}
           className="font-heading text-4xl md:text-5xl lg:text-6xl text-white font-black mb-6 drop-shadow-xl uppercase tracking-tight"

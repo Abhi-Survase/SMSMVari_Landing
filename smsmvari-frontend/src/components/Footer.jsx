@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 export default function Footer() {
   const pathname = usePathname();
@@ -14,8 +15,17 @@ export default function Footer() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 px-4 md:px-8 py-12 max-w-7xl mx-auto">
         {/* Brand Column */}
         <div className="col-span-1 sm:col-span-2 md:col-span-1 flex flex-col gap-4">
-          <div className="font-heading text-2xl font-black text-white tracking-tight">
-            SMSM Vari
+          <div className="flex items-center gap-2">
+            <Image
+              src="/icon.webp"
+              alt="SMSM Vari"
+              width={36}
+              height={36}
+              className="rounded-full"
+            />
+            <div className="font-heading text-2xl font-black text-white tracking-tight">
+              SMSM Vari
+            </div>
           </div>
           <p className="text-sm text-muted-foreground max-w-xs">
             Providing free medical care to remote tribal villages,
@@ -25,13 +35,18 @@ export default function Footer() {
 
           {/* Donation QR Card */}
           <div className="bg-white p-3 rounded w-48 flex flex-col items-center my-2 shadow-sm">
-            <span className="text-primary font-bold text-xs mb-2 text-center">
-              SMSM Vari Trust
-            </span>
-            <img
+            <div className="flex items-center gap-1.5 mb-2">
+              <Image src="/icon.webp" alt="" width={18} height={18} />
+              <span className="text-primary font-bold text-xs text-center">
+                SMSM Vari Trust
+              </span>
+            </div>
+            <Image
               src="/dummy_qr.webp"
               alt="Scan to Donate"
-              className="w-full h-auto object-contain"
+              width={256}
+              height={256}
+              className="object-contain"
             />
             <span className="text-primary font-bold text-[11px] mt-2 text-center">
               UPI ID: smsmvari@upi

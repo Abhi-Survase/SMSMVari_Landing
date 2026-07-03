@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 // ── Motion components (client, safe to import from a server component) ───────
 import AnimatedPageHero from "@/components/AnimatedPageHero";
@@ -119,6 +120,13 @@ export default function AboutUsPage() {
       ─────────────────────────────────────────────────────────────────── */}
       <section className="bg-secondary text-white py-16 px-4 md:px-8 border-b-4 border-primary">
         <AnimatedPageHero className="max-w-3xl mx-auto text-center">
+          <Image
+            src="/icon.webp"
+            alt="SMSM Vari"
+            width={64}
+            height={64}
+            className="mx-auto mb-4"
+          />
           <Badge className="mb-4 bg-primary/20 text-primary border-primary/30 uppercase tracking-widest text-xs">
             Since 1984
           </Badge>
@@ -149,7 +157,6 @@ export default function AboutUsPage() {
       {/* ── Values ────────────────────────────────────────────────────── */}
       <section className="py-16 px-4 md:px-8 bg-muted/30 border-y border-border">
         <div className="max-w-7xl mx-auto">
-
           {/* Heading + underline fade up together */}
           <FadeUp className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl text-secondary font-black uppercase tracking-tight">
@@ -190,13 +197,11 @@ export default function AboutUsPage() {
               );
             })}
           </StaggerContainer>
-
         </div>
       </section>
 
       {/* ── Leadership ────────────────────────────────────────────────── */}
       <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
-
         <FadeUp className="text-center mb-12">
           <h2 className="font-heading text-3xl md:text-4xl text-primary font-black uppercase tracking-tight">
             Our Leadership
@@ -224,14 +229,14 @@ export default function AboutUsPage() {
               name: "Trustee Name 3",
               role: "Trustee & [Designation]",
               bio: "Brief bio describing this trustee's background, responsibilities, and contribution to the trust's work.",
-              img: "/trustee3_image.webp",
+              img: "/cmo_image.webp",
             },
             {
               // TODO: confirm name, role, and bio with the trust
               name: "Trustee Name 4",
               role: "Trustee & [Designation]",
               bio: "Brief bio describing this trustee's background, responsibilities, and contribution to the trust's work.",
-              img: "/trustee4_image.webp",
+              img: "/log-head_image.webp",
             },
           ].map((person) => (
             <StaggerItem key={person.name}>
@@ -239,10 +244,12 @@ export default function AboutUsPage() {
                 <CardContent className="p-6 pt-8">
                   <div className="flex items-start gap-4">
                     <div className="w-20 h-20 bg-muted rounded-full overflow-hidden border-2 border-secondary shrink-0">
-                      <img
+                      <Image
                         src={person.img}
                         alt={person.name}
-                        className="w-full h-full object-cover"
+                        width={256}
+                        height={256}
+                        className="object-cover"
                       />
                     </div>
                     <div>
@@ -297,7 +304,6 @@ export default function AboutUsPage() {
             </StaggerItem>
           ))}
         </StaggerContainer>
-
       </section>
 
       {/* ── CTA ───────────────────────────────────────────────────────────

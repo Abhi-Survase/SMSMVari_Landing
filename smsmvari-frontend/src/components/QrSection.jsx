@@ -2,6 +2,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import { QrCode, ReceiptText, Heart } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import Image from "next/image";
 
 // Shared easing — same curve used across all homepage motion components.
 const EASE = [0.22, 1, 0.36, 1];
@@ -59,16 +60,24 @@ export default function QrSection() {
               <div className="flex flex-col items-center justify-start gap-6">
                 {/* QR code — slides in from the left */}
                 <motion.div
-                  className="bg-white p-4 border-4 border-muted rounded-xl shadow-sm hover:scale-105 transition-transform duration-300"
+                  className="bg-white p-4 border-4 border-muted rounded-xl shadow-sm hover:scale-105 transition-transform duration-300 flex flex-col items-center gap-3"
                   initial={{ opacity: 0, x: shouldReduce ? 0 : -32 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, ease: EASE, delay: 0.35 }}
                 >
-                  <img
+                  <div className="flex items-center gap-1.5">
+                    <Image src="/icon.webp" alt="" width={18} height={18} />
+                    <span className="text-primary font-bold text-xs uppercase tracking-wide">
+                      SMSM Vari Trust
+                    </span>
+                  </div>
+                  <Image
                     src="/dummy_qr.webp"
                     alt="Scan to Donate"
-                    className="w-56 h-56 object-contain"
+                    width={256}
+                    height={256}
+                    className="object-contain"
                   />
                 </motion.div>
 

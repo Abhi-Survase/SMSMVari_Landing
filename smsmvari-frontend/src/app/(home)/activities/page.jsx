@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import {
   HeartPulse,
   Siren,
@@ -174,6 +175,13 @@ export default function ActivitiesPage() {
         />
         <div className="absolute inset-0 bg-secondary/90" />
         <AnimatedPageHero className="max-w-3xl mx-auto text-center relative z-10">
+          <Image
+            src="/icon.webp"
+            alt="SMSM Vari"
+            width={64}
+            height={64}
+            className="mx-auto mb-4"
+          />
           <Badge className="mb-4 bg-primary/20 text-primary border-primary/30 uppercase tracking-widest text-xs">
             Since 1982
           </Badge>
