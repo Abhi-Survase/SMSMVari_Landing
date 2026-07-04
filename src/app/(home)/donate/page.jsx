@@ -2,63 +2,65 @@
 // ─── "use client" removed ─ server component so metadata export works ────────
 
 import QrSection from "@/components/QrSection";
-import { Heart, Users, Stethoscope, ShieldCheck } from "lucide-react";
+import { Heart, Users, Stethoscope, ShieldCheck, Calendar } from "lucide-react";
 import { NumberTicker } from "@/components/shadcn-space/number-ticker/number-ticker-01";
 
 export const metadata = {
-  title: "Donate | SMSM Vari – Fund Varkari Healthcare",
+  title:
+    "Donate | Sahyadri Manav Seva Manch – Fund Healthcare for the Underserved",
   description:
-    "Support the Pandharpur Wari medical mission. Donate via UPI to fund emergency care, wound treatment, and medicine for thousands of Varkaris walking 250 km.",
+    "Support our work across tribal health camps, disaster relief, and the annual Aarogyawari pilgrimage service. Donate via UPI to fund medical camps, treatment, and medicines for thousands.",
   keywords: [
-    "donate Pandharpur Wari",
-    "SMSM Vari donation",
-    "Varkari healthcare fund",
-    "Sahyadri Manav Seva Manch Vari Trust",
+    "donate Sahyadri Manav Seva Manch",
+    "Aarogyawari donation",
+    "tribal health camp donation Maharashtra",
+    "Devbandh medical camp donation",
     "UPI donation NGO Maharashtra",
   ],
   openGraph: {
-    title: "Donate to SMSM Vari – Serve the Varkaris",
+    title: "Donate to Sahyadri Manav Seva Manch",
     description:
-      "Fund life-saving medical care for lakhs of Varkaris during the sacred 250 km Pandharpur Wari pilgrimage.",
+      "Fund life-saving medical care for tribal communities, disaster-affected families, and Varkaris during the Pandharpur pilgrimage.",
     type: "website",
     url: "https://smsmvari.com/donate",
-    siteName: "SMSM Vari",
+    siteName: "Sahyadri Manav Seva Manch",
     images: [
       {
         url: "/og_donate.webp",
         width: 1200,
         height: 630,
-        alt: "Volunteer providing medical care to a Varkari during the Pandharpur Wari",
+        alt: "Volunteer providing medical care at a Sahyadri Manav Seva Manch camp",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Donate to SMSM Vari – Serve the Varkaris",
+    title: "Donate to Sahyadri Manav Seva Manch",
     description:
-      "Fund life-saving medical care for lakhs of Varkaris during the sacred 250 km Pandharpur Wari pilgrimage.",
+      "Fund life-saving medical care for tribal communities, disaster-affected families, and Varkaris during the Pandharpur pilgrimage.",
     images: ["/og_donate.webp"],
   },
   alternates: { canonical: "https://smsmvari.com/donate" },
 };
 
 const jsonLd = {
-  "@context": "https://schema.com",
+  "@context": "https://schema.org",
   "@type": "DonateAction",
-  name: "Donate to SMSM Vari",
+  name: "Donate to Sahyadri Manav Seva Manch",
   description:
-    "Support Varkari healthcare during the Pandharpur Wari pilgrimage.",
+    "Support healthcare for tribal communities, disaster-affected families, and Varkaris during the Pandharpur pilgrimage.",
   agent: {
     "@type": "NGO",
-    name: "Sahyadri Manav Seva Manch Vari Trust",
+    name: "Sahyadri Manav Seva Manch, Thane",
     alternateName: "SMSM Vari",
     url: "https://smsmvari.com",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Main Road, Chouphala",
-      addressLocality: "Pandharpur",
+      // TODO: confirm exact HQ street address in Thane with the trust
+      streetAddress: "[Office Address], Thane",
+      addressLocality: "Thane",
       addressRegion: "Maharashtra",
-      postalCode: "413304",
+      postalCode: "400601",
       addressCountry: "IN",
     },
   },
@@ -70,11 +72,22 @@ const impactStats = [
     icon: Users,
     number: 12000,
     suffix: "+",
-    label: "Varkaris Treated Annually",
+    label: "Lives Touched Annually",
   },
-  { icon: Stethoscope, number: 40, suffix: "+", label: "Medical Camps Set Up" },
-  { icon: Heart, value: "250 km", label: "Route Covered" },
-  { icon: ShieldCheck, value: "21 Days", label: "Continuous Service" },
+  {
+    icon: Stethoscope,
+    number: 40,
+    suffix: "+",
+    label: "Medical Camps Set Up",
+  },
+  { icon: Heart, value: "250 km", label: "Wari Route Covered" },
+  { icon: ShieldCheck, value: "21 Days", label: "Continuous Wari Service" },
+  {
+    icon: Calendar,
+    value: "Since 1982",
+    label: "Serving Communities",
+    accent: "blue",
+  },
 ];
 
 export default function DonatePage() {
@@ -93,12 +106,13 @@ export default function DonatePage() {
             Make a Difference
           </p>
           <h1 className="font-heading text-4xl md:text-5xl font-black uppercase tracking-tight mb-6">
-            Support the Wari Mission
+            Support Our Healthcare Mission
           </h1>
           <p className="text-white/80 text-lg md:text-xl font-medium leading-relaxed">
-            Every rupee you give provides emergency care, wound treatment, and
-            medicine to devoted Varkaris walking barefoot for 250 km over 21
-            days. Your support sustains their sacred journey.
+            Every rupee you give funds medical camps in remote tribal villages,
+            emergency relief during disasters, and round-the-clock care for
+            Varkaris walking 250 km during the annual Aarogyawari pilgrimage
+            service. Your support reaches communities that need it most.
           </p>
         </div>
       </section>
@@ -108,27 +122,35 @@ export default function DonatePage() {
         aria-label="Our impact"
         className="bg-muted/40 border-b border-border py-10 px-4 md:px-8"
       >
-        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          {impactStats.map(({ icon: Icon, number, suffix, value, label }) => (
-            <div key={label} className="flex flex-col items-center gap-2">
-              <Icon className="text-primary" size={28} strokeWidth={2} />
-              <p className="font-heading text-2xl md:text-3xl font-black text-secondary">
-                {number ? (
-                  <NumberTicker
-                    start={number * 0.85}
-                    end={number}
-                    suffix={suffix}
-                    duration={8}
-                  />
-                ) : (
-                  value
-                )}
-              </p>
-              <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                {label}
-              </p>
-            </div>
-          ))}
+        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+          {impactStats.map(
+            ({ icon: Icon, number, suffix, value, label, accent }) => (
+              <div key={label} className="flex flex-col items-center gap-2">
+                <Icon
+                  className={
+                    accent === "blue" ? "text-brand-blue" : "text-primary"
+                  }
+                  size={28}
+                  strokeWidth={2}
+                />
+                <p className="font-heading text-2xl md:text-3xl font-black text-secondary">
+                  {number ? (
+                    <NumberTicker
+                      start={number * 0.85}
+                      end={number}
+                      suffix={suffix}
+                      duration={8}
+                    />
+                  ) : (
+                    value
+                  )}
+                </p>
+                <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  {label}
+                </p>
+              </div>
+            ),
+          )}
         </div>
       </section>
 

@@ -1,31 +1,47 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  // True once the page has scrolled past 50px — deepens the nav shadow.
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Don't render the public navbar on any admin route
+  if (pathname.startsWith("/admin")) return null;
 
   const navLinks = [
     { name: "Homepage", href: "/" },
     { name: "About Us", href: "/about" },
     { name: "Gallery", href: "/gallery" },
-    { name: "Contact Us", href: "/contact" },
+    { name: "Our Activities", href: "/activities" },
+    { name: "Join Us", href: "/join" },
   ];
 
   return (
-    <nav className="bg-card border-b-2 border-primary w-full sticky top-0 z-50 shadow-sm">
+    <nav
+      className={`bg-card border-b-2 border-primary w-full sticky top-0 z-50 transition-shadow duration-300 ${
+        scrolled ? "shadow-lg shadow-foreground/10" : "shadow-sm"
+      }`}
+    >
       <div className="flex justify-between items-center w-full px-4 md:px-8 py-2 max-w-7xl mx-auto">
-        {/* Logo */}
-        <Link
-          href="/"
-          className="font-heading text-2xl font-black text-primary tracking-tight"
-        >
-          SMSM Vari
+        <Link href="/" className="flex items-center gap-2 ...">
+          <Image src="icon.webp" alt="SMSM Vari" width={42} height={42} />
+          <span className="font-heading text-2xl font-black text-primary tracking-tight hover:text-brand-blue">
+            SMSM Vari
+          </span>
         </Link>
 
         {/* Desktop Navigation Links — unchanged, hidden below md */}
@@ -39,7 +55,7 @@ export default function Navbar() {
                 className={`transition-all pb-1 border-b-2 ${
                   isActive
                     ? "text-primary font-bold border-primary"
-                    : "text-muted-foreground border-transparent hover:text-primary"
+                    : "text-muted-foreground border-transparent hover:text-brand-blue"
                 }`}
               >
                 {link.name}

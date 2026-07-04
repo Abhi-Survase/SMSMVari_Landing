@@ -25,7 +25,7 @@ const ResetPassword = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Extract the email passed from the SendOtp page URL parameter
+  // Extract the email passed from the SendOtp page via URL parameters
   const email = searchParams.get("email") || "";
 
   const [password, setPassword] = useState("");
@@ -47,6 +47,7 @@ const ResetPassword = () => {
       return;
     }
 
+    // resetToken was stored by send-otp/page.jsx after OTP verification
     const resetToken = localStorage.getItem("resetToken");
 
     if (!resetToken) {
