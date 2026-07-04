@@ -34,10 +34,14 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative w-full border-b-4 border-secondary">
-      <div className="absolute inset-0 bg-black/50 z-10" />
-
-      <div className="relative h-[614px] md:h-[819px] w-full">
+    // overflow-hidden clips the background image to the section's own box.
+    // min-h-[...] sets a *floor* only — if the mobile content stack (logo +
+    // heading + paragraph + buttons) needs more room than that, the section
+    // grows taller instead of the content overflowing upward into the navbar.
+    <section className="relative w-full border-b-4 border-secondary overflow-hidden min-h-[560px] md:min-h-[819px] flex items-center">
+      {/* Background image + tint now live in their own absolute layer behind
+          the content, instead of being the thing that defines the box height. */}
+      <div className="absolute inset-0 z-0">
         <Image
           src="/home-hero.webp"
           alt="A grand procession of thousands of Varkaris (devotees) during the Pandharpur Wari"
@@ -45,28 +49,32 @@ export default function HeroSection() {
           className="object-cover object-center"
           priority
         />
+        <div className="absolute inset-0 bg-black/50" />
       </div>
 
-      {/* The three elements (h1, p, buttons) arrive in sequence, 140ms apart */}
+      {/* The three elements (h1, p, buttons) arrive in sequence, 140ms apart.
+          No longer absolutely positioned — it sits in normal flow, centered
+          by the section's own flex/items-center, with vertical padding as a
+          guaranteed buffer from the navbar above and the border below. */}
       <motion.div
-        className="absolute inset-0 z-20 flex flex-col justify-center items-center text-center px-4 max-w-5xl mx-auto"
+        className="relative z-20 flex flex-col justify-center items-center text-center px-4 py-16 md:py-0 max-w-5xl mx-auto w-full"
         variants={container}
         initial="hidden"
         animate="show"
       >
-        <motion.div variants={item} className="mb-6">
+        <motion.div variants={item} className="mb-4 md:mb-6">
           <Image
             src="/icon.webp"
             alt="SMSM Vari"
             width={80}
             height={80}
-            className="drop-shadow-xl"
+            className="w-16 h-16 md:w-20 md:h-20 drop-shadow-xl"
           />
         </motion.div>
 
         <motion.h1
           variants={item}
-          className="font-heading text-4xl md:text-5xl lg:text-6xl text-white font-black mb-6 drop-shadow-xl uppercase tracking-tight"
+          className="font-heading text-3xl md:text-5xl lg:text-6xl text-white font-black mb-4 md:mb-6 drop-shadow-xl uppercase tracking-tight"
         >
           Walking with Devotion,
           <br />
@@ -75,7 +83,7 @@ export default function HeroSection() {
 
         <motion.p
           variants={item}
-          className="font-sans text-lg md:text-xl text-white max-w-2xl mb-8 drop-shadow-md font-medium bg-black/30 p-6 rounded-md border border-white/20 backdrop-blur-sm"
+          className="font-sans text-base md:text-xl text-white max-w-2xl mb-6 md:mb-8 drop-shadow-md font-medium bg-black/30 p-4 md:p-6 rounded-md border border-white/20 backdrop-blur-sm"
         >
           Delivering essential medical care and humanitarian service to remote
           tribal villages, disaster-affected regions, and dedicated pilgrims

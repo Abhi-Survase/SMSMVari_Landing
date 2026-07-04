@@ -176,7 +176,7 @@ export default function HomePage() {
           {/* ── Mission in Action ───────────────────────────────────────── */}
           <section className="py-16 px-4 md:px-8 bg-muted/30 border-y border-border">
             <div className="max-w-7xl mx-auto">
-              <FadeUp className="flex flex-col md:flex-row justify-between items-end mb-8">
+              <FadeUp className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8">
                 <div>
                   <h2 className="font-heading text-3xl md:text-4xl text-secondary font-black uppercase tracking-tight">
                     Mission in Action
