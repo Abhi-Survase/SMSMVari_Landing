@@ -10,7 +10,7 @@
 
         <meta
             name="description"
-            content="SMSM Vari is building a new digital home. Just as the Varkaris journey from Alandi to Pandharpur with faith and perseverance, our website is on its pilgrimage too."
+            content="Sahyadri Manav Seva Manch (SMSM Vari) provides free medical care to remote tribal villages, disaster-affected communities, and pilgrims on the Pandharpur Wari. Our new website is on its way — just like the Varkaris, one step at a time."
         />
 
         <link rel="icon" type="image/webp" href="icon.webp" />
@@ -224,12 +224,60 @@
                 animation-delay: 0.46s;
             }
 
+            .mission-line {
+                margin-top: -18px;
+                animation-delay: 0.42s;
+            }
+
+            /* =======================================================
+   TRUST STATS
+======================================================= */
+
+            .trust-row {
+                display: flex;
+
+                flex-wrap: wrap;
+
+                gap: 32px;
+
+                margin: -6px 0 50px;
+
+                padding-top: 4px;
+
+                opacity: 0;
+                animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+                animation-delay: 0.58s;
+            }
+
+            .trust-item strong {
+                display: block;
+
+                font-size: 1.3rem;
+
+                font-weight: 900;
+
+                color: #6d1b13;
+            }
+
+            .trust-item span {
+                font-size: 0.78rem;
+
+                font-weight: 700;
+
+                text-transform: uppercase;
+
+                letter-spacing: 0.06em;
+
+                color: #888;
+            }
+
             @media (prefers-reduced-motion: reduce) {
                 body,
                 .brand-row,
                 h1,
                 .tagline,
-                .status {
+                .status,
+                .trust-row {
                     animation: none !important;
                     opacity: 1 !important;
                     transform: none !important;
@@ -426,10 +474,39 @@
                 home worthy of that same spirit.
             </p>
 
+            <p class="tagline mission-line">
+                For over four decades, we've provided free medical care to
+                remote tribal villages, disaster-affected communities, and
+                devoted Varkaris across Maharashtra —
+                <strong>this website is simply catching up to that work.</strong>
+            </p>
+
             <div class="status">
                 <div class="status-dot"></div>
 
                 Website under construction • Walking towards Pandharpur
+            </div>
+
+            <!-- TODO: confirm founding year with the trust — About/Aarogyawari
+                 hero say 1984, but Activities/Gallery stats say 1982. Using
+                 1984 as placeholder; update once resolved across the site. -->
+            <div class="trust-row">
+                <div class="trust-item">
+                    <strong>1984</strong>
+                    <span>Serving Since</span>
+                </div>
+                <div class="trust-item">
+                    <strong>250 KM</strong>
+                    <span>Wari Pilgrimage Route</span>
+                </div>
+                <div class="trust-item">
+                    <strong>21 Days</strong>
+                    <span>Aarogyawari Camps</span>
+                </div>
+                <div class="trust-item">
+                    <strong>Tribal &amp; Disaster</strong>
+                    <span>Relief, Year-Round</span>
+                </div>
             </div>
 
             <div class="route-wrapper">
@@ -439,15 +516,17 @@
                     <p>
                         Every year, lakhs of devotees walk more than
                         <strong>250 kilometres</strong>
-                        towards Lord Vitthal.
+                        towards Lord Vitthal — and our medical camps walk
+                        alongside them, from Alandi to Pandharpur.
                     </p>
 
-                    <p>Our website is taking the same journey.</p>
+                    <p>Our website is taking a similar journey.</p>
 
                     <p>
                         Follow the tiny saffron
                         <strong>भगवा पताका</strong>
-                        as it travels the sacred route.
+                        as it travels the sacred route — the same route our
+                        volunteers walk every Aashad Ekadashi.
                     </p>
                 </div>
                 <!-- =====================================================
@@ -636,6 +715,20 @@ C180 610 205 645 210 680
 
                 <div class="divider" style="margin-top: 1rem"></div>
             </div>
+            <!-- Reach Us Directly -->
+            <div class="reach-block">
+                <div class="divider" style="margin-bottom: 1rem"></div>
+
+                <p class="reach-label">Need to reach us before the site is ready?</p>
+
+                <div class="reach-links">
+                    <!-- TODO: confirm official email address with the trust -->
+                    <a href="mailto:contact@smsmvari.org">contact@smsmvari.org</a>
+                    <!-- TODO: confirm registered phone number with the trust -->
+                    <a href="tel:+912186235550">021862235550</a>
+                </div>
+            </div>
+
             <!-- FOOTER -->
 
             <div class="footer">
@@ -645,7 +738,11 @@ C180 610 205 645 210 680
                     Serving with Compassion.
                 </div>
 
-                <div>Sahyadri Manav Seva Manch Vari Trust</div>
+                <div>
+                    Sahyadri Manav Seva Manch Vari Trust
+                    <br />
+                    © 2026. All Rights Reserved.
+                </div>
             </div>
         </div>
 
@@ -853,6 +950,58 @@ C180 610 205 645 210 680
                 );
 
                 border-radius: 99px;
+            }
+
+            /* ============================================
+   REACH US
+============================================ */
+
+            .reach-block {
+                margin-top: 40px;
+
+                text-align: center;
+            }
+
+            .reach-label {
+                font-size: 0.85rem;
+
+                font-weight: 700;
+
+                color: #888;
+
+                text-transform: uppercase;
+
+                letter-spacing: 0.04em;
+
+                margin-bottom: 12px;
+            }
+
+            .reach-links {
+                display: flex;
+
+                justify-content: center;
+
+                flex-wrap: wrap;
+
+                gap: 10px 28px;
+            }
+
+            .reach-links a {
+                color: #a93200;
+
+                font-weight: 700;
+
+                text-decoration: none;
+
+                border-bottom: 1px solid rgba(169, 50, 0, 0.3);
+
+                padding-bottom: 2px;
+
+                transition: border-color 0.2s;
+            }
+
+            .reach-links a:hover {
+                border-color: #a93200;
             }
 
             /* ============================================
