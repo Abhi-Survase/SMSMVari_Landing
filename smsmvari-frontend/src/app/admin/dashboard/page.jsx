@@ -18,11 +18,13 @@ import {
   ImageIcon,
   LayoutDashboard,
   Trash2,
-  XCircle,
+  Pencil,
+  Eye,
+  EyeOff,
+  ExternalLink,
   Plus,
   MapPin,
   Calendar,
-  Tag,
 } from "lucide-react";
 
 const BASE_URL =
@@ -53,33 +55,84 @@ function authHeaders() {
   };
 }
 
-const CATEGORY_OPTIONS = [
+// DELETE / PATCH-toggle calls send no body, so skip the JSON content-type header.
+function authHeadersNoBody() {
+  const token = localStorage.getItem("accessToken");
+  return { Authorization: `Bearer ${token}` };
+}
+
+function formatDateRange(startDate, endDate) {
+  if (!startDate) return "";
+  const opts = { day: "numeric", month: "short", year: "numeric" };
+  const start = new Date(`${startDate}T00:00:00`).toLocaleDateString(
+    "en-IN",
+    opts
+  );
+  if (!endDate || endDate === startDate) return start;
+  const end = new Date(`${endDate}T00:00:00`).toLocaleDateString(
+    "en-IN",
+    opts
+  );
+  return `${start} – ${end}`;
+}
+
+const CATEGORY_SUGGESTIONS = [
+  "Health",
   "Tribal Health Camp",
   "Aarogyawari",
   "Disaster Relief",
   "School Health Programme",
   "Community Camp",
-  "Other",
 ];
 
-const STATUS_OPTIONS = ["LIVE", "UPCOMING", "COMPLETED"];
+const STATUS_OPTIONS = ["UPCOMING", "ONGOING", "COMPLETED", "CANCELLED"];
+
+const EMPTY_FORM = {
+  title: "",
+  description: "",
+  category: "",
+  tagLine: "",
+  location: "",
+  startDate: "",
+  endDate: "",
+  status: "UPCOMING",
+  published: true,
+};
 
 // ── Sub-components ───────────────────────────────────────────────────────────
 
 function StatusBadge({ status }) {
+  const key = (status ?? "").toUpperCase();
   const map = {
+    ONGOING: "bg-green-500 text-white",
     LIVE: "bg-green-500 text-white",
     UPCOMING: "bg-blue-500 text-white",
+    PAST: "bg-muted text-muted-foreground",
     COMPLETED: "bg-muted text-muted-foreground",
+    CANCELLED: "bg-destructive text-destructive-foreground",
   };
   return (
     <span
-      className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full ${map[status] ?? map.COMPLETED}`}
+      className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full ${map[key] ?? "bg-muted text-muted-foreground"}`}
     >
-      {status === "LIVE" && (
+      {(key === "ONGOING" || key === "LIVE") && (
         <span className="inline-block h-1.5 w-1.5 rounded-full bg-white mr-1 animate-pulse" />
       )}
-      {status}
+      {status ?? "UNKNOWN"}
+    </span>
+  );
+}
+
+function PublishedBadge({ published }) {
+  return published ? (
+    <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-green-700 border border-green-300 bg-green-50 rounded-full px-2 py-0.5">
+      <Eye size={11} />
+      Published
+    </span>
+  ) : (
+    <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground border border-border rounded-full px-2 py-0.5">
+      <EyeOff size={11} />
+      Draft
     </span>
   );
 }
@@ -92,31 +145,25 @@ function EventsPanel() {
   const [actionMsg, setActionMsg] = useState(null); // {type: "success"|"error", text}
   const [showForm, setShowForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [form, setForm] = useState({
-    title: "",
-    date: "",
-    location: "",
-    category: "",
-    description: "",
-    status: "UPCOMING",
-  });
+  const [togglingId, setTogglingId] = useState(null);
+  const [deletingId, setDeletingId] = useState(null);
+  const [editingEvent, setEditingEvent] = useState(null); // null = create mode, object = edit mode
+  const [form, setForm] = useState(EMPTY_FORM);
 
   const flash = (type, text) => {
     setActionMsg({ type, text });
     setTimeout(() => setActionMsg(null), 4000);
   };
 
-  // TODO: confirm GET events endpoint path with backend
   const fetchEvents = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${BASE_URL}/api/v1/events`, {
+      const res = await fetch(`${BASE_URL}/api/admin/events`, {
         headers: authHeaders(),
       });
       if (!res.ok) throw new Error();
-      const data = await res.json();
-      // TODO: confirm response shape — assuming data is array or data.events
-      setEvents(Array.isArray(data) ? data : (data.events ?? []));
+      const json = await res.json();
+      setEvents(json?.data?.events ?? []);
     } catch {
       flash("error", "Failed to load events. Check your connection.");
     } finally {
@@ -128,66 +175,100 @@ function EventsPanel() {
     fetchEvents();
   }, []);
 
-  const handleChange = (e) =>
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleChange = (e) => {
+    const { name, type, checked, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
+  };
 
-  // TODO: confirm POST event endpoint path and request body shape with backend
-  const handleCreate = async (e) => {
+  const openCreateForm = () => {
+    setEditingEvent(null);
+    setForm(EMPTY_FORM);
+    setShowForm(true);
+  };
+
+  const openEditForm = (event) => {
+    setEditingEvent(event);
+    setForm({
+      title: event.title ?? "",
+      description: event.description ?? "",
+      category: event.category ?? "",
+      tagLine: event.tagLine ?? "",
+      location: event.location ?? "",
+      startDate: event.startDate ?? "",
+      endDate: event.endDate ?? "",
+      status: event.status ?? "UPCOMING",
+      published: event.published ?? true,
+    });
+    setShowForm(true);
+  };
+
+  const closeForm = () => {
+    setShowForm(false);
+    setEditingEvent(null);
+    setForm(EMPTY_FORM);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
+    const isEdit = Boolean(editingEvent);
+    const url = isEdit
+      ? `${BASE_URL}/api/admin/events/${editingEvent.uuid}`
+      : `${BASE_URL}/api/admin/events`;
+
+    // status is only editable once an event exists — omit it on create so
+    // we don't send a field the backend doesn't expect from the POST body.
+    const { status, ...createPayload } = form;
+    const payload = isEdit ? form : createPayload;
+
     try {
-      const res = await fetch(`${BASE_URL}/api/admin/events`, {
-        method: "POST",
+      const res = await fetch(url, {
+        method: isEdit ? "PUT" : "POST",
         headers: authHeaders(),
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
       if (!res.ok) throw new Error();
-      flash("success", "Event created successfully.");
-      setForm({
-        title: "",
-        date: "",
-        location: "",
-        category: "",
-        description: "",
-        status: "UPCOMING",
-      });
-      setShowForm(false);
+      flash("success", isEdit ? "Event updated successfully." : "Event created successfully.");
+      closeForm();
       fetchEvents();
     } catch {
-      flash("error", "Failed to create event. Please try again.");
+      flash("error", isEdit ? "Failed to update event." : "Failed to create event.");
     } finally {
       setSubmitting(false);
     }
   };
 
-  // TODO: confirm DELETE event endpoint path with backend
-  const handleDelete = async (id) => {
+  const handleDelete = async (uuid) => {
     if (!confirm("Delete this event? This cannot be undone.")) return;
+    setDeletingId(uuid);
     try {
-      const res = await fetch(`${BASE_URL}/api/v1/events/${id}`, {
+      const res = await fetch(`${BASE_URL}/api/admin/events/${uuid}`, {
         method: "DELETE",
-        headers: authHeaders(),
+        headers: authHeadersNoBody(),
       });
       if (!res.ok) throw new Error();
       flash("success", "Event deleted.");
       fetchEvents();
     } catch {
       flash("error", "Failed to delete event.");
+    } finally {
+      setDeletingId(null);
     }
   };
 
-  // TODO: confirm PATCH/close event endpoint path with backend
-  const handleClose = async (id) => {
+  const handleTogglePublished = async (uuid) => {
+    setTogglingId(uuid);
     try {
-      const res = await fetch(`${BASE_URL}/api/v1/events/${id}/close`, {
+      const res = await fetch(`${BASE_URL}/api/admin/events/${uuid}/published`, {
         method: "PATCH",
-        headers: authHeaders(),
+        headers: authHeadersNoBody(),
       });
       if (!res.ok) throw new Error();
-      flash("success", "Event marked as completed.");
       fetchEvents();
     } catch {
-      flash("error", "Failed to close event.");
+      flash("error", "Failed to update publish status.");
+    } finally {
+      setTogglingId(null);
     }
   };
 
@@ -195,15 +276,24 @@ function EventsPanel() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="font-heading text-2xl font-black text-secondary uppercase tracking-tight">
+          <h2 className="font-heading text-2xl font-black text-secondary uppercase tracking-tight flex items-center gap-2">
             Events
+            <a
+              href="/activities"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View events on the live site"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <ExternalLink size={16} />
+            </a>
           </h2>
           <p className="text-sm text-muted-foreground mt-1">
-            Create, manage, and close medical camps and events.
+            Create, edit, publish, and delete medical camps and events.
           </p>
         </div>
         <Button
-          onClick={() => setShowForm((v) => !v)}
+          onClick={showForm ? closeForm : openCreateForm}
           size="sm"
           className="uppercase font-bold tracking-wide gap-2"
         >
@@ -231,16 +321,16 @@ function EventsPanel() {
         </Alert>
       )}
 
-      {/* Create Event Form */}
+      {/* Create / Edit Event Form */}
       {showForm && (
         <Card className="border-2 border-primary/30">
           <CardHeader className="pb-4">
             <CardTitle className="text-base font-bold uppercase tracking-tight text-primary">
-              New Event
+              {editingEvent ? "Edit Event" : "New Event"}
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleCreate} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="title">Event Title</Label>
@@ -254,17 +344,55 @@ function EventsPanel() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="date">Date</Label>
+                  <Label htmlFor="category">Category</Label>
                   <Input
-                    id="date"
-                    name="date"
-                    type="date"
+                    id="category"
+                    name="category"
+                    list="category-suggestions"
+                    placeholder="Health"
                     required
-                    value={form.date}
+                    value={form.category}
+                    onChange={handleChange}
+                  />
+                  <datalist id="category-suggestions">
+                    {CATEGORY_SUGGESTIONS.map((c) => (
+                      <option key={c} value={c} />
+                    ))}
+                  </datalist>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="tagLine">Tag Line</Label>
+                  <Input
+                    id="tagLine"
+                    name="tagLine"
+                    placeholder="Your health, our priority"
+                    value={form.tagLine}
                     onChange={handleChange}
                   />
                 </div>
+                {editingEvent && (
+                  <div className="space-y-2">
+                    <Label htmlFor="status">Status</Label>
+                    <select
+                      id="status"
+                      name="status"
+                      value={form.status}
+                      onChange={handleChange}
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    >
+                      {STATUS_OPTIONS.map((s) => (
+                        <option key={s} value={s}>
+                          {s.charAt(0) + s.slice(1).toLowerCase()}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
               </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="location">Location</Label>
@@ -277,27 +405,32 @@ function EventsPanel() {
                     onChange={handleChange}
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="category">Category</Label>
-                  <select
-                    id="category"
-                    name="category"
-                    required
-                    value={form.category}
-                    onChange={handleChange}
-                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  >
-                    <option value="" disabled>
-                      Select a category
-                    </option>
-                    {CATEGORY_OPTIONS.map((c) => (
-                      <option key={c} value={c}>
-                        {c}
-                      </option>
-                    ))}
-                  </select>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-2">
+                    <Label htmlFor="startDate">Start Date</Label>
+                    <Input
+                      id="startDate"
+                      name="startDate"
+                      type="date"
+                      required
+                      value={form.startDate}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="endDate">End Date</Label>
+                    <Input
+                      id="endDate"
+                      name="endDate"
+                      type="date"
+                      required
+                      value={form.endDate}
+                      onChange={handleChange}
+                    />
+                  </div>
                 </div>
               </div>
+
               <div className="space-y-2">
                 <Label htmlFor="description">Description</Label>
                 <textarea
@@ -311,35 +444,37 @@ function EventsPanel() {
                   className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-none"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="status">Status</Label>
-                <select
-                  id="status"
-                  name="status"
-                  value={form.status}
+
+              <label
+                htmlFor="published"
+                className="flex items-center gap-2 text-sm font-medium cursor-pointer w-fit"
+              >
+                <input
+                  id="published"
+                  name="published"
+                  type="checkbox"
+                  checked={form.published}
                   onChange={handleChange}
-                  className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  {STATUS_OPTIONS.map((s) => (
-                    <option key={s} value={s}>
-                      {s}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                  className="h-4 w-4 rounded border-input accent-primary"
+                />
+                Publish immediately
+              </label>
+
               <div className="flex gap-3 pt-2">
                 <Button
                   type="submit"
                   disabled={submitting}
                   className="uppercase font-bold tracking-wide"
                 >
-                  {submitting ? "Creating…" : "Create Event"}
+                  {submitting
+                    ? editingEvent
+                      ? "Saving…"
+                      : "Creating…"
+                    : editingEvent
+                      ? "Save Changes"
+                      : "Create Event"}
                 </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => setShowForm(false)}
-                >
+                <Button type="button" variant="outline" onClick={closeForm}>
                   Cancel
                 </Button>
               </div>
@@ -356,23 +491,18 @@ function EventsPanel() {
               <CardContent className="p-5">
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                   <div className="flex-1 space-y-2.5">
-                    {/* Badge row */}
                     <div className="flex items-center gap-2">
                       <div className="h-4 w-12 rounded-full bg-muted" />
                       <div className="h-4 w-24 rounded-full bg-muted" />
                     </div>
-                    {/* Title */}
                     <div className="h-5 w-2/3 rounded bg-muted" />
-                    {/* Date + location */}
                     <div className="flex gap-3">
                       <div className="h-3.5 w-28 rounded bg-muted" />
                       <div className="h-3.5 w-36 rounded bg-muted" />
                     </div>
-                    {/* Description lines */}
                     <div className="h-3 w-full rounded bg-muted" />
                     <div className="h-3 w-4/5 rounded bg-muted" />
                   </div>
-                  {/* Action buttons */}
                   <div className="flex sm:flex-col gap-2 shrink-0">
                     <div className="h-8 w-16 rounded bg-muted" />
                     <div className="h-8 w-16 rounded bg-muted" />
@@ -397,9 +527,9 @@ function EventsPanel() {
         <div className="space-y-3">
           {events.map((event) => (
             <Card
-              key={event.id ?? event.uuid}
+              key={event.uuid}
               className={`transition-opacity ${
-                event.status === "COMPLETED" ? "opacity-60" : ""
+                !event.published ? "opacity-60" : ""
               }`}
             >
               <CardContent className="p-5">
@@ -407,6 +537,7 @@ function EventsPanel() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1 flex-wrap">
                       <StatusBadge status={event.status} />
+                      <PublishedBadge published={event.published} />
                       <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground border border-border rounded-full px-2 py-0.5">
                         {event.category}
                       </span>
@@ -414,10 +545,15 @@ function EventsPanel() {
                     <h3 className="font-heading font-black text-secondary text-base mt-1 leading-snug">
                       {event.title}
                     </h3>
+                    {event.tagLine && (
+                      <p className="text-xs text-primary font-semibold italic mt-0.5">
+                        {event.tagLine}
+                      </p>
+                    )}
                     <div className="flex flex-wrap gap-3 mt-1.5 text-xs text-muted-foreground font-medium">
                       <span className="flex items-center gap-1">
                         <Calendar size={11} />
-                        {event.date}
+                        {formatDateRange(event.startDate, event.endDate)}
                       </span>
                       <span className="flex items-center gap-1">
                         <MapPin size={11} />
@@ -430,39 +566,45 @@ function EventsPanel() {
                       </p>
                     )}
                   </div>
-                  {event.status !== "COMPLETED" && (
-                    <div className="flex sm:flex-col gap-2 shrink-0">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="text-xs gap-1.5 text-muted-foreground hover:text-foreground"
-                        onClick={() => handleClose(event.id ?? event.uuid)}
-                      >
-                        <XCircle size={13} />
-                        Close
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="text-xs gap-1.5 text-destructive hover:bg-destructive hover:text-destructive-foreground border-destructive/30"
-                        onClick={() => handleDelete(event.id ?? event.uuid)}
-                      >
-                        <Trash2 size={13} />
-                        Delete
-                      </Button>
-                    </div>
-                  )}
-                  {event.status === "COMPLETED" && (
+                  <div className="flex sm:flex-col gap-2 shrink-0">
                     <Button
                       size="sm"
                       variant="outline"
-                      className="text-xs gap-1.5 text-destructive hover:bg-destructive hover:text-destructive-foreground border-destructive/30 shrink-0"
-                      onClick={() => handleDelete(event.id ?? event.uuid)}
+                      className="text-xs gap-1.5"
+                      onClick={() => openEditForm(event)}
+                    >
+                      <Pencil size={13} />
+                      Edit
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      disabled={togglingId === event.uuid}
+                      className="text-xs gap-1.5 text-muted-foreground hover:text-foreground"
+                      onClick={() => handleTogglePublished(event.uuid)}
+                    >
+                      {event.published ? (
+                        <EyeOff size={13} />
+                      ) : (
+                        <Eye size={13} />
+                      )}
+                      {togglingId === event.uuid
+                        ? "…"
+                        : event.published
+                          ? "Unpublish"
+                          : "Publish"}
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      disabled={deletingId === event.uuid}
+                      className="text-xs gap-1.5 text-destructive hover:bg-destructive hover:text-destructive-foreground border-destructive/30"
+                      onClick={() => handleDelete(event.uuid)}
                     >
                       <Trash2 size={13} />
-                      Delete
+                      {deletingId === event.uuid ? "…" : "Delete"}
                     </Button>
-                  )}
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -499,7 +641,7 @@ function GalleryPanel() {
 
 // ── Overview Panel ────────────────────────────────────────────────────────────
 
-function OverviewPanel({ user }) {
+function OverviewPanel({ user, onNavigate }) {
   return (
     <div className="space-y-6">
       <div>
@@ -525,7 +667,7 @@ function OverviewPanel({ user }) {
               size="sm"
               variant="outline"
               className="mt-4 uppercase font-bold text-xs tracking-wide"
-              onClick={() => {}}
+              onClick={() => onNavigate("events")}
             >
               Go to Events →
             </Button>
@@ -661,7 +803,9 @@ export default function DashboardPage() {
 
         {/* Main content */}
         <main className="flex-1 min-w-0 pb-20 md:pb-0">
-          {activePanel === "overview" && <OverviewPanel user={user} />}
+          {activePanel === "overview" && (
+            <OverviewPanel user={user} onNavigate={setActivePanel} />
+          )}
           {activePanel === "events" && <EventsPanel />}
           {activePanel === "gallery" && <GalleryPanel />}
         </main>
