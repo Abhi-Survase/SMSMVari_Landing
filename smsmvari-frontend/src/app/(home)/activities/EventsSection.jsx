@@ -3,15 +3,42 @@
 //     can remain a server component and export metadata.
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, Radio } from "lucide-react";
 
-// const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080";
-// ^ uncomment when activating the fetch block below
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080";
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+
+// API gives startDate/endDate as "YYYY-MM-DD". Collapse to a single date
+// when they match, otherwise show a range.
+function formatDateRange(startDate, endDate) {
+  if (!startDate) return "";
+  const opts = { day: "numeric", month: "short", year: "numeric" };
+  const start = new Date(`${startDate}T00:00:00`).toLocaleDateString(
+    "en-IN",
+    opts
+  );
+  if (!endDate || endDate === startDate) return start;
+  const end = new Date(`${endDate}T00:00:00`).toLocaleDateString(
+    "en-IN",
+    opts
+  );
+  return `${start} – ${end}`;
+}
+
+async function fetchEvents(endpoint) {
+  const res = await fetch(`${BASE_URL}/api/events/${endpoint}`, {
+    cache: "no-store",
+  });
+  if (!res.ok) throw new Error(`Failed to fetch ${endpoint} events`);
+  const json = await res.json();
+  return json?.data?.events ?? [];
+}
 
 // ── Skeleton ─────────────────────────────────────────────────────────────────
 
@@ -79,82 +106,54 @@ function EventsSkeleton() {
   );
 }
 
-// ── Hardcoded events — replace with fetch block below when API is ready ──────
-// status: "LIVE" | "UPCOMING" | "COMPLETED"
-const STATIC_EVENTS = [
-  {
-    title: "Monthly Devbandh Health Camp",
-    date: "Sunday, 13 July 2025",
-    location: "Devbandh, Mokhada Taluka, Thane District",
-    description:
-      "Our monthly medical camp at Devbandh — medical examinations, treatment, and essential medicines for tribal community residents affected by illness and malnutrition.",
-    category: "Tribal Health Camp",
-    status: "LIVE",
-  },
-  {
-    title: "Aarogyawari 2025 — Pandharpur Wari",
-    date: "August 2025",
-    location: "Alandi to Pandharpur Route",
-    description:
-      "Our annual health pilgrimage service along the 250 km Wari route — milk distribution, medical camps at Dive Ghat, Saswad, Phaltan, and Natepute.",
-    category: "Aarogyawari",
-    status: "UPCOMING",
-  },
-  {
-    title: "School Health Camp — Thane",
-    date: "May 2025",
-    location: "Multiple Schools, Thane",
-    description: null,
-    category: "Education",
-    status: "COMPLETED",
-  },
-  {
-    title: "Monthly Devbandh Camp",
-    date: "June 2025",
-    location: "Devbandh, Mokhada",
-    description: null,
-    category: "Tribal Health Camp",
-    status: "COMPLETED",
-  },
-  {
-    title: "Aarogyawari 2024",
-    date: "June 2024",
-    location: "Alandi to Pandharpur Route",
-    description: null,
-    category: "Aarogyawari",
-    status: "COMPLETED",
-  },
-];
-
 // ── Main component ────────────────────────────────────────────────────────────
 
 export default function EventsSection() {
-  // ── TODO: swap to fetch block when /api/v1/events is ready ───────────────
-  // Step 1: delete the two lines below (STATIC_EVENTS assignment + loading false)
-  // Step 2: uncomment the useState/useEffect block beneath them
-  // ─────────────────────────────────────────────────────────────────────────
-  const [events, setEvents] = useState(STATIC_EVENTS);
-  const [loading, setLoading] = useState(false);
+  const [liveEvents, setLiveEvents] = useState([]);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [pastEvents, setPastEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  // useEffect(() => {
-  //   // TODO: confirm GET events endpoint path with backend
-  //   fetch(`${BASE_URL}/api/v1/events`)
-  //     .then((res) => {
-  //       if (!res.ok) throw new Error();
-  //       return res.json();
-  //     })
-  //     .then((data) => {
-  //       // TODO: confirm response shape — assuming array or { events: [] }
-  //       setEvents(Array.isArray(data) ? data : (data.events ?? []));
-  //     })
-  //     .catch(() => setError(true))
-  //     .finally(() => setLoading(false));
-  // }, []);
+  useEffect(() => {
+    let cancelled = false;
 
-  const liveEvent = events.find((e) => e.status === "LIVE");
-  const upcomingEvents = events.filter((e) => e.status === "UPCOMING");
-  const pastEvents = events.filter((e) => e.status === "COMPLETED");
+    async function loadEvents() {
+      setLoading(true);
+      setError(false);
+
+      // Settle all three independently — one endpoint failing (e.g. no
+      // ongoing camp right now) shouldn't blank out the other two.
+      const [ongoingRes, upcomingRes, pastRes] = await Promise.allSettled([
+        fetchEvents("ongoing"),
+        fetchEvents("upcoming"),
+        fetchEvents("past"),
+      ]);
+
+      if (cancelled) return;
+
+      const allFailed = [ongoingRes, upcomingRes, pastRes].every(
+        (r) => r.status === "rejected"
+      );
+
+      if (allFailed) {
+        setError(true);
+      } else {
+        setLiveEvents(ongoingRes.status === "fulfilled" ? ongoingRes.value : []);
+        setUpcomingEvents(
+          upcomingRes.status === "fulfilled" ? upcomingRes.value : []
+        );
+        setPastEvents(pastRes.status === "fulfilled" ? pastRes.value : []);
+      }
+
+      setLoading(false);
+    }
+
+    loadEvents();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <section className="py-14 px-4 md:px-8 bg-muted/30 border-b border-border">
@@ -181,47 +180,52 @@ export default function EventsSection() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
             {/* Left column: Live + Upcoming — 2 of 3 columns */}
             <div className="lg:col-span-2 flex flex-col gap-4">
-              {/* Live event */}
-              {liveEvent ? (
-                <Card className="border-2 border-green-500 shadow-md">
-                  <CardContent className="p-6 md:p-8">
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="relative flex items-center gap-1.5 bg-green-500 text-white text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full">
-                        <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-60 animate-ping" />
-                        <span className="relative h-1.5 w-1.5 rounded-full bg-white" />
-                        Live
-                      </span>
-                      <Badge className="bg-primary/10 text-primary border-primary/30 uppercase tracking-wider text-[10px]">
-                        {liveEvent.category}
-                      </Badge>
-                    </div>
-                    <h3 className="font-heading text-xl md:text-2xl font-black text-secondary uppercase tracking-tight mb-3">
-                      {liveEvent.title}
-                    </h3>
-                    <div className="flex flex-col sm:flex-row gap-3 mb-4 text-sm text-foreground/70 font-medium">
-                      <span className="flex items-center gap-1.5">
-                        <Calendar size={14} className="text-primary" />
-                        {liveEvent.date}
-                      </span>
-                      <span className="flex items-center gap-1.5">
-                        <MapPin size={14} className="text-primary" />
-                        {liveEvent.location}
-                      </span>
-                    </div>
-                    {liveEvent.description && (
-                      <p className="text-sm text-foreground/80 font-medium leading-relaxed mb-6">
-                        {liveEvent.description}
-                      </p>
-                    )}
-                    <Button
-                      asChild
-                      size="sm"
-                      className="uppercase font-bold tracking-wide border-b-4 border-b-secondary/50 active:border-b-0 active:translate-y-1"
-                    >
-                      <Link href="/join">Volunteer for This Camp</Link>
-                    </Button>
-                  </CardContent>
-                </Card>
+              {/* Live events */}
+              {liveEvents.length > 0 ? (
+                liveEvents.map((event) => (
+                  <Card
+                    key={event.uuid}
+                    className="border-2 border-green-500 shadow-md"
+                  >
+                    <CardContent className="p-6 md:p-8">
+                      <div className="flex items-center gap-3 mb-4">
+                        <span className="relative flex items-center gap-1.5 bg-green-500 text-white text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full">
+                          <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-60 animate-ping" />
+                          <span className="relative h-1.5 w-1.5 rounded-full bg-white" />
+                          Live
+                        </span>
+                        <Badge className="bg-primary/10 text-primary border-primary/30 uppercase tracking-wider text-[10px]">
+                          {event.category}
+                        </Badge>
+                      </div>
+                      <h3 className="font-heading text-xl md:text-2xl font-black text-secondary uppercase tracking-tight mb-3">
+                        {event.title}
+                      </h3>
+                      <div className="flex flex-col sm:flex-row gap-3 mb-4 text-sm text-foreground/70 font-medium">
+                        <span className="flex items-center gap-1.5">
+                          <Calendar size={14} className="text-primary" />
+                          {formatDateRange(event.startDate, event.endDate)}
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <MapPin size={14} className="text-primary" />
+                          {event.location}
+                        </span>
+                      </div>
+                      {event.description && (
+                        <p className="text-sm text-foreground/80 font-medium leading-relaxed mb-6">
+                          {event.description}
+                        </p>
+                      )}
+                      <Button
+                        asChild
+                        size="sm"
+                        className="uppercase font-bold tracking-wide border-b-4 border-b-secondary/50 active:border-b-0 active:translate-y-1"
+                      >
+                        <Link href="/join">Volunteer for This Camp</Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))
               ) : (
                 <div className="border-2 border-dashed border-border rounded-lg p-8 text-center text-muted-foreground text-sm font-medium">
                   No live event right now.
@@ -236,7 +240,7 @@ export default function EventsSection() {
                   </p>
                   {upcomingEvents.map((event) => (
                     <Card
-                      key={event.title + event.date}
+                      key={event.uuid}
                       className="border border-brand-blue/40 bg-brand-blue/5"
                     >
                       <CardContent className="p-5">
@@ -259,7 +263,10 @@ export default function EventsSection() {
                                   size={11}
                                   className="text-brand-blue"
                                 />
-                                {event.date}
+                                {formatDateRange(
+                                  event.startDate,
+                                  event.endDate
+                                )}
                               </span>
                               <span className="flex items-center gap-1">
                                 <MapPin size={11} className="text-brand-blue" />
@@ -300,7 +307,7 @@ export default function EventsSection() {
               ) : (
                 pastEvents.map((event) => (
                   <Card
-                    key={event.title + event.date}
+                    key={event.uuid}
                     className="border border-border opacity-60"
                   >
                     <CardContent className="p-4">
@@ -312,7 +319,7 @@ export default function EventsSection() {
                           Completed
                         </Badge>
                         <span className="text-[10px] text-muted-foreground font-medium">
-                          {event.date}
+                          {formatDateRange(event.startDate, event.endDate)}
                         </span>
                       </div>
                       <p className="text-sm font-bold text-foreground/60 mt-1 leading-snug">
