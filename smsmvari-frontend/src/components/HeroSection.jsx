@@ -1,7 +1,13 @@
 // components/HeroSection.jsx
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { useRef } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "motion/react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,9 +17,29 @@ const EASE = [0.22, 1, 0.36, 1];
 
 export default function HeroSection() {
   const shouldReduce = useReducedMotion();
+  const sectionRef = useRef(null);
+
+  // 1. Track scroll progress from top of the page until the hero exits the viewport
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  // 2. Parallax vertical translation (moves downward slower than scroll speed)
+  const bgY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    shouldReduce ? ["0%", "0%"] : ["0%", "28%"],
+  );
+
+  // 3. Subtle scale effect on scroll for extra depth (optional, clean SaaS feel)
+  const bgScale = useTransform(
+    scrollYProgress,
+    [0, 1],
+    shouldReduce ? [1, 1] : [1, 1.06],
+  );
 
   // Stagger container: orchestrates children arriving one by one.
-  // Reduced-motion users get instant opacity-only reveal, no movement.
   const container = {
     hidden: {},
     show: {
@@ -34,14 +60,15 @@ export default function HeroSection() {
   };
 
   return (
-    // overflow-hidden clips the background image to the section's own box.
-    // min-h-[...] sets a *floor* only — if the mobile content stack (logo +
-    // heading + paragraph + buttons) needs more room than that, the section
-    // grows taller instead of the content overflowing upward into the navbar.
-    <section className="relative w-full border-b-4 border-secondary overflow-hidden min-h-[560px] md:min-h-[819px] flex items-center">
-      {/* Background image + tint now live in their own absolute layer behind
-          the content, instead of being the thing that defines the box height. */}
-      <div className="absolute inset-0 z-0">
+    <section
+      ref={sectionRef}
+      className="relative w-full border-b-4 border-secondary overflow-hidden min-h-[560px] md:min-h-[819px] flex items-center"
+    >
+      {/* ── Parallax Background Wrapper ────────────────────────────────────── */}
+      <motion.div
+        className="absolute inset-x-0 -top-[10%] h-[125%] w-full z-0 pointer-events-none"
+        style={{ y: bgY, scale: bgScale }}
+      >
         <Image
           src="/home-hero.webp"
           alt="A grand procession of thousands of Varkaris (devotees) during the Pandharpur Wari"
@@ -50,12 +77,9 @@ export default function HeroSection() {
           priority
         />
         <div className="absolute inset-0 bg-black/50" />
-      </div>
+      </motion.div>
 
-      {/* The three elements (h1, p, buttons) arrive in sequence, 140ms apart.
-          No longer absolutely positioned — it sits in normal flow, centered
-          by the section's own flex/items-center, with vertical padding as a
-          guaranteed buffer from the navbar above and the border below. */}
+      {/* ── Foreground Content ─────────────────────────────────────────────── */}
       <motion.div
         className="relative z-20 flex flex-col justify-center items-center text-center px-4 py-16 md:py-0 max-w-5xl mx-auto w-full"
         variants={container}
