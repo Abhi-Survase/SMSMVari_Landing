@@ -150,41 +150,35 @@ export default function AarogyawariPage() {
           AnimatedPageHero staggers: Badge → h1 → tagline → description.
           The photo, overlay, and dotted pattern render server-side immediately.
       ─────────────────────────────────────────────────────────────────── */}
-      <section
-        className="relative py-20 px-4 md:px-8 border-b-4 overflow-hidden"
-        style={{ borderColor: "#F39C12" }}
-      >
+      <section className="relative py-20 px-4 md:px-8 border-b-4 border-accent-marigold overflow-hidden">
         <img
           src="https://images.unsplash.com/photo-1722030736304-5f07165707b5?fm=jpg&q=80&w=2000&auto=format&fit=crop"
           alt="Warkari pilgrims gathered during the Pandharpur Wari"
           className="absolute inset-0 w-full h-full object-cover"
         />
+        <div className="absolute inset-0 bg-secondary-deep/90" />
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 opacity-[0.06] pointer-events-none"
           style={{
-            backgroundColor: "rgba(109, 27, 19, 0.88)",
             backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23F39C12' fill-opacity='0.06' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E\")",
+              "radial-gradient(circle, var(--accent-marigold) 1.5px, transparent 1.5px)",
+            backgroundSize: "20px 20px",
           }}
         />
-        <AnimatedPageHero className="max-w-3xl mx-auto text-center relative z-10">
-          <Image
-            src="/icon.webp"
-            alt="SMSM Vari"
-            width={64}
-            height={64}
-            className="mx-auto mb-4"
-          />
-          <Badge className="mb-4 bg-[#F39C12]/15 text-[#F39C12] border-[#F39C12]/40 uppercase tracking-widest text-xs">
-            Since 1984
-          </Badge>
+        <AnimatedPageHero className="max-w-2xl relative z-10 mx-auto lg:mx-0 lg:ml-[max(2rem,calc((100%-72rem)/2))]">
+          <div className="flex items-center gap-3 mb-5">
+            <Image src="/icon.webp" alt="SMSM Vari" width={56} height={56} />
+            <Badge className="bg-accent-marigold/15 text-accent-marigold border-accent-marigold/40 uppercase tracking-widest text-xs">
+              Since 1984
+            </Badge>
+          </div>
           <h1 className="font-heading text-4xl md:text-6xl font-black uppercase tracking-tight mb-4 text-white">
             Aarogyawari
           </h1>
-          <p className="text-[#F39C12] font-bold uppercase tracking-widest text-sm mb-6">
+          <p className="text-accent-marigold font-bold uppercase tracking-widest text-sm mb-6">
             Health Pilgrimage Service
           </p>
-          <p className="text-white/85 text-lg md:text-xl font-medium leading-relaxed">
+          <p className="text-white text-lg md:text-xl font-medium leading-relaxed max-w-xl">
             Every year during Ashadhi Ekadashi, thousands of Warkari devotees
             walk from Alandi to Pandharpur for the darshan of Lord Vitthal. We
             walk alongside them — with milk, medicine, and care.
@@ -229,17 +223,22 @@ export default function AarogyawariPage() {
       {/* ── What We Provide ─────────────────────────────────────────────── */}
       <section className="py-16 px-4 md:px-8 bg-muted/30 border-y border-border">
         <div className="max-w-7xl mx-auto">
-          <FadeUp className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl text-primary font-black uppercase tracking-tight">
-              What We Provide
-            </h2>
-            <div className="h-1 w-24 bg-primary mt-3 mx-auto rounded-full" />
+          <FadeUp className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+            <div>
+              <div className="h-1 w-16 bg-primary mb-4" />
+              <h2 className="font-heading text-3xl md:text-4xl text-primary font-black uppercase tracking-tight">
+                What We Provide
+              </h2>
+            </div>
+            <p className="text-foreground-muted font-medium max-w-xs md:text-right">
+              Four kinds of support, delivered wherever the route demands them.
+            </p>
           </FadeUp>
 
           <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {offerings.map((item) => (
               <StaggerItem key={item.title}>
-                <Card className="border-t-4 border-t-primary hover:shadow-md transition-shadow h-full">
+                <Card className="shadow-none border-border h-full">
                   <CardContent className="pt-8 pb-6 px-6">
                     <item.icon
                       className="text-primary mb-4"
@@ -249,7 +248,7 @@ export default function AarogyawariPage() {
                     <h3 className="font-heading text-base font-black text-secondary mb-2 uppercase tracking-tight">
                       {item.title}
                     </h3>
-                    <p className="text-sm text-foreground/80 font-medium leading-relaxed">
+                    <p className="text-sm text-foreground-muted font-medium leading-relaxed">
                       {item.description}
                     </p>
                   </CardContent>
@@ -266,20 +265,21 @@ export default function AarogyawariPage() {
           each card cascades in 100ms apart — a natural top-to-bottom reveal.
       ─────────────────────────────────────────────────────────────────── */}
       <section
-        className="py-16 px-4 md:px-8"
+        className="py-16 px-4 md:px-8 bg-surface-parchment relative"
         style={{
-          backgroundColor: "#E6E2D3",
           backgroundImage:
             "url(\"data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23a93200' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E\")",
         }}
       >
-        <div className="max-w-5xl mx-auto">
-          <FadeUp className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl text-[#a93200] font-black uppercase tracking-tight">
-              Along the Route
-            </h2>
-            <div className="h-1.5 w-24 bg-[#F39C12] mx-auto mt-4" />
-            <p className="text-[#333333]/80 font-medium leading-relaxed max-w-2xl mx-auto mt-4">
+        <div className="max-w-5xl mx-auto relative">
+          <FadeUp className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+            <div>
+              <h2 className="font-heading text-3xl md:text-4xl text-secondary-deep font-black uppercase tracking-tight">
+                Along the Route
+              </h2>
+              <div className="h-1.5 w-24 bg-accent-marigold mt-4" />
+            </div>
+            <p className="text-foreground-muted font-medium max-w-xs md:text-right">
               From Dive Ghat to Pandharpur, our camps are placed exactly where
               the journey gets hardest.
             </p>
@@ -288,7 +288,7 @@ export default function AarogyawariPage() {
           <StaggerContainer className="space-y-6">
             {routePoints.map((point) => (
               <StaggerItem key={point.title}>
-                <Card className="rounded-none border border-[rgba(140,98,57,0.2)] shadow-sm bg-white overflow-hidden">
+                <Card className="rounded-none border border-secondary-deep/20 shadow-sm bg-white overflow-hidden">
                   <CardContent className="p-0">
                     <div className="flex flex-col sm:flex-row">
                       <div className="sm:w-48 h-40 sm:h-auto shrink-0 bg-muted">
@@ -301,20 +301,20 @@ export default function AarogyawariPage() {
                       <div className="p-8 flex flex-col sm:flex-row sm:items-start gap-4 flex-1">
                         <div className="flex items-center gap-3 sm:w-48 shrink-0">
                           <point.icon
-                            className="text-[#6D1B13]"
+                            className="text-secondary-deep"
                             size={32}
                             strokeWidth={2}
                           />
                           <div>
-                            <Badge className="bg-[#F39C12]/15 text-[#a93200] border-[#F39C12]/40 uppercase tracking-wider text-[10px] mb-1">
+                            <Badge className="bg-accent-marigold/15 text-secondary-deep border-accent-marigold/40 uppercase tracking-wider text-[10px] mb-1">
                               {point.tag}
                             </Badge>
-                            <h3 className="font-heading text-lg font-black text-[#6D1B13] leading-tight">
+                            <h3 className="font-heading text-lg font-black text-secondary-deep leading-tight">
                               {point.title}
                             </h3>
                           </div>
                         </div>
-                        <p className="text-[#333333] text-sm leading-relaxed font-medium">
+                        <p className="text-foreground-muted text-sm leading-relaxed font-medium">
                           {point.description}
                         </p>
                       </div>
@@ -338,7 +338,7 @@ export default function AarogyawariPage() {
             size={36}
             strokeWidth={2}
           />
-          <p className="text-xl md:text-2xl text-foreground/90 font-semibold italic leading-relaxed">
+          <p className="text-xl md:text-2xl text-foreground font-semibold italic leading-relaxed">
             Despite adverse weather, lack of water, and the risk of disease,
             they continue their journey with devotion. We are simply here to
             make sure that devotion doesn't come at the cost of their health.
@@ -347,21 +347,23 @@ export default function AarogyawariPage() {
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────────────── */}
-      <section className="py-14 px-4 md:px-8 bg-secondary text-white text-center border-t-4 border-primary">
-        <FadeUp className="max-w-xl mx-auto">
-          <h2 className="font-heading text-3xl font-black uppercase tracking-tight mb-4">
-            Be Part of Aarogyawari
-          </h2>
-          <p className="text-white/80 mb-8 font-medium">
-            Every camp along the route runs on volunteers and donors who believe
-            no pilgrim should walk this journey alone. Join us, or help fund the
-            next camp.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
+      <section className="py-16 px-4 md:px-8 bg-secondary text-white border-t-4 border-primary">
+        <FadeUp className="max-w-6xl mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+          <div className="max-w-md">
+            <h2 className="font-heading text-3xl font-black uppercase tracking-tight mb-4">
+              Be Part of Aarogyawari
+            </h2>
+            <p className="text-white font-medium">
+              Every camp along the route runs on volunteers and donors who
+              believe no pilgrim should walk this journey alone. Join us, or
+              help fund the next camp.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 shrink-0">
             <Button
               asChild
               size="lg"
-              className="uppercase font-bold tracking-wide border-b-4 border-b-primary/50 active:border-b-0 active:translate-y-1 animate-heartbeat"
+              className="uppercase font-bold tracking-wide"
             >
               <Link href="/join">Join the Mission</Link>
             </Button>
