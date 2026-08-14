@@ -72,6 +72,10 @@
   --color-shadow-color: var(--shadow-color);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-brand-blue: var(--brand-blue);
+  --color-secondary-deep: var(--secondary-deep);
+  --color-accent-marigold: var(--accent-marigold);
+  --color-surface-parchment: var(--surface-parchment);
+  --color-foreground-muted: var(--foreground-muted);
   --text-sm: 0.95rem; /* Bumps up from default 0.875rem */
   --text-sm--line-height: 1.5rem;
   --text-base: 1.05rem; /* Bumps up from default 1rem */
@@ -118,6 +122,25 @@
   --sidebar-ring: oklch(0.6606 0.1963 38.2094);
   --destructive-foreground: oklch(1 0 0);
   --brand-blue: #0047ab; /* Logo cobalt — caring hands; use only for medical/care highlights */
+
+  /* ── DESIGN.md color fixes ────────────────────────────────────────────
+     Replaces the inline hex values that were quietly running a second,
+     competing palette alongside the token system. Each value below is
+     derived from (or matched to) the hex it replaces so the visual
+     result stays the same while the source of truth becomes the token. */
+  --secondary-deep: oklch(
+    0.269 0.0875 27.6
+  ); /* darker maroon for border-2/stripe accents, replaces #6D1B13 / #a93200 */
+  --accent-marigold: oklch(
+    0.7686 0.1614 65.85
+  ); /* warm marigold accent, replaces #F39C12 */
+  --surface-parchment: oklch(
+    0.9107 0.0197 75.5
+  ); /* parchment section bg, replaces #E6E2D3 */
+  --foreground-muted: oklch(
+    0.4432 0.0212 47.5
+  ); /* muted body/caption tone, replaces raw #333333 */
+
   --font-sans: Mukta, ui-sans-serif, sans-serif, system-ui;
   --font-serif: Martel, ui-serif, serif;
   --font-mono: Geist Mono, ui-monospace, monospace;
@@ -198,6 +221,10 @@
   --sidebar-ring: oklch(0.439 0 0);
   --destructive-foreground: oklch(0.985 0 0);
   --brand-blue: #3a7bd5; /* lightened for dark surfaces */
+  --secondary-deep: oklch(0.22 0.075 27.6);
+  --accent-marigold: oklch(0.7686 0.1614 65.85);
+  --surface-parchment: oklch(0.269 0 0);
+  --foreground-muted: oklch(0.708 0 0);
   --radius: 0.625rem;
   --font-sans: Mukta, ui-sans-serif, sans-serif, system-ui;
   --font-serif: Martel, ui-serif, serif;

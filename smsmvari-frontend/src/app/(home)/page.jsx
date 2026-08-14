@@ -7,7 +7,17 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MoveRight } from "lucide-react";
+import {
+  MoveRight,
+  HandHeart,
+  MapPin,
+  HeartPulse,
+  ChevronRight,
+  Stethoscope,
+  Users,
+  GraduationCap,
+  Quote,
+} from "lucide-react";
 import QrSection from "@/components/QrSection";
 import Image from "next/image";
 import Link from "next/link";
@@ -112,9 +122,9 @@ export default function HomePage() {
           <section
             className="font-sans text-foreground py-16 px-4 md:px-8"
             style={{
-              backgroundColor: "#E6E2D3",
+              backgroundColor: "var(--surface-parchment)",
               backgroundImage:
-                "url(\"data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23a93200' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E\")",
+                "url(\"data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23582415' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E\")",
             }}
           >
             <div className="max-w-7xl mx-auto">
@@ -124,7 +134,7 @@ export default function HomePage() {
                 <h2 className="font-heading text-4xl md:text-5xl text-secondary font-bold">
                   सह्याद्री मानव सेवा मंचची आरोग्यवारी
                 </h2>
-                <div className="h-1.5 w-32 bg-[#F39C12] mx-auto mt-4" />
+                <div className="h-1.5 w-32 bg-accent-marigold mx-auto mt-4" />
               </FadeUp>
 
               <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8">
@@ -133,15 +143,15 @@ export default function HomePage() {
                     the heading is the only structural device it needs. */}
                 <FadeUp className="md:col-span-8" delay={0.08}>
                   <Card className="rounded-none border border-secondary shadow-sm relative overflow-hidden bg-white h-full">
-                    <div className="h-1.5 w-full bg-[#a93200] absolute top-0 left-0" />
+                    <div className="h-1.5 w-full bg-secondary absolute top-0 left-0" />
                     <CardContent className="p-8 pt-10">
-                      <div className="flex items-center gap-3 mb-6 text-[#6D1B13]">
+                      <div className="flex items-center gap-3 mb-6 text-secondary-deep">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           height="48"
                           viewBox="0 0 24 24"
                           width="48"
-                          fill="#F39C12"
+                          fill="var(--accent-marigold)"
                         >
                           <path d="M0 0h24v24H0z" fill="none" />
                           <path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7" />
@@ -150,7 +160,7 @@ export default function HomePage() {
                           A Journey of Faith
                         </h3>
                       </div>
-                      <p className="text-foreground text-lg leading-relaxed mb-6 font-medium max-w-2xl">
+                      <p className="text-foreground text-lg leading-relaxed mb-6 font-medium">
                         Thousands of people called varkari reach Pandharpur from
                         Alandi and Dehu after walking for about 250km in Aashad
                         Ekadashi. They walk with palkhis carrying padukas of the
@@ -160,7 +170,7 @@ export default function HomePage() {
                         Maharashtra. Warkaris worship Vitthal, the presiding
                         deity of Pandharpur, regarded as a form of Krishna.
                       </p>
-                      <blockquote className="text-foreground/80 leading-relaxed border-l-4 border-[#F39C12] pl-6 italic text-md font-medium max-w-2xl">
+                      <blockquote className="text-foreground-muted leading-relaxed border-l-4 border-accent-marigold pl-6 italic text-md font-medium">
                         This walk is not just an escape from reality for lakhs
                         of people. It is something that keeps them focused and
                         connected to a power bigger than them. People spend 21
@@ -225,19 +235,14 @@ export default function HomePage() {
                     </div>
                     <CardHeader className="pb-2">
                       <div className="flex items-center gap-2 text-primary">
-                        <span
-                          className="material-symbols-outlined"
-                          style={{ fontVariationSettings: "'FILL' 1" }}
-                        >
-                          diversity_1
-                        </span>
+                        <HandHeart className="w-6 h-6" strokeWidth={2} />
                         <CardTitle className="font-heading text-xl">
                           The Aarogyawari Initiative
                         </CardTitle>
                       </div>
                     </CardHeader>
                     <CardContent className="flex flex-col grow">
-                      <CardDescription className="text-foreground/80 mb-4 grow text-base">
+                      <CardDescription className="text-foreground-muted mb-4 grow text-base">
                         Since 1984, the organization has continuously conducted
                         this Health Pilgrimage Service during Ashadhi Ekadashi.
                         We provide dedicated healthcare and support services for
@@ -247,9 +252,7 @@ export default function HomePage() {
                       <Link href="/about">
                         <div className="w-full border-t border-border mt-auto pt-4 flex justify-between items-center text-secondary font-bold text-sm uppercase">
                           Read More
-                          <span className="material-symbols-outlined">
-                            chevron_right
-                          </span>
+                          <ChevronRight className="w-5 h-5" />
                         </div>
                       </Link>
                     </CardContent>
@@ -270,29 +273,21 @@ export default function HomePage() {
                     </div>
                     <CardHeader className="pb-2">
                       <div className="flex items-center gap-2 text-primary">
-                        <span
-                          className="material-symbols-outlined"
-                          style={{ fontVariationSettings: "'FILL' 1" }}
-                        >
-                          location_on
-                        </span>
+                        <MapPin className="w-6 h-6" strokeWidth={2} />
                         <CardTitle className="font-heading text-xl">
                           Strategic Camp Locations
                         </CardTitle>
                       </div>
                     </CardHeader>
                     <CardContent className="flex flex-col grow">
-                      <CardDescription className="text-foreground/80 mb-4 grow text-base">
+                      <CardDescription className="text-foreground-muted mb-4 grow text-base">
                         Medical camps are set up near Saswad and Phaltan. Our
                         first camp is positioned between Dive Ghat and Saswad to
                         assist pilgrims crossing steep inclines, and we continue
                         providing support after they cross Natepute.
                       </CardDescription>
                       <div className="w-full border-t border-border mt-auto pt-4 flex justify-between items-center text-secondary font-bold text-sm uppercase">
-                        View Locations{" "}
-                        <span className="material-symbols-outlined">
-                          chevron_right
-                        </span>
+                        View Locations <ChevronRight className="w-5 h-5" />
                       </div>
                     </CardContent>
                   </Card>
@@ -315,19 +310,14 @@ export default function HomePage() {
                     </div>
                     <CardHeader className="pb-2">
                       <div className="flex items-center gap-2 text-brand-blue">
-                        <span
-                          className="material-symbols-outlined"
-                          style={{ fontVariationSettings: "'FILL' 1" }}
-                        >
-                          health_and_safety
-                        </span>
+                        <HeartPulse className="w-6 h-6" strokeWidth={2} />
                         <CardTitle className="font-heading text-xl">
                           Comprehensive Care & Services
                         </CardTitle>
                       </div>
                     </CardHeader>
                     <CardContent className="flex flex-col grow">
-                      <CardDescription className="text-foreground/80 mb-4 grow text-base">
+                      <CardDescription className="text-foreground-muted mb-4 grow text-base">
                         Volunteers provide milk distribution, medical
                         examinations, treatment, and referrals for surgeries.
                         Our dedicated doctors treat conditions such as severe
@@ -335,10 +325,7 @@ export default function HomePage() {
                         various infections.
                       </CardDescription>
                       <div className="w-full border-t border-border mt-auto pt-4 flex justify-between items-center text-brand-blue font-bold text-sm uppercase">
-                        Volunteer{" "}
-                        <span className="material-symbols-outlined">
-                          chevron_right
-                        </span>
+                        Volunteer <ChevronRight className="w-5 h-5" />
                       </div>
                     </CardContent>
                   </Card>
@@ -353,16 +340,14 @@ export default function HomePage() {
           <section className="py-16 px-4 md:px-8 bg-secondary border-t-4 border-primary">
             <div className="max-w-6xl mx-auto">
               <FadeUp className="text-center mb-10">
-                <span
-                  className="material-symbols-outlined text-primary text-5xl mb-3 block"
-                  style={{ fontVariationSettings: "'FILL' 1" }}
-                >
-                  volunteer_activism
-                </span>
+                <HandHeart
+                  size={48}
+                  className="text-primary text-5xl mb-3 block mx-auto"
+                />
                 <h2 className="text-3xl md:text-4xl text-white font-bold mb-4">
                   Become a Volunteer
                 </h2>
-                <p className="text-white/80 text-lg font-medium leading-relaxed max-w-2xl mx-auto">
+                <p className="text-primary-foreground text-lg font-medium leading-relaxed max-w-2xl mx-auto">
                   Every camp we run depends on people who choose to show up.
                   Doctors, nurses, students, and dedicated citizens — there is a
                   place for you here.
@@ -373,36 +358,34 @@ export default function HomePage() {
               <StaggerContainer className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
                 {[
                   {
-                    icon: "medical_services",
+                    icon: Stethoscope,
                     title: "Medical Professionals",
                     description:
                       "Lend your skills at tribal camps, disaster sites, and along the Wari route.",
                   },
                   {
-                    icon: "groups",
+                    icon: Users,
                     title: "Field Volunteers",
                     description:
                       "Help with camp logistics, supply distribution, and on-ground coordination.",
                   },
                   {
-                    icon: "school",
+                    icon: GraduationCap,
                     title: "Education & Outreach",
                     description:
                       "Support school health check-ups, awareness lectures, and material distribution.",
                   },
-                ].map(({ icon, title, description }) => (
+                ].map(({ icon: Icon, title, description }) => (
                   <StaggerItem key={title}>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 p-6 text-center h-full">
-                      <span
-                        className="material-symbols-outlined text-primary text-3xl mb-3 block"
-                        style={{ fontVariationSettings: "'FILL' 1" }}
-                      >
-                        {icon}
-                      </span>
-                      <h3 className="font-sans text-base font-bold text-white mb-2 uppercase tracking-wide">
+                    <div className="bg-secondary-deep rounded-lg border border-secondary-deep p-6 text-center h-full">
+                      <Icon
+                        className="w-8 h-8 text-primary mb-3 mx-auto"
+                        strokeWidth={2}
+                      />
+                      <h3 className="font-sans text-base font-bold text-primary-foreground mb-2 uppercase tracking-wide">
                         {title}
                       </h3>
-                      <p className="text-sm text-white/70 font-medium leading-relaxed">
+                      <p className="text-sm text-primary-foreground/90 font-medium leading-relaxed">
                         {description}
                       </p>
                     </div>
@@ -430,10 +413,7 @@ export default function HomePage() {
               tint and a border instead. Grid now uses the same 12-col
               asymmetric idiom as the Wari section (there 8/4, here 5/7) so
               the page has one consistent bento logic, not a one-off. ──── */}
-          <div
-            className="w-full border-t border-[rgba(140,98,57,0.2)]"
-            style={{ backgroundColor: "#E6E2D3" }}
-          >
+          <div className="w-full border-t border-secondary/20 bg-surface-parchment">
             <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
                 {/* Intro column fades up */}
@@ -441,19 +421,14 @@ export default function HomePage() {
                   <h2 className="text-3xl md:text-4xl text-primary font-bold mb-4">
                     Our Leadership
                   </h2>
-                  <p className="text-foreground/80 mb-6 font-medium">
+                  <p className="text-foreground-muted mb-6 font-medium">
                     Guided by steadfast devotion and professional excellence,
                     our trustees ensure that every donation translates directly
                     into impactful medical aid — for tribal villages,
                     disaster-affected communities, and Varkaris alike.
                   </p>
-                  <div className="bg-white/60 backdrop-blur-sm p-6 rounded-lg border-l-4 border-l-primary shadow-sm">
-                    <span
-                      className="material-symbols-outlined text-primary text-4xl mb-2 opacity-50"
-                      style={{ fontVariationSettings: "'FILL' 1" }}
-                    >
-                      format_quote
-                    </span>
+                  <div className="bg-card p-6 rounded-lg border-l-4 border-l-primary shadow-sm">
+                    <Quote className="text-primary fill-primary text-4xl mb-2 opacity-60" />
                     <p className="font-heading italic text-secondary font-medium text-lg leading-snug">
                       Service to those in need is service to the divine. We
                       strive to provide the highest standard of care wherever
@@ -486,7 +461,7 @@ export default function HomePage() {
                             </p>
                           </div>
                         </div>
-                        <p className="text-sm text-foreground/80 mt-6 font-medium leading-relaxed">
+                        <p className="text-sm text-foreground-muted mt-6 font-medium leading-relaxed">
                           With over 25 years of experience in public health, Dr.
                           Deshmukh coordinates the organisation's entire medical
                           strategy, ensuring standardised care protocols across
@@ -519,7 +494,7 @@ export default function HomePage() {
                             </p>
                           </div>
                         </div>
-                        <p className="text-sm text-foreground/80 mt-6 font-medium leading-relaxed">
+                        <p className="text-sm text-foreground-muted mt-6 font-medium leading-relaxed">
                           A veteran in large-scale event management, Mr. Patil
                           oversees the complex logistics of setting up mobile
                           camps, supply chains, and volunteer deployment across

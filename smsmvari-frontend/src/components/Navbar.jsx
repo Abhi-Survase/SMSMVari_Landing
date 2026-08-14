@@ -46,7 +46,7 @@ export default function Navbar() {
             height={40}
             className="w-8 h-8 sm:w-10 sm:h-10 shrink-0 object-contain"
           />
-          <span className="inline-block origin-left font-heading text-lg sm:text-xl md:text-2xl font-black text-primary tracking-tight leading-none translate-y-0.5 transition-all duration-200 ease-out group-hover:text-brand-blue group-hover:scale-105">
+          <span className="inline-block origin-left font-heading text-lg sm:text-xl md:text-2xl font-black text-primary tracking-tight leading-none translate-y-0.5 transition-all duration-200 ease-out group-hover:text-brand-blue group-hover:scale-103">
             SMSM Vari
           </span>
         </Link>
