@@ -167,7 +167,7 @@ export default function AarogyawariPage() {
         />
         <AnimatedPageHero className="max-w-2xl relative z-10 mx-auto lg:mx-0 lg:ml-[max(2rem,calc((100%-72rem)/2))]">
           <div className="flex items-center gap-3 mb-5">
-            <Image src="/icon.webp" alt="SMSM Vari" width={56} height={56} />
+            <Image src="icon.webp" alt="SMSM Vari" width={56} height={56} />
             <Badge className="bg-accent-marigold/15 text-accent-marigold border-accent-marigold/40 uppercase tracking-widest text-xs">
               Since 1984
             </Badge>

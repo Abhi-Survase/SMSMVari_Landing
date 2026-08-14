@@ -226,7 +226,7 @@ export default function HomePage() {
                         Since 1984
                       </Badge>
                       <Image
-                        src="/initiative.webp"
+                        src="initiative.webp"
                         alt="Aarogyawari Initiative"
                         width={653}
                         height={315}
@@ -264,7 +264,7 @@ export default function HomePage() {
                     <div className="h-1 w-full bg-primary" />
                     <div className="h-48 relative overflow-hidden shrink-0">
                       <Image
-                        src="/camp_services.webp"
+                        src="camp_services.webp"
                         alt="Camp Locations"
                         width={768}
                         height={371}
@@ -301,7 +301,7 @@ export default function HomePage() {
                         24/7 Active
                       </Badge>
                       <Image
-                        src="/medical_camps.webp"
+                        src="medical_camps.webp"
                         alt="Comprehensive Care & Services"
                         width={750}
                         height={446}
@@ -445,7 +445,7 @@ export default function HomePage() {
                         <div className="flex items-start gap-4">
                           <div className="w-20 h-20 bg-muted rounded-full overflow-hidden border-2 border-secondary shrink-0">
                             <Image
-                              src="/cmo_image.webp"
+                              src="cmo_image.webp"
                               alt="Dr. Anjali Deshmukh"
                               width={256}
                               height={256}
@@ -478,7 +478,7 @@ export default function HomePage() {
                         <div className="flex items-start gap-4">
                           <div className="w-20 h-20 bg-muted rounded-full overflow-hidden border-2 border-secondary shrink-0">
                             <Image
-                              src="/log-head_image.webp"
+                              src="log-head_image.webp"
                               alt="Mr. Prakash Patil"
                               width={256}
                               height={256}

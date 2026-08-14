@@ -108,7 +108,7 @@ export default function GalleryPage() {
       <section className="bg-secondary text-white py-20 px-4 md:px-8 border-b-4 border-primary">
         <AnimatedPageHero className="max-w-2xl">
           <div className="flex items-center gap-3 mb-5">
-            <Image src="/icon.webp" alt="SMSM Vari" width={56} height={56} />
+            <Image src="icon.webp" alt="SMSM Vari" width={56} height={56} />
           </div>
           <p className="text-primary font-bold uppercase tracking-widest text-sm mb-3">
             Through the Lens

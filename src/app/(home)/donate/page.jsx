@@ -104,7 +104,7 @@ export default function DonatePage() {
       <section className="bg-secondary text-white py-16 px-4 md:px-8 border-b-4 border-primary">
         <div className="max-w-3xl mx-auto text-center">
           <div className="inline-block items-center">
-            <Image src="/icon.webp" alt="SMSM Vari" width={56} height={56} />
+            <Image src="icon.webp" alt="SMSM Vari" width={56} height={56} />
           </div>
           <p className="text-primary font-bold uppercase tracking-widest text-sm mb-3">
             Make a Difference

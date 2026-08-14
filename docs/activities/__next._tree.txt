@@ -1,4 +1,4 @@
-:HL["/SMSMVari_Landing/_next/static/chunks/11bulrpb4-ipr.css","style"]
+:HL["/SMSMVari_Landing/_next/static/chunks/1outmv2kws9mw.css","style"]
 :HL["/SMSMVari_Landing/_next/static/media/0e70a8c5ff3cd4cf-s.p.05lpjjsnz0gd-.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/SMSMVari_Landing/_next/static/media/32c830f11645148a-s.p.2dqc93ya4aqyh.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/SMSMVari_Landing/_next/static/media/3a73703e20b6786e-s.p.1x20ftg7xr4e9.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
@@ -24,6 +24,5 @@
 :HL["https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap","style"]
 :HL["https://images.unsplash.com/photo-1717820775574-bc200d22ce40?fm=jpg&q=80&w=2000&auto=format&fit=crop","image"]
 :HL["https://images.unsplash.com/photo-1641465756589-dc84610af2d1?fm=jpg&q=80&w=2000&auto=format&fit=crop","image"]
-:HL["activities-disaster-relief.webp","image"]
 :HL["https://images.unsplash.com/photo-1673146416489-98c2e139f680?fm=jpg&q=80&w=2000&auto=format&fit=crop","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"(home)","param":null,"prefetchHints":0,"slots":{"children":{"name":"activities","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"RxpLkNf9s9-SBfYjaGKjG"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"(home)","param":null,"prefetchHints":0,"slots":{"children":{"name":"activities","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"dH41zMj7AwC_qaVPPyvVV"}

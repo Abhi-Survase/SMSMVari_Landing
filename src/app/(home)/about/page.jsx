@@ -132,7 +132,7 @@ export default function AboutUsPage() {
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-12 lg:gap-16 items-center">
           <AnimatedPageHero className="text-left">
             <div className="flex items-center gap-3 mb-5">
-              <Image src="/icon.webp" alt="SMSM Vari" width={44} height={44} />
+              <Image src="icon.webp" alt="SMSM Vari" width={44} height={44} />
               <Badge className="bg-primary/20 text-primary border-primary/30 uppercase tracking-widest text-xs">
                 Since 1984
               </Badge>

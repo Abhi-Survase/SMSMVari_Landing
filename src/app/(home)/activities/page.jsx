@@ -178,7 +178,7 @@ export default function ActivitiesPage() {
         <div className="absolute inset-0 bg-secondary/90" />
         <AnimatedPageHero className="max-w-2xl relative z-10 mx-auto lg:mx-0 lg:ml-[max(2rem,calc((100%-72rem)/2))]">
           <div className="flex items-center gap-3 mb-5">
-            <Image src="/icon.webp" alt="SMSM Vari" width={44} height={44} />
+            <Image src="icon.webp" alt="SMSM Vari" width={44} height={44} />
             <Badge className="bg-primary/20 text-primary border-primary/30 uppercase tracking-widest text-xs">
               Since 1984
             </Badge>
