@@ -40,7 +40,7 @@ export default function Navbar() {
         {/* ── Brand Logo & Text (Responsive scale) ─────────────────────────── */}
         <Link href="/" className="flex items-center gap-2 group shrink-0">
           <Image
-            src="/icon.webp"
+            src="icon.webp"
             alt="SMSM Vari"
             width={40}
             height={40}
