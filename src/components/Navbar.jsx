@@ -36,15 +36,22 @@ export default function Navbar() {
         scrolled ? "shadow-lg shadow-foreground/10" : "shadow-sm"
       }`}
     >
-      <div className="flex justify-between items-center w-full px-4 md:px-8 py-2 max-w-7xl mx-auto">
-        <Link href="/" className="flex items-center gap-2 ...">
-          <Image src="icon.webp" alt="SMSM Vari" width={42} height={42} />
-          <span className="font-heading text-2xl font-black text-primary tracking-tight hover:text-brand-blue">
+      <div className="flex justify-between items-center w-full px-3 sm:px-6 md:px-8 py-2 md:py-2.5 max-w-7xl mx-auto">
+        {/* ── Brand Logo & Text (Responsive scale) ─────────────────────────── */}
+        <Link href="/" className="flex items-center gap-2 group shrink-0">
+          <Image
+            src="/icon.webp"
+            alt="SMSM Vari"
+            width={40}
+            height={40}
+            className="w-8 h-8 sm:w-10 sm:h-10 shrink-0 object-contain"
+          />
+          <span className="inline-block origin-left font-heading text-lg sm:text-xl md:text-2xl font-black text-primary tracking-tight leading-none translate-y-0.5 transition-all duration-200 ease-out group-hover:text-brand-blue group-hover:scale-103">
             SMSM Vari
           </span>
         </Link>
 
-        {/* Desktop Navigation Links — unchanged, hidden below md */}
+        {/* ── Desktop Navigation Links ────────────────────────────────────── */}
         <div className="hidden md:flex space-x-6">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
@@ -64,11 +71,12 @@ export default function Navbar() {
           })}
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex items-center space-x-4">
+        {/* ── Action Buttons ──────────────────────────────────────────────── */}
+        <div className="flex items-center gap-2 sm:gap-4">
+          {/* Desktop-only Login */}
           <Link
             href="/admin"
-            className={`transition-colors ${
+            className={`hidden md:block transition-colors ${
               pathname === "/admin"
                 ? "text-primary font-bold border-primary"
                 : "text-muted-foreground hover:text-primary font-medium"
@@ -77,23 +85,21 @@ export default function Navbar() {
             Login
           </Link>
 
-          {/* Language toggle — desktop only */}
+          {/* Desktop-only Language toggle */}
           <button className="font-bold text-xs text-foreground hover:text-primary transition-colors uppercase hidden md:block">
             मराठी
           </button>
 
-          <Link href={"/donate"}>
-            <Button
-              size="lg"
-              className="uppercase font-bold tracking-wide border-b-4 border-b-secondary/50 active:border-b-0 active:translate-y-1"
-            >
+          {/* Responsive Donate Button */}
+          <Link href="/donate">
+            <Button className="h-8 px-3 text-xs sm:h-9 sm:px-4 sm:text-sm md:h-10 md:px-5 uppercase font-bold tracking-wide border-b-4 border-b-secondary/50 active:border-b-0 active:translate-y-1 translate-y-0.5 shadow-sm">
               Donate Now
             </Button>
           </Link>
 
-          {/* Hamburger — mobile only, sits right of Donate Now */}
+          {/* Hamburger — mobile only */}
           <button
-            className="md:hidden p-1 text-foreground hover:text-primary transition-colors"
+            className="md:hidden p-1 text-foreground hover:text-primary transition-colors focus:outline-none"
             onClick={() => setIsOpen((prev) => !prev)}
             aria-label={isOpen ? "Close menu" : "Open menu"}
             aria-expanded={isOpen}
@@ -103,9 +109,9 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile dropdown — only rendered when open, hidden on md+ */}
+      {/* ── Mobile Dropdown Menu ────────────────────────────────────────── */}
       {isOpen && (
-        <div className="md:hidden border-t border-border bg-card px-4 py-3 flex flex-col">
+        <div className="md:hidden border-t border-border bg-card px-4 py-3 flex flex-col space-y-1">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -124,9 +130,22 @@ export default function Navbar() {
             );
           })}
 
-          {/* Language toggle in mobile menu */}
+          {/* Mobile Login Link */}
+          <Link
+            href="/admin"
+            onClick={() => setIsOpen(false)}
+            className={`py-2.5 px-3 rounded-md font-medium transition-all ${
+              pathname === "/admin"
+                ? "text-primary font-bold bg-primary/10"
+                : "text-muted-foreground hover:text-primary hover:bg-primary/5"
+            }`}
+          >
+            Login
+          </Link>
+
+          {/* Language toggle inside mobile menu */}
           <div className="mt-2 pt-2 border-t border-border">
-            <button className="font-bold text-xs text-foreground hover:text-primary transition-colors uppercase py-2 px-3">
+            <button className="w-full text-left font-bold text-xs text-foreground hover:text-primary transition-colors uppercase py-2 px-3">
               मराठी
             </button>
           </div>

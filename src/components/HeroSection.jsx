@@ -1,7 +1,13 @@
 // components/HeroSection.jsx
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { useRef } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "motion/react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,9 +17,29 @@ const EASE = [0.22, 1, 0.36, 1];
 
 export default function HeroSection() {
   const shouldReduce = useReducedMotion();
+  const sectionRef = useRef(null);
+
+  // 1. Track scroll progress from top of the page until the hero exits the viewport
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  // 2. Parallax vertical translation (moves downward slower than scroll speed)
+  const bgY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    shouldReduce ? ["0%", "0%"] : ["0%", "28%"],
+  );
+
+  // 3. Subtle scale effect on scroll for extra depth (optional, clean SaaS feel)
+  const bgScale = useTransform(
+    scrollYProgress,
+    [0, 1],
+    shouldReduce ? [1, 1] : [1, 1.06],
+  );
 
   // Stagger container: orchestrates children arriving one by one.
-  // Reduced-motion users get instant opacity-only reveal, no movement.
   const container = {
     hidden: {},
     show: {
@@ -34,28 +60,26 @@ export default function HeroSection() {
   };
 
   return (
-    // overflow-hidden clips the background image to the section's own box.
-    // min-h-[...] sets a *floor* only — if the mobile content stack (logo +
-    // heading + paragraph + buttons) needs more room than that, the section
-    // grows taller instead of the content overflowing upward into the navbar.
-    <section className="relative w-full border-b-4 border-secondary overflow-hidden min-h-[560px] md:min-h-[819px] flex items-center">
-      {/* Background image + tint now live in their own absolute layer behind
-          the content, instead of being the thing that defines the box height. */}
-      <div className="absolute inset-0 z-0">
+    <section
+      ref={sectionRef}
+      className="relative w-full border-b-4 border-secondary overflow-hidden min-h-[560px] md:min-h-[819px] flex items-center"
+    >
+      {/* ── Parallax Background Wrapper ────────────────────────────────────── */}
+      <motion.div
+        className="absolute inset-x-0 -top-[10%] h-[125%] w-full z-0 pointer-events-none"
+        style={{ y: bgY, scale: bgScale }}
+      >
         <Image
-          src="/home-hero.webp"
+          src="home-hero.webp"
           alt="A grand procession of thousands of Varkaris (devotees) during the Pandharpur Wari"
           fill
           className="object-cover object-center"
           priority
         />
         <div className="absolute inset-0 bg-black/50" />
-      </div>
+      </motion.div>
 
-      {/* The three elements (h1, p, buttons) arrive in sequence, 140ms apart.
-          No longer absolutely positioned — it sits in normal flow, centered
-          by the section's own flex/items-center, with vertical padding as a
-          guaranteed buffer from the navbar above and the border below. */}
+      {/* ── Foreground Content ─────────────────────────────────────────────── */}
       <motion.div
         className="relative z-20 flex flex-col justify-center items-center text-center px-4 py-16 md:py-0 max-w-5xl mx-auto w-full"
         variants={container}
@@ -64,7 +88,7 @@ export default function HeroSection() {
       >
         <motion.div variants={item} className="mb-4 md:mb-6">
           <Image
-            src="/icon.webp"
+            src="icon.webp"
             alt="SMSM Vari"
             width={80}
             height={80}
@@ -74,7 +98,7 @@ export default function HeroSection() {
 
         <motion.h1
           variants={item}
-          className="font-heading text-3xl md:text-5xl lg:text-6xl text-white font-black mb-4 md:mb-6 drop-shadow-xl uppercase tracking-tight"
+          className="text-4xl md:text-6xl lg:text-7xl text-white font-extrabold mb-4 md:mb-6 drop-shadow-xl leading-[1.05] tracking-[-0.02em]"
         >
           Walking with Devotion,
           <br />
@@ -83,7 +107,7 @@ export default function HeroSection() {
 
         <motion.p
           variants={item}
-          className="font-sans text-base md:text-xl text-white max-w-2xl mb-6 md:mb-8 drop-shadow-md font-medium bg-black/30 p-4 md:p-6 rounded-md border border-white/20 backdrop-blur-sm"
+          className="text-base md:text-xl text-white max-w-2xl mb-6 md:mb-8 font-medium bg-black/5 p-4 md:p-6 rounded-md border border-white/20 backdrop-blur-sm"
         >
           Delivering essential medical care and humanitarian service to remote
           tribal villages, disaster-affected regions, and dedicated pilgrims
@@ -94,7 +118,7 @@ export default function HeroSection() {
           <Link href="/donate">
             <Button
               size="lg"
-              className="uppercase font-bold tracking-wide text-md px-8 py-6 border-b-4 border-b-secondary/50 shadow-xl active:border-b-0 active:translate-y-1 animate-heartbeat"
+              className="uppercase font-bold tracking-wide text-md px-8 py-6 border-b-4 border-b-secondary/50 shadow-xl active:border-b-0 active:translate-y-1"
             >
               Support the Mission
             </Button>

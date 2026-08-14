@@ -136,10 +136,10 @@ export default function DonatePage() {
                 <p className="font-heading text-2xl md:text-3xl font-black text-secondary">
                   {number ? (
                     <NumberTicker
-                      start={number * 0.85}
+                      start={number > 50 ? number * 0.997 : number - 7}
                       end={number}
                       suffix={suffix}
-                      duration={8}
+                      duration={4}
                     />
                   ) : (
                     value

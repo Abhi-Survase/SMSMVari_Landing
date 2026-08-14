@@ -1,4 +1,4 @@
-import { Mukta } from "next/font/google";
+import { Mukta, Martel } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -8,6 +8,13 @@ const muktaSans = Mukta({
   subsets: ["latin", "devanagari"],
   display: "swap",
   weight: ["300", "400", "500", "600", "700", "800"],
+});
+
+const martelSerif = Martel({
+  variable: "--font-martel",
+  subsets: ["latin", "devanagari"],
+  display: "swap",
+  weight: ["400", "600", "700", "800", "900"],
 });
 
 export const metadata = {
@@ -21,7 +28,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${muktaSans.variable} text-base md:text-lg font-medium tracking-wide h-full antialiased`}
+      className={`${muktaSans.variable} ${martelSerif.variable} text-base md:text-lg font-medium tracking-wide h-full antialiased`}
     >
       <head>
         <link

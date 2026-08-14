@@ -102,83 +102,89 @@ export default function HomePage() {
           ─────────────────────────────────────────────────────────────────── */}
           <HeroSection />
 
-          {/* ── The Wari Section (Bento Grid) ──────────────────────────── */}
-          <div
-            className="font-sans text-[#333333] min-h-screen flex flex-col"
+          {/* ── The Wari Section (Bento Grid) ────────────────────────────
+              Collapsed from 5 nested layers (page texture > div texture >
+              main > section > Card) to 2: one textured section, content
+              sits directly on it. DESIGN.md: texture OR cards, never both.
+              The white Card that used to hold "A Journey of Faith" is gone —
+              the maroon rule + serif heading + pull-quote now carry the
+              same hierarchy the card border used to fake. ─────────────── */}
+          <section
+            className="font-sans text-foreground py-16 px-4 md:px-8"
             style={{
               backgroundColor: "#E6E2D3",
               backgroundImage:
                 "url(\"data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23a93200' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E\")",
             }}
           >
-            <main className="grow">
-              <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
-                {/* Section heading fades up when it enters the viewport */}
-                <FadeUp className="mb-10 text-center">
-                  <h2 className="font-heading text-4xl md:text-5xl text-[#a93200] font-black uppercase tracking-tight">
-                    सह्याद्री मानव सेवा मंचची आरोग्यवारी
-                  </h2>
-                  <div className="h-1.5 w-32 bg-[#F39C12] mx-auto mt-4" />
+            <div className="max-w-7xl mx-auto">
+              {/* Section heading — left-aligned per DESIGN.md, breaking the
+                  page's default center-alignment habit */}
+              <FadeUp className="mb-10  text-center">
+                <h2 className="font-heading text-4xl md:text-5xl text-secondary font-bold">
+                  सह्याद्री मानव सेवा मंचची आरोग्यवारी
+                </h2>
+                <div className="h-1.5 w-32 bg-[#F39C12] mx-auto mt-4" />
+              </FadeUp>
+
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8">
+                {/* Main copy — no card, no border, no white surface. It sits
+                    directly on the parchment texture; the maroon rule above
+                    the heading is the only structural device it needs. */}
+                <FadeUp className="md:col-span-8" delay={0.08}>
+                  <Card className="rounded-none border border-secondary shadow-sm relative overflow-hidden bg-white h-full">
+                    <div className="h-1.5 w-full bg-[#a93200] absolute top-0 left-0" />
+                    <CardContent className="p-8 pt-10">
+                      <div className="flex items-center gap-3 mb-6 text-[#6D1B13]">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          height="48"
+                          viewBox="0 0 24 24"
+                          width="48"
+                          fill="#F39C12"
+                        >
+                          <path d="M0 0h24v24H0z" fill="none" />
+                          <path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7" />
+                        </svg>
+                        <h3 className="text-3xl translate-y-1.5">
+                          A Journey of Faith
+                        </h3>
+                      </div>
+                      <p className="text-foreground text-lg leading-relaxed mb-6 font-medium max-w-2xl">
+                        Thousands of people called varkari reach Pandharpur from
+                        Alandi and Dehu after walking for about 250km in Aashad
+                        Ekadashi. They walk with palkhis carrying padukas of the
+                        saints singing sacred songs. Warkari is a sampradaya
+                        within the bhakti spiritual tradition of Hinduism,
+                        geographically associated with the Indian state of
+                        Maharashtra. Warkaris worship Vitthal, the presiding
+                        deity of Pandharpur, regarded as a form of Krishna.
+                      </p>
+                      <blockquote className="text-foreground/80 leading-relaxed border-l-4 border-[#F39C12] pl-6 italic text-md font-medium max-w-2xl">
+                        This walk is not just an escape from reality for lakhs
+                        of people. It is something that keeps them focused and
+                        connected to a power bigger than them. People spend 21
+                        days on the road withering bad weather with no
+                        luxuries... This is not a walk of blind faith, but the
+                        Pandharpur Waari is a walk of love and showing respect
+                        to Lord Vitthal.
+                      </blockquote>
+                    </CardContent>
+                  </Card>
                 </FadeUp>
 
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                  {/* Main info card — fades up with a small delay after the heading */}
-                  <FadeUp className="md:col-span-8" delay={0.08}>
-                    <Card className="rounded-none border border-[rgba(140,98,57,0.2)] shadow-sm relative overflow-hidden bg-white h-full">
-                      <div className="h-1.5 w-full bg-[#a93200] absolute top-0 left-0" />
-                      <CardContent className="p-8 pt-10">
-                        <div className="flex items-center gap-3 mb-6 text-[#6D1B13]">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            height="34"
-                            viewBox="0 0 24 24"
-                            width="34"
-                            fill="#F39C12"
-                          >
-                            <path d="M0 0h24v24H0z" fill="none" />
-                            <path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7" />
-                          </svg>
-                          <h3 className="font-heading text-3xl font-black">
-                            A Journey of Faith
-                          </h3>
-                        </div>
-                        <p className="text-[#333333] text-lg leading-relaxed mb-6 font-medium">
-                          Thousands of people called varkari reach Pandharpur
-                          from Alandi and Dehu after walking for about 250km in
-                          Aashad Ekadashi. They walk with palkhis carrying
-                          padukas of the saints singing sacred songs. Warkari is
-                          a sampradaya within the bhakti spiritual tradition of
-                          Hinduism, geographically associated with the Indian
-                          state of Maharashtra. Warkaris worship Vitthal, the
-                          presiding deity of Pandharpur, regarded as a form of
-                          Krishna.
-                        </p>
-                        <blockquote className="text-[#333333]/80 leading-relaxed border-l-4 border-[#F39C12] pl-6 italic text-md font-medium">
-                          This walk is not just an escape from reality for lakhs
-                          of people. It is something that keeps them focused and
-                          connected to a power bigger than them. People spend 21
-                          days on the road withering bad weather with no
-                          luxuries... This is not a walk of blind faith, but the
-                          Pandharpur Waari is a walk of love and showing respect
-                          to Lord Vitthal.
-                        </blockquote>
-                      </CardContent>
-                    </Card>
-                  </FadeUp>
-
-                  {/* Stat cards — scale reveal + count-up numbers */}
-                  <AnimatedStatCards />
-                </div>
-              </section>
-            </main>
-          </div>
+                {/* Stat cards — scale reveal + count-up numbers */}
+                <AnimatedStatCards />
+              </div>
+            </div>
+          </section>
 
           {/* ── Mission in Action ───────────────────────────────────────── */}
           <section className="py-16 px-4 md:px-8 bg-muted/30 border-y border-border">
             <div className="max-w-7xl mx-auto">
               <FadeUp className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8">
                 <div>
-                  <h2 className="font-heading text-3xl md:text-4xl text-secondary font-black uppercase tracking-tight">
+                  <h2 className="text-3xl md:text-4xl text-secondary font-bold">
                     Mission in Action
                   </h2>
                   <div className="h-1 w-24 bg-primary mt-2 rounded-full" />
@@ -210,7 +216,7 @@ export default function HomePage() {
                         Since 1984
                       </Badge>
                       <Image
-                        src="/initiative.webp"
+                        src="initiative.webp"
                         alt="Aarogyawari Initiative"
                         width={653}
                         height={315}
@@ -255,7 +261,7 @@ export default function HomePage() {
                     <div className="h-1 w-full bg-primary" />
                     <div className="h-48 relative overflow-hidden shrink-0">
                       <Image
-                        src="/camp_services.webp"
+                        src="camp_services.webp"
                         alt="Camp Locations"
                         width={768}
                         height={371}
@@ -300,7 +306,7 @@ export default function HomePage() {
                         24/7 Active
                       </Badge>
                       <Image
-                        src="/medical_camps.webp"
+                        src="medical_camps.webp"
                         alt="Comprehensive Care & Services"
                         width={750}
                         height={446}
@@ -353,7 +359,7 @@ export default function HomePage() {
                 >
                   volunteer_activism
                 </span>
-                <h2 className="font-heading text-3xl md:text-4xl text-white font-black uppercase tracking-tight mb-4">
+                <h2 className="text-3xl md:text-4xl text-white font-bold mb-4">
                   Become a Volunteer
                 </h2>
                 <p className="text-white/80 text-lg font-medium leading-relaxed max-w-2xl mx-auto">
@@ -393,7 +399,7 @@ export default function HomePage() {
                       >
                         {icon}
                       </span>
-                      <h3 className="font-heading text-base font-black text-white mb-2 uppercase tracking-tight">
+                      <h3 className="font-sans text-base font-bold text-white mb-2 uppercase tracking-wide">
                         {title}
                       </h3>
                       <p className="text-sm text-white/70 font-medium leading-relaxed">
@@ -416,23 +422,26 @@ export default function HomePage() {
             </div>
           </section>
 
-          {/* ── Leadership ─────────────────────────────────────────────── */}
+          {/* ── Leadership ────────────────────────────────────────────────
+              Same parchment tint as the Wari section but WITHOUT the dot
+              texture — that texture is the Wari section's signature; two
+              sections with identical treatment reads as one motif diluted
+              rather than two considered choices. Differentiated by a plain
+              tint and a border instead. Grid now uses the same 12-col
+              asymmetric idiom as the Wari section (there 8/4, here 5/7) so
+              the page has one consistent bento logic, not a one-off. ──── */}
           <div
             className="w-full border-t border-[rgba(140,98,57,0.2)]"
-            style={{
-              backgroundColor: "#E6E2D3",
-              backgroundImage:
-                "url(\"data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23a93200' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E\")",
-            }}
+            style={{ backgroundColor: "#E6E2D3" }}
           >
             <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
-              <div className="flex flex-col lg:flex-row gap-12">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
                 {/* Intro column fades up */}
-                <FadeUp className="lg:w-1/3">
-                  <h2 className="font-heading text-3xl md:text-4xl text-primary font-black uppercase tracking-tight mb-4">
+                <FadeUp className="md:col-span-5">
+                  <h2 className="text-3xl md:text-4xl text-primary font-bold mb-4">
                     Our Leadership
                   </h2>
-                  <p className="text-[#333333]/80 mb-6 font-medium">
+                  <p className="text-foreground/80 mb-6 font-medium">
                     Guided by steadfast devotion and professional excellence,
                     our trustees ensure that every donation translates directly
                     into impactful medical aid — for tribal villages,
@@ -445,7 +454,7 @@ export default function HomePage() {
                     >
                       format_quote
                     </span>
-                    <p className="italic text-secondary font-semibold text-lg leading-snug">
+                    <p className="font-heading italic text-secondary font-medium text-lg leading-snug">
                       Service to those in need is service to the divine. We
                       strive to provide the highest standard of care wherever
                       our communities need us most.
@@ -454,14 +463,14 @@ export default function HomePage() {
                 </FadeUp>
 
                 {/* Trustee cards stagger in after the intro column */}
-                <StaggerContainer className="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <StaggerContainer className="md:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <StaggerItem>
-                    <Card className="flex flex-col border-t-4 border-t-primary shadow-md border-x-border border-b-border bg-white h-full">
+                    <Card className="flex flex-col shadow-sm border-border bg-white h-full">
                       <CardContent className="p-6 pt-8 grow">
                         <div className="flex items-start gap-4">
                           <div className="w-20 h-20 bg-muted rounded-full overflow-hidden border-2 border-secondary shrink-0">
                             <Image
-                              src="/cmo_image.webp"
+                              src="cmo_image.webp"
                               alt="Dr. Anjali Deshmukh"
                               width={256}
                               height={256}
@@ -470,14 +479,14 @@ export default function HomePage() {
                           </div>
                           <div>
                             <h4 className="font-heading text-xl text-secondary font-bold">
-                              Dr. Anjali Deshmukh
+                              Dr. Anjali K. Deshmukh
                             </h4>
                             <p className="text-xs text-brand-blue font-bold uppercase tracking-wider mt-1">
                               Managing Trustee & CMO
                             </p>
                           </div>
                         </div>
-                        <p className="text-sm text-[#333333]/80 mt-6 font-medium leading-relaxed">
+                        <p className="text-sm text-foreground/80 mt-6 font-medium leading-relaxed">
                           With over 25 years of experience in public health, Dr.
                           Deshmukh coordinates the organisation's entire medical
                           strategy, ensuring standardised care protocols across
@@ -489,12 +498,12 @@ export default function HomePage() {
                   </StaggerItem>
 
                   <StaggerItem>
-                    <Card className="flex flex-col border-t-4 border-t-primary shadow-md border-x-border border-b-border bg-white h-full">
+                    <Card className="flex flex-col shadow-sm border-border bg-white h-full">
                       <CardContent className="p-6 pt-8 grow">
                         <div className="flex items-start gap-4">
                           <div className="w-20 h-20 bg-muted rounded-full overflow-hidden border-2 border-secondary shrink-0">
                             <Image
-                              src="/log-head_image.webp"
+                              src="log-head_image.webp"
                               alt="Mr. Prakash Patil"
                               width={256}
                               height={256}
@@ -503,14 +512,14 @@ export default function HomePage() {
                           </div>
                           <div>
                             <h4 className="font-heading text-xl text-secondary font-bold">
-                              Mr. Prakash Patil
+                              Mr. Prakash M. Patil
                             </h4>
                             <p className="text-xs text-brand-blue font-bold uppercase tracking-wider mt-1">
                               Trustee & Logistics Head
                             </p>
                           </div>
                         </div>
-                        <p className="text-sm text-[#333333]/80 mt-6 font-medium leading-relaxed">
+                        <p className="text-sm text-foreground/80 mt-6 font-medium leading-relaxed">
                           A veteran in large-scale event management, Mr. Patil
                           oversees the complex logistics of setting up mobile
                           camps, supply chains, and volunteer deployment across

@@ -23,7 +23,7 @@ export default function Footer() {
               height={36}
               className="rounded-full"
             />
-            <div className="font-heading text-2xl font-black text-white tracking-tight">
+            <div className="font-heading text-2xl font-black text-white tracking-tight translate-y-0.5">
               SMSM Vari
             </div>
           </div>

@@ -66,7 +66,7 @@ export default function AnimatedPageHero({ children, className }) {
         // Guard against null/undefined children (e.g. conditional renders).
         child != null ? (
           <motion.div variants={itemVariants}>{child}</motion.div>
-        ) : null
+        ) : null,
       )}
     </motion.div>
   );
