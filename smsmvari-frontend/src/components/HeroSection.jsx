@@ -83,7 +83,7 @@ export default function HeroSection() {
 
         <motion.p
           variants={item}
-          className="text-base md:text-xl text-white max-w-2xl mb-6 md:mb-8 font-medium bg-black/55 p-4 md:p-6 rounded-md border border-white/20 backdrop-blur-sm"
+          className="text-base md:text-xl text-white max-w-2xl mb-6 md:mb-8 font-medium bg-black/5 p-4 md:p-6 rounded-md border border-white/20 backdrop-blur-sm"
         >
           Delivering essential medical care and humanitarian service to remote
           tribal villages, disaster-affected regions, and dedicated pilgrims

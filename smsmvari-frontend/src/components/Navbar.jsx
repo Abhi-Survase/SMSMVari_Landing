@@ -37,9 +37,9 @@ export default function Navbar() {
       }`}
     >
       <div className="flex justify-between items-center w-full px-4 md:px-8 py-2 max-w-7xl mx-auto">
-        <Link href="/" className="flex items-center gap-2 ...">
+        <Link href="/" className="flex items-center gap-2 group">
           <Image src="/icon.webp" alt="SMSM Vari" width={42} height={42} />
-          <span className="font-heading text-2xl font-black text-primary tracking-tight hover:text-brand-blue">
+          <span className="font-heading text-2xl font-black text-primary translate-y-0.5 tracking-tight group-hover:text-brand-blue">
             SMSM Vari
           </span>
         </Link>
