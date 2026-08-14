@@ -184,7 +184,7 @@ export default function HomePage() {
             <div className="max-w-7xl mx-auto">
               <FadeUp className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8">
                 <div>
-                  <h2 className="text-3xl md:text-4xl text-secondary font-semibold">
+                  <h2 className="text-3xl md:text-4xl text-secondary font-bold">
                     Mission in Action
                   </h2>
                   <div className="h-1 w-24 bg-primary mt-2 rounded-full" />
@@ -359,7 +359,7 @@ export default function HomePage() {
                 >
                   volunteer_activism
                 </span>
-                <h2 className="text-3xl md:text-4xl text-white font-semibold mb-4">
+                <h2 className="text-3xl md:text-4xl text-white font-bold mb-4">
                   Become a Volunteer
                 </h2>
                 <p className="text-white/80 text-lg font-medium leading-relaxed max-w-2xl mx-auto">
@@ -438,7 +438,7 @@ export default function HomePage() {
               <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
                 {/* Intro column fades up */}
                 <FadeUp className="md:col-span-5">
-                  <h2 className="text-3xl md:text-4xl text-primary font-semibold mb-4">
+                  <h2 className="text-3xl md:text-4xl text-primary font-bold mb-4">
                     Our Leadership
                   </h2>
                   <p className="text-foreground/80 mb-6 font-medium">
