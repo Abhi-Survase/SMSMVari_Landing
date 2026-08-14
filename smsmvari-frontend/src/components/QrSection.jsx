@@ -48,7 +48,7 @@ export default function QrSection() {
               transition={{ duration: 0.45, ease: EASE, delay: 0.2 }}
             >
               <QrCode size={40} strokeWidth={2.5} />
-              <h2 className="font-heading text-3xl md:text-4xl font-black uppercase tracking-tight text-center">
+              <h2 className="font-heading text-3xl md:text-4xl font-semibold text-center">
                 Make a Contribution
               </h2>
             </motion.div>

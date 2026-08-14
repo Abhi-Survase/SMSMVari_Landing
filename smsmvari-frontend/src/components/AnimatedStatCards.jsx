@@ -54,7 +54,7 @@ export default function AnimatedStatCards() {
       >
         <Card className="bg-[#F39C12] text-white rounded-none border-2 border-[#6D1B13] shadow-none flex flex-col justify-center items-center text-center h-full py-5">
           <Route size={54} strokeWidth={3} />
-          <div className="font-heading text-5xl font-black mb-1">
+          <div className="font-sans text-5xl font-extrabold tabular-nums mb-1">
             <CountUp to={250} suffix="km" duration={1.3} />
           </div>
           <div className="text-base uppercase tracking-[0.15em] font-bold">
@@ -73,7 +73,7 @@ export default function AnimatedStatCards() {
       >
         <Card className="bg-[#a93200] text-white rounded-none border-2 border-[#6D1B13] shadow-none flex flex-col justify-center items-center text-center h-full py-5">
           <CalendarDays size={56} strokeWidth={3} />
-          <div className="font-heading text-5xl font-black mb-1">
+          <div className="font-sans text-5xl font-extrabold tabular-nums mb-1">
             <CountUp to={21} suffix=" Days" duration={1.0} />
           </div>
           <div className="text-base uppercase tracking-[0.15em] font-bold">

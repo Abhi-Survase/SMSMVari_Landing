@@ -74,7 +74,7 @@ export default function HeroSection() {
 
         <motion.h1
           variants={item}
-          className="font-heading text-3xl md:text-5xl lg:text-6xl text-white font-black mb-4 md:mb-6 drop-shadow-xl uppercase tracking-tight"
+          className="text-4xl md:text-6xl lg:text-7xl text-white font-extrabold mb-4 md:mb-6 drop-shadow-xl leading-[1.05] tracking-[-0.02em]"
         >
           Walking with Devotion,
           <br />
@@ -83,7 +83,7 @@ export default function HeroSection() {
 
         <motion.p
           variants={item}
-          className="font-sans text-base md:text-xl text-white max-w-2xl mb-6 md:mb-8 drop-shadow-md font-medium bg-black/30 p-4 md:p-6 rounded-md border border-white/20 backdrop-blur-sm"
+          className="text-base md:text-xl text-white max-w-2xl mb-6 md:mb-8 font-medium bg-black/55 p-4 md:p-6 rounded-md border border-white/20 backdrop-blur-sm"
         >
           Delivering essential medical care and humanitarian service to remote
           tribal villages, disaster-affected regions, and dedicated pilgrims
@@ -94,7 +94,7 @@ export default function HeroSection() {
           <Link href="/donate">
             <Button
               size="lg"
-              className="uppercase font-bold tracking-wide text-md px-8 py-6 border-b-4 border-b-secondary/50 shadow-xl active:border-b-0 active:translate-y-1 animate-heartbeat"
+              className="uppercase font-bold tracking-wide text-md px-8 py-6 border-b-4 border-b-secondary/50 shadow-xl active:border-b-0 active:translate-y-1"
             >
               Support the Mission
             </Button>
