@@ -1,5 +1,0 @@
-1:"$Sreact.fragment"
-2:I[62991,["/SMSMVari_Landing/_next/static/chunks/3g9-kjq3_66h6.js","/SMSMVari_Landing/_next/static/chunks/1124ddmj5g_p8.js","/SMSMVari_Landing/_next/static/chunks/3qek0vk5nuw57.js"],"OutletBoundary"]
-3:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","div",null,{"children":["Contact Us Page",["$","pre",null,{"children":"WIP"}]]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"ckJrRagIBHNSZReerc2rn"}
-4:null
