@@ -4,6 +4,7 @@
 import QrSection from "@/components/QrSection";
 import { Heart, Users, Stethoscope, ShieldCheck, Calendar } from "lucide-react";
 import { NumberTicker } from "@/components/shadcn-space/number-ticker/number-ticker-01";
+import Image from "next/image";
 
 export const metadata = {
   title:
@@ -102,11 +103,14 @@ export default function DonatePage() {
       {/* Hero */}
       <section className="bg-secondary text-white py-16 px-4 md:px-8 border-b-4 border-primary">
         <div className="max-w-3xl mx-auto text-center">
+          <div className="inline-block items-center">
+            <Image src="/icon.webp" alt="SMSM Vari" width={56} height={56} />
+          </div>
           <p className="text-primary font-bold uppercase tracking-widest text-sm mb-3">
             Make a Difference
           </p>
-          <h1 className="font-heading text-4xl md:text-5xl font-black uppercase tracking-tight mb-6">
-            Support Our Healthcare Mission
+          <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-black uppercase mb-6">
+            Support Our <br /> Healthcare Mission
           </h1>
           <p className="text-white/80 text-lg md:text-xl font-medium leading-relaxed">
             Every rupee you give funds medical camps in remote tribal villages,

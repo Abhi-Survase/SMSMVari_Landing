@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { Route, CalendarDays } from "lucide-react";
 
 // ── Motion components (client, safe to import from a server component) ───────
 import AnimatedPageHero from "@/components/AnimatedPageHero";
@@ -113,38 +114,74 @@ export default function AboutUsPage() {
       />
 
       {/* ── Page Hero ─────────────────────────────────────────────────────
+          Asymmetric two-column composition instead of a centered stack.
+          Left: badge → h1 → tagline → body, all left-anchored — this is
+          where the eye should land first and read a natural top-to-bottom
+          line. Right: the two founding figures (250km / 21 Days) given
+          real structural weight, echoing AnimatedStatCards on the
+          homepage. Numbers carry the credibility argument per PRODUCT.md
+          ("let concrete numbers carry weight the adjectives shouldn't")
+          instead of living only in a stat strip elsewhere.
+
           AnimatedPageHero staggers each direct child on mount:
           Badge (100ms) → h1 (220ms) → tagline p (340ms) → body p (460ms).
           The outer section stays in this server component so its background
           and border render immediately without waiting for hydration.
       ─────────────────────────────────────────────────────────────────── */}
-      <section className="bg-secondary text-white py-16 px-4 md:px-8 border-b-4 border-primary">
-        <AnimatedPageHero className="max-w-3xl mx-auto text-center">
-          <Image
-            src="icon.webp"
-            alt="SMSM Vari"
-            width={64}
-            height={64}
-            className="mx-auto mb-4"
-          />
-          <Badge className="mb-4 bg-primary/20 text-primary border-primary/30 uppercase tracking-widest text-xs">
-            Since 1984
-          </Badge>
-          <h1 className="font-heading text-4xl md:text-5xl font-black uppercase tracking-tight mb-3">
-            About SMSM Vari
-          </h1>
-          <p className="text-primary font-bold uppercase tracking-widest text-sm mb-6">
-            Healthcare Without Boundaries
-          </p>
-          <p className="text-white/80 text-lg font-medium leading-relaxed">
-            Sahyadri Manav Seva Manch Vari Trust was founded on a single
-            conviction: that geography should never be a barrier to dignified
-            medical care. We carry healthcare into Maharashtra's most
-            underserved spaces — remote tribal villages, disaster-affected
-            communities, rural fair grounds, and pilgrimage routes — wherever
-            people have the least access and need it most.
-          </p>
-        </AnimatedPageHero>
+      <section className="bg-secondary text-white py-20 px-4 md:px-8 border-b-4 border-primary">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-12 lg:gap-16 items-center">
+          <AnimatedPageHero className="text-left">
+            <div className="flex items-center gap-3 mb-5">
+              <Image src="/icon.webp" alt="SMSM Vari" width={44} height={44} />
+              <Badge className="bg-primary/20 text-primary border-primary/30 uppercase tracking-widest text-xs">
+                Since 1984
+              </Badge>
+            </div>
+            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight mb-3 max-w-xl">
+              About SMSM Vari
+            </h1>
+            <p className="text-primary font-bold uppercase tracking-widest text-sm mb-6">
+              Healthcare Without Boundaries
+            </p>
+            <p className="text-white text-lg font-medium leading-relaxed max-w-xl">
+              Sahyadri Manav Seva Manch Vari Trust was founded on a single
+              conviction: that geography should never be a barrier to dignified
+              medical care. We carry healthcare into Maharashtra&apos;s most
+              underserved spaces — remote tribal villages, disaster-affected
+              communities, rural fair grounds, and pilgrimage routes — wherever
+              people have the least access and need it most.
+            </p>
+          </AnimatedPageHero>
+
+          {/* Founding figures — right column, breaks the centered-stack
+              habit by giving the hero real left/right tension. Not a
+              "card" in the nested-card sense: flush blocks of color sitting
+              directly on the section background. */}
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-4 bg-accent-marigold text-secondary px-6 py-5">
+              <Route size={40} strokeWidth={2.5} className="shrink-0" />
+              <div>
+                <div className="font-sans text-3xl font-extrabold tabular-nums leading-none">
+                  250km
+                </div>
+                <div className="text-xs uppercase tracking-[0.15em] font-bold mt-1">
+                  Sacred Journey
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 bg-secondary-deep text-white px-6 py-5">
+              <CalendarDays size={40} strokeWidth={2.5} className="shrink-0" />
+              <div>
+                <div className="font-sans text-3xl font-extrabold tabular-nums leading-none">
+                  21 Days
+                </div>
+                <div className="text-xs uppercase tracking-[0.15em] font-bold mt-1">
+                  Aashad Ekadashi
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ── Mission ───────────────────────────────────────────────────────
@@ -157,12 +194,21 @@ export default function AboutUsPage() {
       {/* ── Values ────────────────────────────────────────────────────── */}
       <section className="py-16 px-4 md:px-8 bg-muted/30 border-y border-border">
         <div className="max-w-7xl mx-auto">
-          {/* Heading + underline fade up together */}
-          <FadeUp className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl text-secondary font-black uppercase tracking-tight">
-              What We Stand For
-            </h2>
-            <div className="h-1 w-24 bg-primary mt-3 mx-auto rounded-full" />
+          {/* Left-anchored heading, paired with a short supporting line on
+              the right of the same row on larger screens — replaces the
+              centered heading + centered rule pattern repeated across
+              every section. */}
+          <FadeUp className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+            <div>
+              <div className="h-1 w-16 bg-primary mb-4" />
+              <h2 className="font-heading text-3xl md:text-4xl text-secondary font-black uppercase tracking-tight">
+                What We Stand For
+              </h2>
+            </div>
+            <p className="text-foreground-muted font-medium max-w-xs md:text-right">
+              Four principles that hold whether we&apos;re at a pilgrimage camp
+              or a flood relief site.
+            </p>
           </FadeUp>
 
           {/* 4 value cards stagger in 100ms apart */}
@@ -171,11 +217,7 @@ export default function AboutUsPage() {
               const isMedical = v.title === "Medical Excellence";
               return (
                 <StaggerItem key={v.title}>
-                  <Card
-                    className={`border-t-4 hover:shadow-md transition-shadow h-full ${
-                      isMedical ? "border-t-brand-blue" : "border-t-primary"
-                    }`}
-                  >
+                  <Card className="shadow-none border-border h-full">
                     <CardContent className="pt-8 pb-6 px-6">
                       <span
                         className={`material-symbols-outlined text-4xl mb-4 block ${
@@ -188,7 +230,7 @@ export default function AboutUsPage() {
                       <h3 className="font-heading text-lg font-black text-secondary mb-2 uppercase tracking-tight">
                         {v.title}
                       </h3>
-                      <p className="text-sm text-foreground/80 font-medium leading-relaxed">
+                      <p className="text-sm text-foreground-muted font-medium leading-relaxed">
                         {v.description}
                       </p>
                     </CardContent>
@@ -202,11 +244,16 @@ export default function AboutUsPage() {
 
       {/* ── Leadership ────────────────────────────────────────────────── */}
       <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
-        <FadeUp className="text-center mb-12">
-          <h2 className="font-heading text-3xl md:text-4xl text-primary font-black uppercase tracking-tight">
-            Our Leadership
-          </h2>
-          <div className="h-1 w-24 bg-primary mt-3 mx-auto rounded-full" />
+        <FadeUp className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+          <div>
+            <div className="h-1 w-16 bg-primary mb-4" />
+            <h2 className="font-heading text-3xl md:text-4xl text-primary font-black uppercase tracking-tight">
+              Our Leadership
+            </h2>
+          </div>
+          <p className="text-foreground-muted font-medium max-w-xs md:text-right">
+            The trustees and volunteers coordinating every camp we run.
+          </p>
         </FadeUp>
 
         {/* Trustees — 4 full cards, stagger 100ms apart */}
@@ -240,7 +287,7 @@ export default function AboutUsPage() {
             },
           ].map((person) => (
             <StaggerItem key={person.name}>
-              <Card className="border-t-4 border-t-primary shadow-md h-full">
+              <Card className="shadow-none border-border h-full">
                 <CardContent className="p-6 pt-8">
                   <div className="flex items-start gap-4">
                     <div className="w-20 h-20 bg-muted rounded-full overflow-hidden border-2 border-secondary shrink-0">
@@ -261,7 +308,7 @@ export default function AboutUsPage() {
                       </p>
                     </div>
                   </div>
-                  <p className="text-sm text-foreground/80 mt-6 font-medium leading-relaxed">
+                  <p className="text-sm text-foreground-muted mt-6 font-medium leading-relaxed">
                     {person.bio}
                   </p>
                 </CardContent>
@@ -270,12 +317,15 @@ export default function AboutUsPage() {
           ))}
         </StaggerContainer>
 
-        {/* Members sub-heading fades up before its grid */}
-        <FadeUp className="text-center mb-8">
+        {/* Members sub-heading — left-anchored, quieter than the section
+            heading above it (smaller rule, no paired right-side copy) so
+            it reads as a subordinate heading, not a repeat of the same
+            pattern. */}
+        <FadeUp className="mb-8 max-w-4xl mx-auto">
+          <div className="h-1 w-10 bg-primary mb-3" />
           <h3 className="font-heading text-xl md:text-2xl text-secondary font-black uppercase tracking-tight">
             Our Members
           </h3>
-          <div className="h-1 w-16 bg-primary mt-2 mx-auto rounded-full" />
         </FadeUp>
 
         {/* 6 compact member cards — uses the default 100ms stagger from StaggerContainer.
@@ -307,26 +357,29 @@ export default function AboutUsPage() {
       </section>
 
       {/* ── CTA ───────────────────────────────────────────────────────────
-          Single FadeUp on the whole block — it reads as one unit and the
-          section is short enough that individual item stagger would feel
-          fidgety. Donate button carries animate-heartbeat for consistency
-          with the homepage hero CTA.
+          Left-anchored heading/copy, buttons break right on larger
+          screens — closes the page with the same asymmetric tension as
+          the hero instead of a third centered stack. Single FadeUp on the
+          whole block still reads as one unit; individual item stagger
+          would feel fidgety at this length.
       ─────────────────────────────────────────────────────────────────── */}
-      <section className="py-14 px-4 md:px-8 bg-secondary text-white text-center border-t-4 border-primary">
-        <FadeUp className="max-w-xl mx-auto">
-          <h2 className="font-heading text-3xl font-black uppercase tracking-tight mb-4">
-            Join the Mission
-          </h2>
-          <p className="text-white/80 mb-8 font-medium">
-            Whether you donate, volunteer, or simply spread the word — every act
-            of support helps us reach one more village, one more patient, one
-            more person who needs care and has nowhere else to turn.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
+      <section className="py-16 px-4 md:px-8 bg-secondary text-white border-t-4 border-primary">
+        <FadeUp className="max-w-6xl mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+          <div className="max-w-md">
+            <h2 className="font-heading text-3xl font-black uppercase tracking-tight mb-4">
+              Join the Mission
+            </h2>
+            <p className="text-white font-medium">
+              Whether you donate, volunteer, or simply spread the word — every
+              act of support helps us reach one more village, one more patient,
+              one more person who needs care and has nowhere else to turn.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 shrink-0">
             <Button
               asChild
               size="lg"
-              className="uppercase font-bold tracking-wide border-b-4 border-b-primary/50 active:border-b-0 active:translate-y-1 animate-heartbeat"
+              className="uppercase font-bold tracking-wide"
             >
               <Link href="/donate">Donate Now</Link>
             </Button>

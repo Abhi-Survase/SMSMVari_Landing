@@ -163,32 +163,30 @@ export default function ActivitiesPage() {
       />
 
       {/* ── Page Hero ────────────────────────────────────────────────────
+          Left-anchored against the photo instead of a centered stack —
+          matches the asymmetric treatment already applied to About.
           AnimatedPageHero staggers each direct child on mount.
           The outer section (background image + overlay) stays server-side
           so it renders immediately without waiting for hydration.
       ─────────────────────────────────────────────────────────────────── */}
-      <section className="relative py-16 px-4 md:px-8 border-b-4 border-primary overflow-hidden">
+      <section className="relative py-24 px-4 md:px-8 border-b-4 border-primary overflow-hidden">
         <img
           src="https://images.unsplash.com/photo-1717820775574-bc200d22ce40?fm=jpg&q=80&w=2000&auto=format&fit=crop"
           alt="Aerial view of a remote village in the mountains"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-secondary/90" />
-        <AnimatedPageHero className="max-w-3xl mx-auto text-center relative z-10">
-          <Image
-            src="icon.webp"
-            alt="SMSM Vari"
-            width={64}
-            height={64}
-            className="mx-auto mb-4"
-          />
-          <Badge className="mb-4 bg-primary/20 text-primary border-primary/30 uppercase tracking-widest text-xs">
-            Since 1982
-          </Badge>
-          <h1 className="font-heading text-4xl md:text-5xl font-black uppercase tracking-tight mb-6 text-white">
+        <AnimatedPageHero className="max-w-2xl relative z-10 mx-auto lg:mx-0 lg:ml-[max(2rem,calc((100%-72rem)/2))]">
+          <div className="flex items-center gap-3 mb-5">
+            <Image src="/icon.webp" alt="SMSM Vari" width={44} height={44} />
+            <Badge className="bg-primary/20 text-primary border-primary/30 uppercase tracking-widest text-xs">
+              Since 1984
+            </Badge>
+          </div>
+          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight mb-6 text-white max-w-xl">
             Our Activities
           </h1>
-          <p className="text-white/80 text-lg font-medium leading-relaxed">
+          <p className="text-white text-lg font-medium leading-relaxed max-w-lg">
             From monthly medical camps in remote tribal villages to disaster
             relief, school health programmes, and the annual Aarogyawari
             pilgrimage service — this is where the work happens.
@@ -203,35 +201,38 @@ export default function ActivitiesPage() {
 
       {/* ── Section 1: Tribal & Community Health Camps ─────────────────── */}
       <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
-        {/* Heading block fades up first */}
-        <FadeUp className="text-center mb-12">
-          <h2 className="font-heading text-3xl md:text-4xl text-primary font-black uppercase tracking-tight">
-            Tribal & Community Health Camps
-          </h2>
-          <div className="h-1 w-24 bg-primary mt-3 mx-auto rounded-full" />
-          <p className="text-foreground/80 font-medium leading-relaxed max-w-2xl mx-auto mt-4">
-            Year-round, our doctors and volunteers carry healthcare into
-            villages that the system rarely reaches.
-          </p>
-        </FadeUp>
+        {/* Intro and banner run side-by-side instead of stacked — breaks
+            the repeating "centered heading → banner → grid" shape that
+            would otherwise recur identically across all four sections. */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-12 items-center mb-12">
+          <FadeUp>
+            <div className="h-1 w-16 bg-primary mb-4" />
+            <h2 className="font-heading text-3xl md:text-4xl text-primary font-black uppercase tracking-tight mb-4">
+              Tribal & Community Health Camps
+            </h2>
+            <p className="text-foreground-muted font-medium leading-relaxed max-w-md">
+              Year-round, our doctors and volunteers carry healthcare into
+              villages that the system rarely reaches.
+            </p>
+          </FadeUp>
 
-        {/* Banner image fades up with a small offset after the heading */}
-        <FadeUp delay={0.08} className="mb-8">
-          <div className="rounded-xl overflow-hidden border border-border h-56 md:h-72">
-            {/* Stock placeholder — replace with a real SMSM photo of Devbandh camps */}
-            <img
-              src="https://images.unsplash.com/photo-1641465756589-dc84610af2d1?fm=jpg&q=80&w=2000&auto=format&fit=crop"
-              alt="A man standing in a rural field, representing the tribal villages we serve"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </FadeUp>
+          <FadeUp delay={0.08}>
+            <div className="rounded-xl overflow-hidden border border-border h-56 md:h-72">
+              {/* Stock placeholder — replace with a real SMSM photo of Devbandh camps */}
+              <img
+                src="https://images.unsplash.com/photo-1641465756589-dc84610af2d1?fm=jpg&q=80&w=2000&auto=format&fit=crop"
+                alt="A man standing in a rural field, representing the tribal villages we serve"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </FadeUp>
+        </div>
 
         {/* 3 cards stagger in 100ms apart */}
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {tribalCamps.map((item) => (
             <StaggerItem key={item.title}>
-              <Card className="border-t-4 border-t-primary hover:shadow-md transition-shadow h-full">
+              <Card className="shadow-none border-border h-full">
                 <CardContent className="pt-8 pb-6 px-6">
                   <item.icon
                     className="text-primary mb-4"
@@ -241,7 +242,7 @@ export default function ActivitiesPage() {
                   <h3 className="font-heading text-lg font-black text-secondary mb-2 uppercase tracking-tight">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-foreground/80 font-medium leading-relaxed">
+                  <p className="text-sm text-foreground-muted font-medium leading-relaxed">
                     {item.description}
                   </p>
                 </CardContent>
@@ -254,32 +255,28 @@ export default function ActivitiesPage() {
       {/* ── Section 2: Disaster & Emergency Relief ─────────────────────── */}
       <section className="py-16 px-4 md:px-8 bg-muted/30 border-y border-border">
         <div className="max-w-7xl mx-auto">
-          <FadeUp className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl text-brand-blue font-black uppercase tracking-tight">
-              Disaster & Emergency Relief
-            </h2>
-            <div className="h-1 w-24 bg-brand-blue mt-3 mx-auto rounded-full" />
-            <p className="text-foreground/80 font-medium leading-relaxed max-w-2xl mx-auto mt-4">
+          {/* No banner image in this section — deliberately, so the page
+              doesn't repeat "heading → banner → grid" four times running.
+              Intro pairs left-anchored heading with a right-aligned
+              supporting line instead. */}
+          <FadeUp className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+            <div>
+              <div className="h-1 w-16 bg-brand-blue mb-4" />
+              <h2 className="font-heading text-3xl md:text-4xl text-brand-blue font-black uppercase tracking-tight">
+                Disaster & Emergency Relief
+              </h2>
+            </div>
+            <p className="text-foreground-muted font-medium max-w-xs md:text-right">
               When disaster strikes, our teams mobilise quickly to provide
               emergency medical care to affected communities.
             </p>
-          </FadeUp>
-
-          <FadeUp delay={0.08} className="mb-8">
-            <div className="rounded-xl overflow-hidden border border-border h-56 md:h-72 bg-muted">
-              <img
-                src="activities-disaster-relief.webp"
-                alt="Medical volunteers providing emergency aid to a disaster-affected community"
-                className="w-full h-full object-cover"
-              />
-            </div>
           </FadeUp>
 
           {/* 4 cards stagger in 100ms apart */}
           <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {disasterRelief.map((item) => (
               <StaggerItem key={item.title}>
-                <Card className="border-t-4 border-t-brand-blue hover:shadow-md transition-shadow bg-white h-full">
+                <Card className="shadow-none border-border bg-white h-full">
                   <CardContent className="pt-8 pb-6 px-6">
                     <item.icon
                       className="text-brand-blue mb-4"
@@ -289,7 +286,7 @@ export default function ActivitiesPage() {
                     <h3 className="font-heading text-base font-black text-secondary mb-2 uppercase tracking-tight">
                       {item.title}
                     </h3>
-                    <p className="text-sm text-foreground/80 font-medium leading-relaxed">
+                    <p className="text-sm text-foreground-muted font-medium leading-relaxed">
                       {item.description}
                     </p>
                   </CardContent>
@@ -302,31 +299,36 @@ export default function ActivitiesPage() {
 
       {/* ── Section 3: Education & Awareness ───────────────────────────── */}
       <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
-        <FadeUp className="text-center mb-12">
-          <h2 className="font-heading text-3xl md:text-4xl text-primary font-black uppercase tracking-tight">
-            Education & Awareness
-          </h2>
-          <div className="h-1 w-24 bg-primary mt-3 mx-auto rounded-full" />
-          <p className="text-foreground/80 font-medium leading-relaxed max-w-2xl mx-auto mt-4">
-            Healthcare and education go hand in hand — we invest in both.
-          </p>
-        </FadeUp>
+        {/* Mirrored from Section 1's image-right pairing (image-left here)
+            so the two image+intro sections don't read as the same
+            component reused, even though the underlying shape is similar. */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-12 items-center mb-12">
+          <FadeUp delay={0.08} className="lg:order-1">
+            <div className="rounded-xl overflow-hidden border border-border h-56 md:h-72">
+              {/* Stock placeholder — replace with a real SMSM school programme photo */}
+              <img
+                src="https://images.unsplash.com/photo-1673146416489-98c2e139f680?fm=jpg&q=80&w=2000&auto=format&fit=crop"
+                alt="A group of people gathered outside a school building"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </FadeUp>
 
-        <FadeUp delay={0.08} className="mb-8">
-          <div className="rounded-xl overflow-hidden border border-border h-56 md:h-72">
-            {/* Stock placeholder — replace with a real SMSM school programme photo */}
-            <img
-              src="https://images.unsplash.com/photo-1673146416489-98c2e139f680?fm=jpg&q=80&w=2000&auto=format&fit=crop"
-              alt="A group of people gathered outside a school building"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </FadeUp>
+          <FadeUp className="lg:order-2">
+            <div className="h-1 w-16 bg-primary mb-4" />
+            <h2 className="font-heading text-3xl md:text-4xl text-primary font-black uppercase tracking-tight mb-4">
+              Education & Awareness
+            </h2>
+            <p className="text-foreground-muted font-medium leading-relaxed max-w-md">
+              Healthcare and education go hand in hand — we invest in both.
+            </p>
+          </FadeUp>
+        </div>
 
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {educationInitiatives.map((item) => (
             <StaggerItem key={item.title}>
-              <Card className="border-t-4 border-t-primary hover:shadow-md transition-shadow h-full">
+              <Card className="shadow-none border-border h-full">
                 <CardContent className="pt-8 pb-6 px-6">
                   <item.icon
                     className="text-primary mb-4"
@@ -336,7 +338,7 @@ export default function ActivitiesPage() {
                   <h3 className="font-heading text-base font-black text-secondary mb-2 uppercase tracking-tight">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-foreground/80 font-medium leading-relaxed">
+                  <p className="text-sm text-foreground-muted font-medium leading-relaxed">
                     {item.description}
                   </p>
                 </CardContent>
@@ -356,14 +358,16 @@ export default function ActivitiesPage() {
         }}
       >
         <div className="max-w-7xl mx-auto">
-          <FadeUp className="text-center mb-12">
-            <Badge className="mb-4 bg-[#a93200]/10 text-[#a93200] border-[#a93200]/30 uppercase tracking-widest text-xs">
-              Since 1984
-            </Badge>
-            <h2 className="font-heading text-3xl md:text-4xl text-[#a93200] font-black uppercase tracking-tight">
-              Aarogyawari — The Pandharpur Wari Service
-            </h2>
-            <div className="h-1.5 w-32 bg-[#F39C12] mx-auto mt-4" />
+          <FadeUp className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+            <div>
+              <Badge className="mb-4 bg-[#a93200]/10 text-[#a93200] border-[#a93200]/30 uppercase tracking-widest text-xs">
+                Since 1984
+              </Badge>
+              <h2 className="font-heading text-3xl md:text-4xl text-[#a93200] font-black uppercase tracking-tight">
+                Aarogyawari — The Pandharpur Wari Service
+              </h2>
+              <div className="h-1.5 w-24 bg-[#F39C12] mt-4" />
+            </div>
           </FadeUp>
 
           {/* Bento cards — StaggerItem carries lg:col-span-2 to preserve the grid span */}
@@ -424,20 +428,23 @@ export default function ActivitiesPage() {
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────────────── */}
-      <section className="py-14 px-4 md:px-8 bg-secondary text-white text-center border-t-4 border-primary">
-        <FadeUp className="max-w-xl mx-auto">
-          <h2 className="font-heading text-3xl font-black uppercase tracking-tight mb-4">
-            Support Our Work
-          </h2>
-          <p className="text-white/80 mb-8 font-medium">
-            Every camp, every check-up, every relief effort is made possible by
-            people like you. Donate, volunteer, or get in touch to learn more.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
+      <section className="py-16 px-4 md:px-8 bg-secondary text-white border-t-4 border-primary">
+        <FadeUp className="max-w-6xl mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+          <div className="max-w-md">
+            <h2 className="font-heading text-3xl font-black uppercase tracking-tight mb-4">
+              Support Our Work
+            </h2>
+            <p className="text-white font-medium">
+              Every camp, every check-up, every relief effort is made possible
+              by people like you. Donate, volunteer, or get in touch to learn
+              more.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 shrink-0">
             <Button
               asChild
               size="lg"
-              className="uppercase font-bold tracking-wide border-b-4 border-b-primary/50 active:border-b-0 active:translate-y-1 animate-heartbeat"
+              className="uppercase font-bold tracking-wide"
             >
               <Link href="/donate">Donate Now</Link>
             </Button>
